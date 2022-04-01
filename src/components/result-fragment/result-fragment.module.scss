@@ -1,0 +1,44 @@
+.medalFragment {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  flex-basis: 50%;
+  &:nth-child(3), &:nth-child(4) {
+    .medalTextPage {
+      margin-bottom: unset;
+    }
+  }
+
+}
+
+.medalFragmentName {
+  font-size: 12px;
+  line-height: 12px;
+  color: var(--grey-700);
+  margin-bottom: var(--spacer-8);
+  display: flex;
+  align-items: center;
+  span {
+    margin-left: var(--spacer-4);
+    &::first-letter {
+      text-transform:capitalize;
+    }
+  }
+}
+
+.medalFragmentText {
+  font-size: 14px;
+  line-height: 14px;
+  color: var(--grey-900);
+  margin-bottom: var(--spacer-16);
+}
+
+.medalNamePage {
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.medalTextPage {
+  font-size: 18px;
+  line-height: 20px;
+}

@@ -1,0 +1,12 @@
+.header {
+  margin-top: var(--spacer-40);
+  height: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--grey-500);
+}
+
+.headerBtnText {
+  padding-left: var(--spacer-4);
+}

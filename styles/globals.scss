@@ -1,0 +1,71 @@
+@import "fonts";
+@import "font-styles";
+@import "media";
+
+html,
+body {
+  font-family: 'Poppins', sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: var(--grey-200) !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+
+}
+
+button, span, p, a {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+}
+
+.ant-modal-body {
+  padding: unset;
+  border-radius: var(--radius-8);
+}
+
+:root {
+  /*colors*/
+  --grey-200: #F1F1F1;
+  --grey-400: #E9E9E9;
+  --grey-500: #CDCDCD;
+  --grey-700: #818181;
+  --grey-900: #1E1E1E;
+  --accent-first: #DDBE90;
+  --accent-second: #17144B;
+  --white: #ffffff;
+
+
+
+  /*spacers*/
+  --spacer-4: 4px;
+  --spacer-8: 8px;
+  --spacer-16: 16px;
+  --spacer-24: 24px;
+  --spacer-32: 32px;
+  --spacer-40: 40px;
+  --spacer-64: 64px;
+
+  /*border-radius*/
+  --radius-4: 4px;
+  --radius-8: 8px;
+
+  /*shadow*/
+  --shadow-main: 0px 2px 4px rgba(200, 200, 200, 0.4);
+
+}

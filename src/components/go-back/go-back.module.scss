@@ -1,0 +1,13 @@
+.goBack {
+  display: flex;
+  align-items: center;
+  margin-top: var(--spacer-64);
+  cursor: pointer;
+  width: fit-content;
+  span {
+    margin-left: var(--spacer-8);
+    color: var(--grey-700);
+    font-size: 20px;
+    line-height: 20px;
+  }
+}

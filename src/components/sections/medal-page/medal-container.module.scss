@@ -1,0 +1,87 @@
+@import "styles/font-styles";
+@import "styles/media";
+
+
+.medalPage {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  min-height: 500px;
+  position: relative;
+  margin-top: var(--spacer-40);
+  grid-gap: var(--spacer-24);
+  padding-bottom: var(--spacer-40);
+  @media (max-width: $desktop) {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: minmax(200px) 1fr;
+  }
+}
+
+.medalImage, .medalContent {
+  border-radius: var(--radius-8);
+  box-shadow: var(--shadow-main);
+  overflow: hidden;
+}
+
+.medalImage {
+  grid-column: 1 / 7;
+  height: 400px;
+  position: sticky;
+  top: 16px;
+  img {
+    width: 100%;
+    height: inherit;
+    object-fit: cover;
+  }
+  @media (max-width: $desktop) {
+    grid-column: 1 / 7;
+    grid-row: 1;
+    position: relative;
+    top: unset;
+  }
+
+}
+
+.medalResizerPosition {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.medalContent {
+  grid-column: 7 / 13;
+  border: 1px solid var(--grey-400);
+  padding: var(--spacer-32);
+  background: var(--white);
+  height: max-content;
+  @media (max-width: $desktop) {
+    grid-column: 1 / 7;
+    grid-row: 2;
+  }
+  @media (max-width: $tablet) {
+    padding: var(--spacer-16);
+  }
+}
+
+.medalId {
+  color: var(--grey-500);
+  margin-bottom: var(--spacer-16);
+}
+
+.medalFragments {
+  border-radius: var(--radius-8);
+  border: 1px solid var(--grey-400);
+  margin-top: var(--spacer-40);
+  display: grid;
+  grid-gap: var(--spacer-16);
+  grid-template-columns: repeat( auto-fit, minmax(200px, 1fr) );
+  padding: var(--spacer-24);
+}
+
+.medalTitle {
+  @include font-500();
+}
+.medalButtonContainer {
+  margin-top: var(--spacer-32);
+}
+
+

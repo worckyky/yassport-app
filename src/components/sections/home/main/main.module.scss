@@ -1,0 +1,177 @@
+@import "styles/font-styles";
+@import "styles/media";
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  min-height: 700px;
+  grid-gap: 24px;
+  padding-bottom: var(--spacer-24);
+}
+
+.mainImage {
+  grid-column: 1 / 7;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainContent {
+  grid-column: 7 / 13;
+  min-height: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+
+.imageOne,
+.imageTwo,
+.imageThree, {
+  position: absolute;
+  .view, .comment {
+    position: absolute;
+    box-shadow: var(--shadow-main);
+    border-radius: 8px;
+  }
+}
+
+.view {
+  width: 200px;
+  z-index: 1;
+}
+
+.comment {
+  width: 200px;
+  z-index: 2;
+}
+
+.imageOne {
+  left: 130px;
+  top: 50px;
+  .view {
+    transform: rotate(8.36deg);
+  }
+  .comment {
+    top: 70px;
+    left: 180px;
+  }
+}
+.imageTwo {
+  left: 320px;
+  top: 280px;
+  .view {
+    transform: rotate(-5.82deg);
+  }
+  .comment {
+    top: 110px;
+    right: -30px;
+  }
+}
+
+.imageThree {
+  left: 100px;
+  bottom: 190px;
+  .view {
+    transform: rotate(-8.27deg);
+  }
+  .comment {
+    top: 70px;
+    left: 180px;
+  }
+}
+
+
+
+.mainTitle {
+  @include font-600();
+  margin-bottom: var(--spacer-16);
+}
+
+.mainDescription {
+  @include font-200()
+}
+
+.mainButtonContainer {
+  display: flex;
+  margin-top: var(--spacer-64);
+}
+
+.mainRegister {
+  margin-right: var(--spacer-16);
+}
+
+.mainExplore {
+  margin-right: var(--spacer-4);
+}
+
+@media (max-width: $desktop) {
+  .imageContainer {
+    transform: scale(0.6);
+  }
+
+}
+
+@media (max-width: $tablet) {
+  .imageContainer {
+    transform: unset;
+    display: flex;
+    position: static;
+    overflow-x: auto;
+    padding-bottom: var(--spacer-16);
+    padding-left: var(--spacer-16);
+  }
+  .main {
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  .mainImage, .mainContent {
+    grid-column: 1 / 9;
+  }
+  .mainImage {
+    grid-row: 1;
+  }
+  .mainContent {
+    grid-row: 2;
+  }
+
+  .imageOne,
+  .imageTwo,
+  .imageThree, {
+    position: relative;
+    top: unset;
+    right: unset;
+    bottom: unset;
+    left: unset;
+    .view, .comment {
+      transform: rotate(0deg);
+      top: unset;
+      right: unset;
+      bottom: 0;
+      left: 0;
+      border-radius: 8px;
+    }
+  }
+  .view {
+    width: 260px;
+  }
+  .comment {
+    width: 260px;
+
+  }
+  .imageTwo {
+    left: 276px;
+  }
+  .imageOne {
+    left: 553px;
+  }
+
+
+}

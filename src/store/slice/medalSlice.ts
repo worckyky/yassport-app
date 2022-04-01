@@ -1,0 +1,124 @@
+import {
+    createSlice,
+    PayloadAction,
+} from '@reduxjs/toolkit';
+import type { RootState } from '../store';
+import {EMedalType} from "../../enums/medal-type";
+
+// declaring the types for our state
+
+type InitialStateType = {
+    medals: EMedalType[],
+    selectedMedal?: EMedalType
+}
+
+
+const initialState: InitialStateType = {
+    medals: [
+        {
+            type: 'Running',
+            img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
+            id: 314141,
+            distance: '42.2 km',
+            name: 'RZD Golden Ring Ultra-Trail',
+            year: '2022',
+            location: 'Russia - Kazan'
+        },
+        {
+            type: 'Running',
+            img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
+            id: 314141,
+            distance: '42.2 km',
+            name: 'RZD Golden Ring Ultra-Trail',
+            year: '2022',
+            location: 'Russia - Kazan'
+        },
+        {
+            type: 'Running',
+            img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
+            id: 314141,
+            distance: '42.2 km',
+            name: 'RZD Golden Ring Ultra-Trail',
+            year: '2022',
+            location: 'Russia - Kazan'
+        },
+        {
+            type: 'Running',
+            img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
+            id: 314141,
+            distance: '42.2 km',
+            name: 'RZD Golden Ring Ultra-Trail',
+            year: '2022',
+            location: 'Russia - Kazan'
+        },
+        {
+            type: 'Running',
+            img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
+            id: 314141,
+            distance: '42.2 km',
+            name: 'RZD Golden Ring Ultra-Trail',
+            year: '2022',
+            location: 'Russia - Kazan'
+        },
+        {
+            type: 'Running',
+            img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
+            id: 314141,
+            distance: '42.2 km',
+            name: 'RZD Golden Ring Ultra-Trail',
+            year: '2022',
+            location: 'Russia - Kazan'
+        },
+        {
+            type: 'Running',
+            img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
+            id: 314141,
+            distance: '42.2 km',
+            name: 'RZD Golden Ring Ultra-Trail',
+            year: '2022',
+            location: 'Russia - Kazan'
+        },
+        {
+            type: 'Running',
+            img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
+            id: 314141,
+            distance: '42.2 km',
+            name: 'RZD Golden Ring Ultra-Trail',
+            year: '2022',
+            location: 'Russia - Kazan'
+        }
+    ],
+    selectedMedal: {} as EMedalType
+
+};
+
+export const counterSlice = createSlice({
+    name: 'medal',
+    initialState,
+// The `reducers` field lets us define reducers and generate associated actions.
+// In this example, 'increment', 'decrement' and 'incrementByAmount' are actions. They can be triggered from outside this slice, anywhere in the app.
+// So for example, if we make a dispatch to the 'increment' action here from the index page, it will get triggered and change the value of the state from 0 to 1.
+    reducers: {
+        takeMedal: (state,action:PayloadAction<string>) => {
+// Redux Toolkit allows us to write "mutating" logic in reducers.
+// It doesn't actually mutate the state because it uses the Immer library, which detects changes to a "draft state" and produces a brand new immutable state based off those changes
+            state.selectedMedal = state.medals.find(elem => elem.id == +action.payload);
+        },
+// 'The increment by amount' action here, has one job and that is to take whatever value is passed to it and add that to state.value.
+// The PayloadAction type here is used to declare the contents of `action.payload`
+//         incrementByAmount: (state, action: PayloadAction<number>) => {
+//             state.value += action.payload;
+//         },
+    },
+});
+// Here we are just exporting the actions from this slice, so that we can call them anywhere in our app.
+export const {
+    takeMedal,
+} = counterSlice.actions;
+
+// calling the above actions would be useless if we could not access the data in the state. So, we use something called a selector which allows us to select a value from the state.
+export const selectMedals = (state: RootState) => state.medal.medals;
+export const selectMedalById = (state: RootState) => state.medal.selectedMedal;
+
+// exporting the reducer here, as we need to add this to the store
+export default counterSlice.reducer;

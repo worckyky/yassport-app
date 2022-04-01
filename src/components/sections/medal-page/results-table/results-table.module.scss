@@ -1,0 +1,41 @@
+@import "styles/font-styles";
+
+.resultsTable {
+  background: var(--white);
+  min-height: 400px;
+  padding-bottom: var(--spacer-40);
+}
+
+.resultsTableTitle {
+  text-align: center;
+  padding-top: var(--spacer-40);
+  margin-bottom: var(--spacer-40);
+  @include font-500();
+}
+
+.resultsTableEmptyState {
+  min-height: 400px;
+  display: flex;
+  border: 1px solid var(--grey-500);
+  border-radius: var(--radius-8);
+  align-items: center;
+  justify-content: center;
+  @include font-200();
+}
+
+.resultsTableMore {
+  color: var(--accent-first);
+  cursor: pointer;
+}
+
+.resultsSearchInput {
+  margin-bottom: var(--spacer-16);
+}
+
+.table-row-light {
+  background-color: #ffffff;
+}
+
+.table-row-dark {
+  background-color: #fbfbfb;
+}

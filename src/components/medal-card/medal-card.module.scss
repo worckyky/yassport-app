@@ -1,0 +1,52 @@
+@import "styles/font-styles";
+
+.medal {
+  box-shadow: var(--shadow-main);
+  border: 1px solid var(--grey-200);
+  min-height: 300px;
+  border-radius: var(--radius-8);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.medalHead {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.medalImg {
+  width: inherit;
+  height: 180px;
+  object-fit: cover;
+  z-index: 0;
+}
+
+
+.medalTitle {
+  width: 90%;
+  background-color: var(--white);
+  border-radius: var(--radius-8);
+  box-shadow: var(--shadow-main);
+  border: 1px solid var(--grey-200);
+  height: 70px;
+  position: absolute;
+  margin: 0 auto;
+  bottom: -34px;
+  @include font-small-100();
+  padding: var(--spacer-16);
+}
+
+.medalFeatures {
+  margin-top: var(--spacer-40);
+  display: flex;
+  flex-wrap: wrap;
+  padding: var(--spacer-16);
+}
+
+.bottomsBlock {
+  border-top: 1px solid var(--grey-500);
+  padding: var(--spacer-16);
+}
