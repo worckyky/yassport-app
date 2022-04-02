@@ -5,6 +5,7 @@ import {useAppDispatch, useAppSelector} from "../../../../store/hooks";
 import {selectColumns, selectResults} from "../../../../store/slice/resultsSlice";
 import Input from "../../../input/input";
 import AppIconSearch from "../../../app-icons/app-icon-search";
+import {useRouter} from "next/router";
 
 
 const ResultsTable = () => {
@@ -12,6 +13,7 @@ const ResultsTable = () => {
     const dispatch = useAppDispatch();
     const results = useAppSelector(selectResults);
     const columns = useAppSelector(selectColumns);
+    const router = useRouter();
 
     const editable = (): any => {
         return [...columns, {
@@ -27,7 +29,7 @@ const ResultsTable = () => {
     }
 
     const onSeeResult = (id: string): void => {
-        console.log(id)
+        router.push(`/protocol/${[id]}`)
     }
 
 

@@ -93,7 +93,7 @@ const initialState: InitialStateType = {
     ]
 };
 
-export const counterSlice = createSlice({
+export const resultsSlice = createSlice({
     name: 'results',
     initialState,
     reducers: {
@@ -107,10 +107,10 @@ export const counterSlice = createSlice({
 });
 export const {
     takeResults,
-} = counterSlice.actions;
+} = resultsSlice.actions;
 
 export const selectResults = (state: RootState) => state.results.results;
 export const selectColumns = (state: RootState) => state.results.columns;
 export const selectResultsId = (state: RootState) => state.results.selectedResult;
 
-export default counterSlice.reducer;
+export default resultsSlice.reducer;

@@ -1,0 +1,150 @@
+@import "styles/font-styles";
+@import "styles/media";
+
+
+.protocolPage {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  min-height: 500px;
+  position: relative;
+  margin-top: var(--spacer-40);
+  grid-gap: var(--spacer-24);
+  padding-bottom: var(--spacer-40);
+  @media (max-width: $desktop) {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: minmax(200px) 1fr;
+  }
+}
+
+.protocolImage, .protocolContent {
+  border-radius: var(--radius-8);
+  box-shadow: var(--shadow-main);
+  overflow: hidden;
+}
+
+.protocolImage {
+  grid-column: 1 / 5;
+  height: 400px;
+  position: sticky;
+  top: 16px;
+  img {
+    width: 100%;
+    height: inherit;
+    object-fit: cover;
+  }
+  @media (max-width: $desktop) {
+    grid-column: 1 / 7;
+    grid-row: 1;
+    position: relative;
+    top: unset;
+  }
+
+}
+
+.protocolResizerPosition {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.protocolContent {
+  grid-column: 5 / 13;
+  border: 1px solid var(--grey-400);
+  padding: var(--spacer-32);
+  background: var(--white);
+  height: max-content;
+  @media (max-width: $desktop) {
+    grid-column: 1 / 7;
+    grid-row: 2;
+  }
+  @media (max-width: $tablet) {
+    padding: var(--spacer-16);
+  }
+}
+
+.protocolId {
+  color: var(--grey-500);
+  margin-bottom: var(--spacer-16);
+}
+
+.protocolFragments {
+  border-radius: var(--radius-8);
+  border: 1px solid var(--grey-400);
+  display: grid;
+  grid-gap: var(--spacer-16);
+  grid-template-columns: repeat( auto-fit, minmax(200px, 1fr) );
+  padding: var(--spacer-24);
+}
+
+.protocolTitle {
+  @include font-500();
+  padding-right: var(--spacer-24);
+}
+.protocolButtonContainer {
+  margin-top: var(--spacer-32);
+}
+
+.protocolBlock {
+  display: flex;
+  @media (max-width: $desktop) {
+    flex-direction: column;
+  }
+}
+.protocolInformation {
+  margin-left: var(--spacer-24);
+  @media (max-width: $desktop) {
+    margin-top: var(--spacer-24);
+    margin-left: unset;
+    flex: 1;
+  }
+}
+
+.protocolUser {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-bottom: var(--spacer-16);
+  border-bottom: 1px solid var(--grey-400);
+  @media (max-width: $tablet) {
+    margin-top: var(--spacer-24);
+  }
+}
+
+.protocolAvatar {
+  height: 100px;
+  width: 100px;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  overflow: hidden;
+  border: 1px solid var(--grey-400);
+  @media (max-width: $tablet) {
+    margin-top: var(--spacer-24);
+  }
+}
+
+.protocolFragmentImg {
+  width: 48px;
+  height: 48px;
+}
+.protocolResults {
+  margin-top: var(--spacer-24);
+  @media (max-width: $desktop) {
+    flex-wrap: wrap;
+    display: flex;
+    gap: 32px;
+  }
+}
+
+.protocolCheckPoints {
+  margin-top: var(--spacer-32);
+  border-top: 1px solid var(--grey-400);
+}
+
+.protocolCheckPointsTitle {
+  @include font-500();
+  text-align: center;
+  margin: var(--spacer-24);
+
+}

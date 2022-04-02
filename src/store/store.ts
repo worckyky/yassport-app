@@ -7,6 +7,7 @@ import counterReducer from "./slice/counterSlice";
 import kanyeReducer from "./slice/kanyeSlice";
 import medalReducer from "./slice/medalSlice";
 import resultsReducer from "./slice/resultsSlice";
+import protocolReducer from "./slice/protocolSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         kanyeQuote: kanyeReducer,
         medal: medalReducer,
         results: resultsReducer,
+        protocol: protocolReducer,
     },
 });
 
