@@ -39,6 +39,20 @@ h1, h2, h3{
   border-radius: var(--radius-8);
 }
 
+.ant-picker-input>input {
+  &::placeholder {
+    color: var(--grey-700);
+  }
+  border-color: unset;
+  &:hover {
+    border-color: unset;
+  }
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+  color: var(--accent-first) !important;
+}
+
 :root {
   /*colors*/
   --grey-200: #F1F1F1;

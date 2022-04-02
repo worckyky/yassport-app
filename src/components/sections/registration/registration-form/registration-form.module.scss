@@ -1,0 +1,15 @@
+.registrationForm {
+  display: flex;
+  gap: var(--spacer-24);
+  padding: var(--spacer-24);
+}
+
+.registrationFormContainer {
+  width: 100%;
+}
+
+.registrationInputBlock {
+  display: flex;
+  gap: var(--spacer-24);
+  margin-bottom: var(--spacer-32);
+}

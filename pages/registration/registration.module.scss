@@ -1,0 +1,20 @@
+@import "styles/font-styles";
+
+.registrationTitle {
+  margin-top: var(--spacer-32);
+  @include font-500();
+}
+
+.registrationContainer {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 24px;
+  min-width: 400px;
+  margin-top: var(--spacer-32);
+}
+.registrationForm {
+  grid-column: 1 / 7;
+  background-color: var(--white);
+  border-radius: var(--radius-8);
+  box-shadow: var(--shadow-main);
+}
