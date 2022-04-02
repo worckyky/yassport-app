@@ -1,12 +1,6 @@
 {
+  "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/api/hello": "pages/api/hello.js",
-  "/": "pages/index.html",
-  "/medal/[id]": "pages/medal/[id].html",
-  "/_app": "pages/_app.js",
-  "/protocol/[id]": "pages/protocol/[id].html",
-  "/protocol": "pages/protocol.js",
-  "/medal": "pages/medal.js",
-  "/404": "pages/404.html"
+  "/": "pages/index.js"
 }
