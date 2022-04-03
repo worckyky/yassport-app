@@ -41,8 +41,8 @@
 
 .medalFeatures {
   margin-top: var(--spacer-40);
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   padding: var(--spacer-16);
 }
 

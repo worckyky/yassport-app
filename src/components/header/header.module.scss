@@ -10,3 +10,13 @@
 .headerBtnText {
   padding-left: var(--spacer-4);
 }
+
+.headerLoginIcon {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--accent-second);
+  border-radius: var(--radius-8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

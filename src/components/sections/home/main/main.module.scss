@@ -23,6 +23,22 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  position: relative;
+}
+.mainContentAnimate {
+  position: absolute;
+  top: 60px;
+  right: 50px;
+  @media (max-width: $tablet) {
+    top: -340px;
+    right: 97px;
+    z-index: 1;
+  }
+  @media (max-width: $phone) {
+    top: -320px;
+    right: -3px;
+    z-index: 1;
+  }
 }
 
 .imageContainer {
@@ -92,7 +108,11 @@
 
 .mainTitle {
   @include font-600();
+  margin-top: var(--spacer-40);
   margin-bottom: var(--spacer-16);
+  @media (max-width: $tablet) {
+    margin-top: unset;
+  }
 }
 
 .mainDescription {
@@ -130,7 +150,7 @@
   }
   .main {
     grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: min(340px) 1fr;
   }
   .mainImage, .mainContent {
     grid-column: 1 / 9;

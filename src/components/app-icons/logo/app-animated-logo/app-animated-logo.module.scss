@@ -1,0 +1,25 @@
+
+.animatedLogo {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.animatedLogoWords {
+  animation: rotateAnimation 20000ms 0ms linear infinite;
+}
+
+.animatedLogoY {
+  position: absolute;
+}
+
+@keyframes rotateAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

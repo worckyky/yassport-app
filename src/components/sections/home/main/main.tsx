@@ -1,8 +1,13 @@
 import s from './main.module.scss'
 import Button from "../../../button/button";
 import AppIconArrowBtn from "../../../app-icons/app-icon-arrowBtn";
+import AppAnimatedLogo from "../../../app-icons/logo/app-animated-logo/app-animated-logo";
+import {EDeviceType, useWindowSize} from "../../../../helpers/device-helper";
 
 const Main = () => {
+    const device = useWindowSize()
+    const condition = [EDeviceType.MOBILE, EDeviceType.TABLET].includes(device as EDeviceType)
+
     return (
         <div className={s.main}>
             <div className={s.mainImage}>
@@ -22,6 +27,10 @@ const Main = () => {
                 </div>
             </div>
             <div className={s.mainContent}>
+                <AppAnimatedLogo
+                    extraStyles={s.mainContentAnimate}
+                    color={condition ? 'var(--accent-first)' : 'var(--accent-second)'}
+                />
                 <h1 className={s.mainTitle}>
                     Your unique digital victories
                 </h1>
