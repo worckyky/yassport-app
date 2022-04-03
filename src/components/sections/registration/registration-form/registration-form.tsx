@@ -152,11 +152,11 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                             <span className={s.registrationFormRules}>
                                 {stringCombiner(
                                     [
-                                        <span className={s.registrationFormRulesText}>By signing up, you agree to Yassport</span>,
-                                        <Link href={'#'} extraClass={s.footerLink}>Privacy Policy</Link>,
-                                        <br/>,
-                                        <span className={s.registrationFormRulesText}>and</span>,
-                                        <Link href={'#'} extraClass={s.footerLink}>Terms of Service</Link>
+                                        <span key={'1'} className={s.registrationFormRulesText}>By signing up, you agree to Yassport</span>,
+                                        <Link key={'2'} href={'#'} extraClass={s.footerLink}>Privacy Policy</Link>,
+                                        <br key={'3'} />,
+                                        <span key={'4'} className={s.registrationFormRulesText}>and</span>,
+                                        <Link key={'5'} href={'#'} extraClass={s.footerLink}>Terms of Service</Link>
                                     ]
                                 )}
                             </span>
@@ -172,4 +172,4 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
     )
 }
 
-export default RegistrationForm
+export default RegistrationForm;
