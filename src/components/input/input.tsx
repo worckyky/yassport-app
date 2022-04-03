@@ -2,26 +2,29 @@
 import s from './input.module.scss'
 import React, {LegacyRef, useRef, useState} from "react";
 import classnames from 'classnames'
-import {Moment} from "moment";
 import {DatePicker} from "antd";
-import AppIconSmallCalendar from "../app-icons/small/app-iconSmall-calendar";
 import AppIconCalendar from "../app-icons/app-icon-calendar";
+import AppIconEye from "../app-icons/app-icon-eye";
+import {useField, useFormikContext} from "formik";
 const cn = classnames.bind(s);
 
 
 type EInputType = {
     value?: string,
-    onChange: (value: string) => void,
+    onChange?: (value: string) => void,
     extraStyles?: string,
     name?: string,
     placeHolder?: string,
-    width: 'default' | 'full'
+    width?: 'default' | 'full'
     icon?: JSX.Element
     type?: string
+    field?: any
+    required?: boolean
 }
 
 const Input: React.FC<EInputType> = (
     {
+        field,
         value = '',
         name,
         onChange,
@@ -29,15 +32,24 @@ const Input: React.FC<EInputType> = (
         placeHolder,
         width = 'default',
         type = 'text',
-        icon}
+        icon,
+        required= 'false',
+        ...props
+        }
 ) => {
 
     const [data, setData] = useState(value)
+    const [showPass, setOnShowPass] = useState(false)
     const inputRef = useRef<HTMLInputElement>()
+
+
+    const { setFieldValue } = useFormikContext();
 
     const changeData = (e : string) => {
         setData(e)
-        onChange(e)
+        if (onChange) {
+            onChange(e)
+        }
     }
     const mapStyles = () => {
         return {
@@ -51,15 +63,20 @@ const Input: React.FC<EInputType> = (
     }
 
     const onChangeDate = (selectedTime: any, value: any ) => {
-        onChange(value)
+        setFieldValue(field.name, value)
+        if (onChange) {
+            onChange(value)
+        }
     }
 
     const changeOnDatePicker = () => {
         if (type === 'date') {
             return <DatePicker
+                {...props}
                 className={s.inputPicker}
                 placeholder={placeHolder}
-                format="YYYY-MM-DD"
+                name={name}
+                format="DD-MM-YYYY"
                 bordered={false}
                 allowClear={false}
                 suffixIcon={<AppIconCalendar/>}
@@ -68,20 +85,36 @@ const Input: React.FC<EInputType> = (
         } else {
             return <input
                 ref={inputRef as LegacyRef<HTMLInputElement>}
-                type={type}
+                type={!showPass ? type : 'text'}
                 name={name}
                 value={data}
+                required={required}
                 onChange={(e)=> changeData(e.target.value)}
                 placeholder={placeHolder}
+                {...field}
+                {...props}
             />
         }
 
     }
 
+    const changeOnPassWord = () => {
+        if (type === 'password') {
+            return <AppIconEye hide={showPass} onClick={() => setOnShowPass((state) => !state)}/>
+        } else {
+            return (
+                <>
+                    {icon}
+                </>
+            )
+        }
+    }
+
+
     return (
         <div className={cn(s.input, mapStyles(), extraStyles)} onClick={onAreaClick}>
             {changeOnDatePicker()}
-            {icon}
+            {changeOnPassWord()}
         </div>
     )
 }

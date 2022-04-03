@@ -2,10 +2,16 @@ import s from './registration-form.module.scss'
 import classnames from 'classnames'
 
 import React from "react";
-import {Formik} from 'formik';
+import {Formik, Field} from 'formik';
+
 import Input from "../../../input/input";
 import {DatePicker} from "antd";
-import RadioButtons from "../../../radio-buttons/radio-buttons";
+import RadioButtons, {IRadioType} from "../../../radio-buttons/radio-buttons";
+import AppIconArrowBtn from "../../../app-icons/app-icon-arrowBtn";
+import Button from "../../../button/button";
+import AppIconEmail from "../../../app-icons/app-icon-email";
+import Link from "../../../link/link";
+import stringCombiner from "../../../../helpers/stringCombiner";
 
 const cn = classnames.bind(s);
 
@@ -36,23 +42,34 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
         checkPassword: '',
     }
 
+    const genderOptions: IRadioType[] = [
+        {
+            key: 'Male',
+            value: 'male',
+        },
+        {
+            key: 'Female',
+            value: 'female'
+        }
+    ]
+
     return (
         <div className={cn(s.registrationForm, extraStyles)}>
             <Formik
                 initialValues={initialValues}
-                validate={values => {
-                    const errors: { email: string } = {
-                        email: '',
-                    };
-                    if (!values.email) {
-                        errors.email = 'Required';
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                    ) {
-                        errors.email = 'Invalid email address';
-                    }
-                    return errors;
-                }}
+                // validate={values => {
+                //     const errors: { email: string } = {
+                //         email: '',
+                //     };
+                //     if (!values.email) {
+                //         errors.email = 'Required';
+                //     } else if (
+                //         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                //     ) {
+                //         errors.email = 'Invalid email address';
+                //     }
+                //     return errors;
+                // }}
                 onSubmit={(values, {setSubmitting}) => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
@@ -68,54 +85,77 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                       handleBlur,
                       handleSubmit,
                       isSubmitting,
+                      ...field
                       /* and other goodies */
                   }) => (
                     <form onSubmit={handleSubmit} className={s.registrationFormContainer}>
                         <div className={s.registrationInputBlock}>
-                            <Input
-                                onChange={handleChange}
-                                placeHolder={'First name'}
-                                width='full'
-                                value={values.firstName}
-                                type='text'/>
-                            <Input
-                                onChange={handleChange}
-                                placeHolder={'Last name'}
-                                width='full'
-                                value={values.lastName}
-                                type='text'/>
+                            <Field placeholder={'First name'} name='firstName' type='text' width='full'
+                                   component={Input}/>
+                            <Field placeholder={'Last name'} name='lastName' type='text' width='full'
+                                   component={Input}/>
                         </div>
                         <div className={s.registrationInputBlock}>
-                            <Input
-                                onChange={handleChange}
-                                placeHolder={'Date of birth'}
-                                width='full'
-                                value={values.birth}
-                                type='date'/>
+                            <Field extraStyles={s.registrationInputPicker}
+                                   placeHolder={'Date of birth'}
+                                   name='birth'
+                                   type='date'
+                                   width='full'
+                                   component={Input}/>
                             <RadioButtons
-                                onChange={handleChange}
-                                radioData={[
-                                      {
-                                          id: 'gender-1',
-                                          name: 'gender',
-                                          value: 'Male'
-                                      },
-                                      {
-                                          id: 'gender-1',
-                                          name: 'gender',
-                                          value: 'Male'
-                                      }
-                                ]}/>
+                                extraStyles={s.registrationInputGender}
+                                label={'Radio topic'}
+                                name={'gender'}
+                                options={genderOptions}/>
                         </div>
+                        <div className={s.registrationInputBlock}>
+                            <Field icon={<AppIconEmail/>}
+                                   placeholder={'Email'}
+                                   name='email'
+                                   type='text'
+                                   width='full'
+                                   component={Input}/>
+                        </div>
+                        <div className={s.registrationInputBlock}>
+                            <Field placeholder={'Password'}
+                                   name='password'
+                                   type='password'
+                                   width='full'
+                                   component={Input}/>
+                            <Field placeholder={'Repeat password'}
+                                   name='checkPassword'
+                                   type='password'
+                                   width='full'
+                                   component={Input}/>
+                        </div>
+                        <div className={s.registrationFormErrorsBlock}>
 
-
+                        </div>
                         {errors.password && touched.password && errors.password}
-                        <button type="submit" disabled={isSubmitting}>
-                            Submit
-                        </button>
+                        <div className={s.registrationFormBtnContainer}>
+                            <Button btnType='submit'
+                                    type='field-primary'
+                                    size='big'>
+                                <span className={s.mainExplore}>Register</span><AppIconArrowBtn/>
+                            </Button>
+                            <span className={s.registrationFormRules}>
+                                {stringCombiner(
+                                    [
+                                        <span className={s.registrationFormRulesText}>By signing up, you agree to Yassport</span>,
+                                        <Link href={'#'} extraClass={s.footerLink}>Privacy Policy</Link>,
+                                        <span className={s.registrationFormRulesText}>and</span>,
+                                        <Link href={'#'} extraClass={s.footerLink}>Terms of Service</Link>
+                                    ]
+                                )}
+                            </span>
+                        </div>
                     </form>
                 )}
             </Formik>
+            <div className={s.registrationFormLogin}>
+                Already have an account? <span className={s.registrationFormLoginClick}>Sign in</span>
+            </div>
+
         </div>
     )
 }

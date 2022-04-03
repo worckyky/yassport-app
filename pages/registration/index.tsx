@@ -18,6 +18,8 @@ const Registration = () => {
                     </h2>
                     <div className={s.registrationContainer}>
                         <RegistrationForm extraStyles={s.registrationForm}/>
+                        <div className={s.registrationContainerIlustraion}>
+                        </div>
                     </div>
                 </>
             </PageLayout>
