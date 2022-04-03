@@ -90,9 +90,17 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                   }) => (
                     <form onSubmit={handleSubmit} className={s.registrationFormContainer}>
                         <div className={s.registrationInputBlock}>
-                            <Field placeholder={'First name'} name='firstName' type='text' width='full'
+                            <Field placeholder={'First name'}
+                                   name='firstName'
+                                   type='text'
+                                   width='full'
+                                   required={true}
                                    component={Input}/>
-                            <Field placeholder={'Last name'} name='lastName' type='text' width='full'
+                            <Field placeholder={'Last name'}
+                                   name='lastName'
+                                   type='text'
+                                   width='full'
+                                   required={true}
                                    component={Input}/>
                         </div>
                         <div className={s.registrationInputBlock}>
@@ -110,6 +118,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                         </div>
                         <div className={s.registrationInputBlock}>
                             <Field icon={<AppIconEmail/>}
+                                   required={true}
                                    placeholder={'Email'}
                                    name='email'
                                    type='text'
@@ -118,11 +127,13 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                         </div>
                         <div className={s.registrationInputBlock}>
                             <Field placeholder={'Password'}
+                                   required={true}
                                    name='password'
                                    type='password'
                                    width='full'
                                    component={Input}/>
                             <Field placeholder={'Repeat password'}
+                                   required={true}
                                    name='checkPassword'
                                    type='password'
                                    width='full'
@@ -143,6 +154,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                                     [
                                         <span className={s.registrationFormRulesText}>By signing up, you agree to Yassport</span>,
                                         <Link href={'#'} extraClass={s.footerLink}>Privacy Policy</Link>,
+                                        <br/>,
                                         <span className={s.registrationFormRulesText}>and</span>,
                                         <Link href={'#'} extraClass={s.footerLink}>Terms of Service</Link>
                                     ]

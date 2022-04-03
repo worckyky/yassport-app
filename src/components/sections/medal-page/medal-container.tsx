@@ -12,6 +12,7 @@ import AppIconSmallFinish from "../../app-icons/small/app-iconSmall-finish";
 import {EMedalType} from "../../../enums/medal-type";
 import ResultFragment from "../../result-fragment/result-fragment";
 import Button from "../../button/button";
+import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
 
 
 type IMedalContainerType = {
@@ -23,6 +24,8 @@ const MedalContainer: React.FC<IMedalContainerType> = ({id}) => {
     const dispatch = useAppDispatch();
     const medal = useAppSelector(selectMedalById);
     const [content, setContent] = useState([])
+    const device = useWindowSize()
+    const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
 
     useEffect(() =>{
         dispatch(takeMedal(id))
@@ -65,6 +68,7 @@ const MedalContainer: React.FC<IMedalContainerType> = ({id}) => {
             <div className={s.medalImage}>
                 <img src={medal?.img} alt=""/>
                 <Resizer img={medal?.img} extraStyles={s.medalResizerPosition}/>
+                {condition && <Resizer img={medal?.img} extraStyles={s.medalGoBack} onGoBack={true}/>}
             </div>
             <div className={s.medalContent}>
                 <span className={s.medalId}>#{medal?.id}</span>

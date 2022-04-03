@@ -6,19 +6,22 @@ import MedalContainer from "../../src/components/sections/medal-page/medal-conta
 import { useRouter } from 'next/router'
 import ResultsTable from "../../src/components/sections/medal-page/results-table/results-table";
 import Footer from "../../src/components/footer/footer"
+import {EDeviceType, useWindowSize} from "../../src/helpers/device-helper";
 
 const MedalPage = () => {
 
     const router = useRouter()
     const { id } = router.query
 
+    const device = useWindowSize()
+    const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
 
     return (
         <>
             <PageLayout>
                 <>
                     <Header/>
-                    <GoBack/>
+                    {!condition && <GoBack/>}
                     <MedalContainer id={id as string}/>
                 </>
             </PageLayout>

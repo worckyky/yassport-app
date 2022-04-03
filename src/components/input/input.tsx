@@ -5,7 +5,8 @@ import classnames from 'classnames'
 import {DatePicker} from "antd";
 import AppIconCalendar from "../app-icons/app-icon-calendar";
 import AppIconEye from "../app-icons/app-icon-eye";
-import {useField, useFormikContext} from "formik";
+import {useFormikContext} from "formik";
+import AppIconSmallRequired from "../app-icons/small/app-iconSmall-required";
 const cn = classnames.bind(s);
 
 
@@ -33,7 +34,7 @@ const Input: React.FC<EInputType> = (
         width = 'default',
         type = 'text',
         icon,
-        required= 'false',
+        required= false,
         ...props
         }
 ) => {
@@ -43,7 +44,7 @@ const Input: React.FC<EInputType> = (
     const inputRef = useRef<HTMLInputElement>()
 
 
-    const { setFieldValue } = useFormikContext();
+    const formikContext = useFormikContext();
 
     const changeData = (e : string) => {
         setData(e)
@@ -63,7 +64,8 @@ const Input: React.FC<EInputType> = (
     }
 
     const onChangeDate = (selectedTime: any, value: any ) => {
-        setFieldValue(field.name, value)
+        formikContext && formikContext.setFieldValue(field.name, value)
+
         if (onChange) {
             onChange(value)
         }
@@ -113,6 +115,7 @@ const Input: React.FC<EInputType> = (
 
     return (
         <div className={cn(s.input, mapStyles(), extraStyles)} onClick={onAreaClick}>
+            {required && <div className={s.inputRequired}><AppIconSmallRequired/></div>}
             {changeOnDatePicker()}
             {changeOnPassWord()}
         </div>

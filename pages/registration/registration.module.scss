@@ -1,4 +1,5 @@
 @import "styles/font-styles";
+@import "styles/media";
 
 .registrationTitle {
   margin-top: var(--spacer-32);
@@ -9,12 +10,44 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 24px;
-  min-width: 400px;
+  min-height: 400px;
   margin: var(--spacer-32) 0;
+  @media (max-width: $tablet) {
+    display: flex;
+    flex-direction: column;
+  }
 }
+.registrationForm, .registrationContainerIllustration {
+  border-radius: var(--radius-8);
+  box-shadow: var(--shadow-main);
+}
+
 .registrationForm {
   grid-column: 1 / 8;
   background-color: var(--white);
-  border-radius: var(--radius-8);
-  box-shadow: var(--shadow-main);
+  order: 1;
+  @media (max-width: $tablet) {
+    order: 2;
+  }
+}
+.registrationContainerIllustration {
+  grid-column: 8 / 13;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--grey-400);
+  order: 2;
+  @media (max-width: $tablet) {
+    height: 180px;
+    width: 100%;
+    order: 1;
+  }
+}
+
+.registrationFormAnimation {
+  transform: scale(1.5);
+  @media (max-width: $tablet) {
+    transform: unset;
+  }
 }

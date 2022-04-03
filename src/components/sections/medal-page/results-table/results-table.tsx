@@ -6,6 +6,7 @@ import {selectColumns, selectResults} from "../../../../store/slice/resultsSlice
 import Input from "../../../input/input";
 import AppIconSearch from "../../../app-icons/app-icon-search";
 import {useRouter} from "next/router";
+import {Formik} from "formik"
 
 
 const ResultsTable = () => {
@@ -55,6 +56,7 @@ const ResultsTable = () => {
     const onChangeHandler = (value: string) => {
 
     }
+
 
     return (
         <div className={s.resultsTable}>

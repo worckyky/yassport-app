@@ -13,6 +13,7 @@ import ResultFragment from "../../result-fragment/result-fragment";
 import Button from "../../button/button";
 import {selectProtocol} from "../../../store/slice/protocolSlice";
 import {Table} from "antd";
+import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
 
 
 type IProtocolContainerType = {
@@ -24,6 +25,8 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
     const dispatch = useAppDispatch();
     const {protocol} = useAppSelector(selectProtocol);
     const [content, setContent] = useState([])
+    const device = useWindowSize()
+    const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
 
     useEffect(() =>{
         dispatch(takeMedal(id))
@@ -66,6 +69,7 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
             <div className={s.protocolImage}>
                 <img src={protocol.medal?.img} alt=""/>
                 <Resizer img={protocol.medal?.img} extraStyles={s.protocolResizerPosition}/>
+                {condition &&  <Resizer img={protocol.medal?.img} extraStyles={s.protocolGoBack} onGoBack={true}/>}
             </div>
             <div className={s.protocolContent}>
                 <div className={s.protocolBlock}>

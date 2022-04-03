@@ -3,10 +3,16 @@ import Button from "../../../button/button";
 import AppIconArrowBtn from "../../../app-icons/app-icon-arrowBtn";
 import AppAnimatedLogo from "../../../app-icons/logo/app-animated-logo/app-animated-logo";
 import {EDeviceType, useWindowSize} from "../../../../helpers/device-helper";
+import {useRouter} from "next/router";
 
 const Main = () => {
     const device = useWindowSize()
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET].includes(device as EDeviceType)
+
+    const router = useRouter()
+    const onRegister = () => {
+        router.push(`/registration`)
+    }
 
     return (
         <div className={s.main}>
@@ -38,7 +44,7 @@ const Main = () => {
                     Save all awards and competition results <br/> as digital NFT medals
                 </p>
                 <div className={s.mainButtonContainer}>
-                    <Button type='outline-primary' size='big' extraStyles={s.mainRegister}>Register</Button>
+                    <Button type='outline-primary' size='big' extraStyles={s.mainRegister} onClick={onRegister}>Register</Button>
                     <Button type='field-primary' size='big'><span className={s.mainExplore}>Explore</span><AppIconArrowBtn/> </Button>
                 </div>
             </div>

@@ -17,10 +17,15 @@ const Header = () => {
     const onRegister = () => {
         router.push(`/registration`)
     }
+    const onMain = () => {
+        router.push(`/`)
+    }
 
     return (
         <div className={s.header}>
-            {condition ? <AppMobileLogo/> : <Image src={'/img/header/yass-logo.png'} width={200} height={28}/>}
+            <span className={s.headerBack} onClick={onMain}>
+                {condition ? <AppMobileLogo/> : <Image src={'/img/header/yass-logo.png'} width={200} height={28}/>}
+            </span>
             {device === EDeviceType.MOBILE ? <div className={s.headerLoginIcon} onClick={onRegister}> <AppIconLogin/></div> : <Button onClick={onRegister} type={'outline-second'} size='normal'><AppIconLogin/> <span className={s.headerBtnText}>Sign in / Register</span></Button>}
         </div>
     )

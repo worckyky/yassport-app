@@ -1,4 +1,5 @@
 @import "styles/font-styles";
+@import "styles/media";
 
 .registrationForm {
   display: flex;
@@ -9,12 +10,19 @@
 .registrationFormContainer {
   width: 100%;
   padding: var(--spacer-24);
+  @media (max-width: $tablet) {
+    padding: var(--spacer-16);
+  }
 }
 
 .registrationInputBlock {
   display: flex;
   gap: var(--spacer-24);
   margin-bottom: var(--spacer-32);
+  @media (max-width: $tablet) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
 }
 .registrationInputPicker, .registrationInputGender {
   flex: 1;
@@ -27,10 +35,11 @@
 .registrationFormBtnContainer {
   display: flex;
   align-items: center;
+  gap: var(--spacer-16);
+  flex-wrap: wrap;
 }
 
 .registrationFormRules {
-  margin-left: var(--spacer-16);
   max-width: 380px;
 }
 .registrationFormRulesText {
@@ -49,10 +58,11 @@
   min-height: 80px;
   font-size: 16px;
   line-height: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .registrationFormLoginClick {
   color: var(--accent-first);
-  margin-left: var(--spacer-16);
   cursor: pointer;
 }

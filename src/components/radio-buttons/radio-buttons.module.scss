@@ -8,8 +8,8 @@
   display: flex;
   align-items: center;
   flex: 1;
+  justify-content: center;
   label {
-    margin-left: var(--spacer-16);
     font-weight: 300;
   }
   [type="radio"]:checked,
