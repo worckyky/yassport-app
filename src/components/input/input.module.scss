@@ -5,12 +5,20 @@
   border: 1px solid var(--grey-400);
   display: flex;
   justify-content: center;
+  cursor: pointer;
   input {
     background-color: transparent;
     border: none;
     outline: none;
     color: var(--grey-700);
   }
+}
+
+.inputPicker {
+  width: 100%;
+  padding: unset;
+  background-color: transparent;
+  border:none;
 }
 
 .inputDefault {

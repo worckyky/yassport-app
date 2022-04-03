@@ -11,6 +11,7 @@ type IBtnProps = {
     size?: 'normal' | 'big'
     width?: 'default' | 'full'
     extraStyles?: string
+    btnType?: 'button' | 'submit'
 }
 
 const Button: React.FC<IBtnProps> = (
@@ -21,6 +22,7 @@ const Button: React.FC<IBtnProps> = (
             size= 'normal',
             width = 'default',
             extraStyles,
+            btnType= 'button'
         }
     ) => {
 
@@ -37,7 +39,7 @@ const Button: React.FC<IBtnProps> = (
     }
 
     return (
-        <button className={cn(s.btn, mapStyles(), extraStyles)} onClick={onClick}>{children}</button>
+        <button type={btnType} className={cn(s.btn, mapStyles(), extraStyles)} onClick={onClick}>{children}</button>
     )
 }
 

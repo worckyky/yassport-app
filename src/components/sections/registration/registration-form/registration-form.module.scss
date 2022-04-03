@@ -1,0 +1,58 @@
+@import "styles/font-styles";
+
+.registrationForm {
+  display: flex;
+  gap: var(--spacer-24);
+  flex-direction: column;
+}
+
+.registrationFormContainer {
+  width: 100%;
+  padding: var(--spacer-24);
+}
+
+.registrationInputBlock {
+  display: flex;
+  gap: var(--spacer-24);
+  margin-bottom: var(--spacer-32);
+}
+.registrationInputPicker, .registrationInputGender {
+  flex: 1;
+}
+
+.mainExplore {
+  margin-right: var(--spacer-4);
+}
+
+.registrationFormBtnContainer {
+  display: flex;
+  align-items: center;
+}
+
+.registrationFormRules {
+  margin-left: var(--spacer-16);
+  max-width: 380px;
+}
+.registrationFormRulesText {
+  color: var(--grey-700);
+}
+
+.registrationFormErrorsBlock {
+  height: 60px;
+}
+.registrationFormLogin {
+  padding: var(--spacer-24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--grey-400);
+  min-height: 80px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.registrationFormLoginClick {
+  color: var(--accent-first);
+  margin-left: var(--spacer-16);
+  cursor: pointer;
+}

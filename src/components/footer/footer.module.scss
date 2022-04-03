@@ -1,6 +1,7 @@
 @import "styles/media";
 
 .footer {
+  border-top: 1px solid var(--grey-500);
   min-height: 100px;
   padding: var(--spacer-16) 0;
   display: flex;
