@@ -106,7 +106,10 @@ var medalSlice = __webpack_require__(4289);
 var resultsSlice = __webpack_require__(8240);
 // EXTERNAL MODULE: ./src/store/slice/protocolSlice.ts
 var protocolSlice = __webpack_require__(7749);
+// EXTERNAL MODULE: ./src/store/slice/loginSlice.ts
+var loginSlice = __webpack_require__(4234);
 ;// CONCATENATED MODULE: ./src/store/store.ts
+
 
 
 
@@ -119,7 +122,8 @@ const store = (0,toolkit_.configureStore)({
         kanyeQuote: slice_kanyeSlice,
         medal: medalSlice/* default */.ZP,
         results: resultsSlice/* default */.ZP,
-        protocol: protocolSlice/* default */.ZP
+        protocol: protocolSlice/* default */.ZP,
+        loginModal: loginSlice/* default */.ZP
     }
 });
 
@@ -140,6 +144,43 @@ function MyApp({ Component , pageProps  }) {
     });
 }
 /* harmony default export */ const _app = (MyApp);
+
+
+/***/ }),
+
+/***/ 4234:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "h7": () => (/* binding */ openModal),
+/* harmony export */   "Mr": () => (/* binding */ closeModal),
+/* harmony export */   "Eu": () => (/* binding */ selectOnOpen),
+/* harmony export */   "ZP": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* unused harmony export loginSlice */
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5184);
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__);
+
+const initialState = {
+    onOpen: false
+};
+const loginSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
+    name: 'protocol',
+    initialState,
+    reducers: {
+        openModal: (state)=>{
+            state.onOpen = true;
+        },
+        closeModal: (state)=>{
+            state.onOpen = false;
+        }
+    }
+});
+const { openModal , closeModal ,  } = loginSlice.actions;
+const selectOnOpen = (state)=>state.loginModal.onOpen
+;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loginSlice.reducer);
 
 
 /***/ }),
