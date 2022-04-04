@@ -1,12 +1,12 @@
-
 import s from './input.module.scss'
-import React, {LegacyRef, useRef, useState} from "react";
+import React, {LegacyRef, useEffect, useRef, useState} from "react";
 import classnames from 'classnames'
 import {DatePicker} from "antd";
 import AppIconCalendar from "../app-icons/app-icon-calendar";
 import AppIconEye from "../app-icons/app-icon-eye";
 import {useFormikContext} from "formik";
 import AppIconSmallRequired from "../app-icons/small/app-iconSmall-required";
+
 const cn = classnames.bind(s);
 
 
@@ -20,7 +20,9 @@ type EInputType = {
     icon?: JSX.Element
     type?: string
     field?: any
-    required?: boolean
+    required?: boolean,
+    error?: ''
+    touched?: boolean
 }
 
 const Input: React.FC<EInputType> = (
@@ -34,9 +36,11 @@ const Input: React.FC<EInputType> = (
         width = 'default',
         type = 'text',
         icon,
-        required= false,
+        required = false,
+        error,
+        touched,
         ...props
-        }
+    }
 ) => {
 
     const [data, setData] = useState(value)
@@ -46,7 +50,7 @@ const Input: React.FC<EInputType> = (
 
     const formikContext = useFormikContext();
 
-    const changeData = (e : string) => {
+    const changeData = (e: string) => {
         setData(e)
         if (onChange) {
             onChange(e)
@@ -63,7 +67,7 @@ const Input: React.FC<EInputType> = (
         inputRef.current?.focus()
     }
 
-    const onChangeDate = (selectedTime: any, value: any ) => {
+    const onChangeDate = (selectedTime: any, value: any) => {
         formikContext && formikContext.setFieldValue(field.name, value)
 
         if (onChange) {
@@ -91,7 +95,7 @@ const Input: React.FC<EInputType> = (
                 name={name}
                 value={data}
                 required={required}
-                onChange={(e)=> changeData(e.target.value)}
+                onChange={(e) => changeData(e.target.value)}
                 placeholder={placeHolder}
                 {...field}
                 {...props}
@@ -105,16 +109,20 @@ const Input: React.FC<EInputType> = (
             return <AppIconEye hide={showPass} onClick={() => setOnShowPass((state) => !state)}/>
         } else {
             return (
-                <>
+                <span style={{width: 24, height: 24}}>
                     {icon}
-                </>
+                </span>
             )
         }
     }
 
 
     return (
-        <div className={cn(s.input, mapStyles(), extraStyles)} onClick={onAreaClick}>
+        <div className={cn(s.input, mapStyles(), {
+            [s.inputError]: error && touched
+                }, extraStyles)
+            }
+            onClick={onAreaClick}>
             {required && <div className={s.inputRequired}><AppIconSmallRequired/></div>}
             {changeOnDatePicker()}
             {changeOnPassWord()}

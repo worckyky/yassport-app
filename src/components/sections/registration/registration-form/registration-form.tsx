@@ -2,7 +2,7 @@ import s from './registration-form.module.scss'
 import classnames from 'classnames'
 
 import React from "react";
-import {Formik, Field} from 'formik';
+import {Formik, Field, FormikErrors} from 'formik';
 
 import Input from "../../../input/input";
 import {DatePicker} from "antd";
@@ -12,6 +12,9 @@ import Button from "../../../button/button";
 import AppIconEmail from "../../../app-icons/app-icon-email";
 import Link from "../../../link/link";
 import stringCombiner from "../../../../helpers/stringCombiner";
+import * as yup from 'yup'
+import {useAppDispatch} from "../../../../store/hooks";
+import {openModal} from "../../../../store/slice/loginSlice";
 
 const cn = classnames.bind(s);
 
@@ -31,6 +34,20 @@ type IFormValuesType = {
 }
 
 const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
+
+    const dispatch = useAppDispatch()
+
+    const validationSchema = yup.object().shape({
+        firstName: yup.string().required('First name is required'),
+        lastName: yup.string().required('Last name is required'),
+        email: yup.string().email('Email must be valid').required('Email is required'),
+        password: yup
+            .string()
+            .required("Please enter your password")
+            .min(8, 'Password is too short - should be 8 chars minimum.'),
+        checkPassword: yup.string().oneOf([], "Password doesn't match")
+    })
+
 
     const initialValues: IFormValuesType = {
         firstName: '',
@@ -57,25 +74,16 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
         <div className={cn(s.registrationForm, extraStyles)}>
             <Formik
                 initialValues={initialValues}
-                // validate={values => {
-                //     const errors: { email: string } = {
-                //         email: '',
-                //     };
-                //     if (!values.email) {
-                //         errors.email = 'Required';
-                //     } else if (
-                //         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                //     ) {
-                //         errors.email = 'Invalid email address';
-                //     }
-                //     return errors;
-                // }}
+                validateOnBlur={true}
+                validateOnChange={false}
+                validationSchema={validationSchema}
                 onSubmit={(values, {setSubmitting}) => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
                         setSubmitting(false);
                     }, 400);
-                }}
+                }
+            }
             >
                 {({
                       values,
@@ -88,18 +96,22 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                       ...field
                       /* and other goodies */
                   }) => (
-                    <form onSubmit={handleSubmit} className={s.registrationFormContainer}>
+                    <form onSubmit={handleSubmit} className={s.registrationFormContainer} >
                         <div className={s.registrationInputBlock}>
                             <Field placeholder={'First name'}
                                    name='firstName'
                                    type='text'
                                    width='full'
+                                   error={errors.firstName}
+                                   touched={touched.firstName}
                                    required={true}
                                    component={Input}/>
                             <Field placeholder={'Last name'}
                                    name='lastName'
                                    type='text'
                                    width='full'
+                                   error={errors.lastName}
+                                   touched={touched.lastName}
                                    required={true}
                                    component={Input}/>
                         </div>
@@ -120,6 +132,8 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                             <Field icon={<AppIconEmail/>}
                                    required={true}
                                    placeholder={'Email'}
+                                   error={errors.email}
+                                   touched={errors.email}
                                    name='email'
                                    type='text'
                                    width='full'
@@ -130,19 +144,26 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                                    required={true}
                                    name='password'
                                    type='password'
+                                   error={errors.password}
+                                   touched={errors.password}
                                    width='full'
                                    component={Input}/>
                             <Field placeholder={'Repeat password'}
                                    required={true}
                                    name='checkPassword'
                                    type='password'
+                                   error={errors.checkPassword}
+                                   touched={errors.checkPassword}
                                    width='full'
                                    component={Input}/>
                         </div>
                         <div className={s.registrationFormErrorsBlock}>
-
+                            {errors.firstName && <span>{touched.firstName && errors.firstName}</span>}
+                            {errors.lastName && <span>{touched.lastName && errors.lastName}</span>}
+                            {errors.email && <span>{touched.email && errors.email}</span>}
+                            {errors.password && <span>{touched.password && errors.password}</span>}
+                            {errors.checkPassword && <span>{touched.checkPassword && errors.checkPassword}</span>}
                         </div>
-                        {errors.password && touched.password && errors.password}
                         <div className={s.registrationFormBtnContainer}>
                             <Button btnType='submit'
                                     type='field-primary'
@@ -165,7 +186,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                 )}
             </Formik>
             <div className={s.registrationFormLogin}>
-                Already have an account? <span className={s.registrationFormLoginClick}>Sign in</span>
+                Already have an account? <span onClick={() => dispatch(openModal())} className={s.registrationFormLoginClick}>Sign in</span>
             </div>
 
         </div>

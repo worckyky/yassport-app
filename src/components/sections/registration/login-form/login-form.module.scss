@@ -1,0 +1,68 @@
+@import "styles/font-styles";
+@import "styles/media";
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacer-32);
+  @media (max-width: $tablet) {
+    padding: var(--spacer-16);
+  }
+}
+
+
+.loginFormTitle {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacer-24);
+  h2 {
+    @include font-500();
+  }
+  span {
+    margin-right: var(--spacer-16);
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+  }
+}
+
+.loginFormContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-24);
+  margin-bottom: var(--spacer-24);
+}
+
+.loginButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  grid-gap: var(--spacer-16);
+}
+
+.loginFormFooter {
+  display: flex;
+  justify-content: space-between;
+}
+.loginFormFooterRegister, .loginFormFooterForgot {
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 30px;
+}
+
+.loginFormFooterRegister {
+  color: var(--accent-first);
+}
+.loginFormErrors {
+  min-height: 20px;
+  margin-bottom: var(--spacer-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacer-8);
+  span {
+    font-size: 12px;
+    line-height: 14px;
+    color: var(--danger);
+  }
+
+}

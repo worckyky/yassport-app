@@ -8,6 +8,7 @@ import kanyeReducer from "./slice/kanyeSlice";
 import medalReducer from "./slice/medalSlice";
 import resultsReducer from "./slice/resultsSlice";
 import protocolReducer from "./slice/protocolSlice";
+import loginReducer from "./slice/loginSlice";
 
 export const store = configureStore({
     reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
         medal: medalReducer,
         results: resultsReducer,
         protocol: protocolReducer,
+        loginModal: loginReducer,
     },
 });
 

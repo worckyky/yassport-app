@@ -38,6 +38,11 @@ h1, h2, h3{
   padding: unset;
   border-radius: var(--radius-8);
 }
+.ant-modal-close-x {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .ant-picker-input>input {
   &::placeholder {
