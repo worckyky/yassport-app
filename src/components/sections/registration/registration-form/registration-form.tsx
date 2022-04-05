@@ -45,7 +45,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
             .string()
             .required("Please enter your password")
             .min(8, 'Password is too short - should be 8 chars minimum.'),
-        checkPassword: yup.string().oneOf([], "Password doesn't match")
+        checkPassword: yup.string().oneOf([yup.ref('password'), null], "Password doesn't match")
     })
 
 
