@@ -6,7 +6,7 @@ import {selectColumns, selectResults} from "../../../../store/slice/resultsSlice
 import Input from "../../../input/input";
 import AppIconSearch from "../../../app-icons/app-icon-search";
 import {useRouter} from "next/router";
-import {Formik} from "formik"
+import Link from 'next/link'
 
 
 const ResultsTable = () => {
@@ -24,16 +24,14 @@ const ResultsTable = () => {
             width: 70,
             fixed: 'right',
             render: (id: string) => (
-                <span className={s.resultsTableMore} onClick={()=> onSeeResult(id)}>More</span>
+                <Link href={`/protocol/${[id]}`}>
+                    <a>
+                        <span className={s.resultsTableMore}>More</span>
+                    </a>
+                </Link>
             ),
         }]
     }
-
-    const onSeeResult = (id: string): void => {
-        router.push(`/protocol/${[id]}`)
-    }
-
-
 
     const emptyStateGuard = () => {
         if (!results) {

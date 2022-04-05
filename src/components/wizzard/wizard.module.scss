@@ -1,0 +1,28 @@
+
+.wizard {
+  border-radius: var(--radius-8);
+  overflow: hidden;
+  border: 1px solid var(--grey-400);
+  box-shadow: var(--shadow-main);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.wizardItem {
+  background-color: var(--white);
+  padding: var(--spacer-24) var(--spacer-32);
+  cursor: pointer;
+  color: var(--grey-700);
+  &:not(&:last-child) {
+    border-bottom: 1px solid var(--grey-400);
+  }
+}
+
+.wizardItemActive {
+  background-color: rgba(221, 190, 144, 0.2);
+  color: var(--grey-900);
+  &:not(&:last-child) {
+    border-bottom: 1px solid #DDBE90;
+  }
+}

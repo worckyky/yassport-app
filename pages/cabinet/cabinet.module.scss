@@ -1,0 +1,20 @@
+@import "styles/font-styles";
+
+.cabinet {
+  display: grid;
+  grid-template-columns: repeat(12,1fr);
+  margin-top: var(--spacer-32);
+}
+
+.cabinetTitle {
+  margin-top: var(--spacer-32);
+  @include font-500();
+}
+
+.cabinetWizard {
+  grid-column: 1 / 4;
+}
+
+.cabinetContent {
+  grid-column: 5 / 13;
+}

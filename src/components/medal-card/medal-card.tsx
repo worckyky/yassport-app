@@ -10,6 +10,7 @@ import AppIconSmallFlash from "../app-icons/small/app-iconSmall-flash";
 import Button from "../button/button";
 import AppIconArrowBtnLong from "../app-icons/app-icon-arrowBtnLong";
 import {useRouter} from "next/router";
+import Link from 'next/link'
 
 const cn = classnames.bind(s);
 
@@ -73,9 +74,13 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal}) => {
                 })}
             </div>
             <div className={s.bottomsBlock}>
-                <Button type='outline-primary' size='normal' width='full' onClick={seeMedal}>
-                    See <AppIconArrowBtnLong/>
-                </Button>
+                <Link href={`/medal/${[medal.id]}`}>
+                    <a target="_blank" rel="noreferrer">
+                        <Button type='outline-primary' size='normal' width='full'>
+                            See <AppIconArrowBtnLong/>
+                        </Button>
+                    </a>
+                </Link>
             </div>
         </div>
     )

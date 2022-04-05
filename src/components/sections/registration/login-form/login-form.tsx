@@ -192,7 +192,7 @@ const LoginForm = () => {
             {changeForm()}
             <div className={s.loginFormFooter}>
                 <span className={s.loginFormFooterForgot} onClick={() => onForgotForm('login')}>Forgot password?</span>
-                <span className={s.loginFormFooterRegister} onClick={handleOnRegister}>Register</span>
+                <span className={s.loginFormFooterRegister} onClick={handleOnRegister}>Sign up</span>
             </div>
         </div>
     )
