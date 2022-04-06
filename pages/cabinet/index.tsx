@@ -5,6 +5,7 @@ import GoBack from "../../src/components/go-back/go-back";
 import s from "./cabinet.module.scss"
 import Wizard from "../../src/components/wizzard/wizard";
 import CabinetContainer from "../../src/components/sections/cabinet/cabinet-container/cabinet-container";
+import Footer from "../../src/components/footer/footer"
 
 export enum ESectionType {
     REWARDS = 'Rewards',
@@ -26,6 +27,7 @@ const Cabinet: NextPage = () => {
                                 extraStyles={s.cabinetWizard}/>
                         <CabinetContainer extraStyles={s.cabinetContent}/>
                     </div>
+                    <Footer/>
                 </>
             </PageLayout>
         </div>

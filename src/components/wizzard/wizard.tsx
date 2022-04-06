@@ -5,6 +5,7 @@ const cn = classnames.bind(s);
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import {useRouter} from "next/router";
+import {ESectionType} from "../../../pages/cabinet";
 
 type IWizardPropsType = {
     extraStyles?: string
@@ -20,7 +21,9 @@ const Wizard:React.FC<IWizardPropsType> = ({sections, extraStyles, pageURL}) => 
     const [selectTab, setSelectTab] = useState('');
 
     useEffect(() => {
-        tab && setSelectTab(tab as string)
+        tab ? setSelectTab(tab as string) : router.push({
+            query: { tab: sections[0] },
+        })
     },[tab])
 
 

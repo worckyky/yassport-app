@@ -19,7 +19,7 @@ const CabinetContainer: React.FC<ICabinetContainerType> = ({extraStyles}) => {
     const {tab} = router.query
 
     useEffect(() => {
-        tab && selectContainer(tab as string)
+        selectContainer(tab as string)
     }, [tab])
 
     const returnContainer = () => {

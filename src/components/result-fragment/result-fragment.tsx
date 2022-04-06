@@ -9,7 +9,8 @@ type IResultFragmentProps = {
     value: string,
     children?: JSX.Element,
     imageBefore?: JSX.Element,
-    resize?: 'card' | 'page'
+    resize?: 'card' | 'page',
+    extraStyles?: string
 }
 
 const ResultFragment: React.FC<IResultFragmentProps> = (
@@ -18,7 +19,8 @@ const ResultFragment: React.FC<IResultFragmentProps> = (
         value,
         children,
         resize = 'card',
-        imageBefore
+        imageBefore,
+        extraStyles
     }
 ) => {
 
@@ -26,13 +28,14 @@ const ResultFragment: React.FC<IResultFragmentProps> = (
     return (
         <div className={cn(s.medalContainerPadding,{
             [s.imageBefore]: imageBefore
-        })}>
+        }, extraStyles)}>
             {imageBefore}
             <div className={cn(s.medalFragment, {
                 [s.imageBeforeFragment]: imageBefore
             })}>
                 <span className={cn(s.medalFragmentName, {
-                    [s.medalNamePage]: resize === 'page'
+                    [s.medalNamePage]: resize === 'page',
+                    [s.medalHasChild]: children
                 })}>
                     {children}
                     <span>

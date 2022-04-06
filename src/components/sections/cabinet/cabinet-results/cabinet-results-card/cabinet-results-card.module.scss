@@ -1,0 +1,68 @@
+@import "styles/font-styles";
+
+
+.medalImage {
+  border-radius: var(--radius-8);
+  box-shadow: var(--shadow-main);
+  overflow: hidden;
+  height: 300px;
+  padding-bottom: var(--spacer-16);
+  width: 100%;
+  position: relative;
+  img {
+    width: 100%;
+    height: inherit;
+    object-fit: cover;
+  }
+}
+
+
+.medalResizerPosition {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+}
+
+.medalImageButton {
+  margin-top: var(--spacer-24);
+  justify-content: center;
+  grid-gap: var(--spacer-16);
+}
+
+.medalContentContainer {
+  padding: var(--spacer-16);
+  margin-top: var(--spacer-16);
+  border-radius: var(--radius-8);
+  box-shadow: var(--shadow-main);
+  border: 1px solid var(--white);
+  background-color: var(--white);
+}
+.medalContentContainerTitle {
+  @include font-small-100();
+  font-size: 20px;
+  min-height: 72px;
+  line-height: 28px;
+  margin: var(--spacer-24) 0 ;
+}
+
+.protocolFragments {
+  border-radius: var(--radius-8);
+  border: 1px solid var(--grey-400);
+  display: grid;
+  grid-gap: var(--spacer-16);
+  grid-template-columns: repeat( auto-fit, minmax(120px, 1fr) );
+  padding: var(--spacer-24);
+}
+
+.protocolResults {
+  margin-top: var(--spacer-24);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: grid;
+  grid-gap: 16px;
+}
+
+.protocolFragmentImg {
+  width: 48px;
+  height: 48px;
+}

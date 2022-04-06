@@ -1,0 +1,14 @@
+@import "styles/media";
+
+.cabinetResults {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 24px;
+}
+
+.cabinetResults {
+  @media (max-width:$tablet) {
+    display: flex;
+    flex-direction: column;
+  }
+}

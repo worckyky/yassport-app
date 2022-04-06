@@ -19,10 +19,16 @@
   display: flex;
   align-items: center;
   span {
-    margin-left: var(--spacer-4);
+
     &::first-letter {
       text-transform:capitalize;
     }
+  }
+}
+
+.medalHasChild {
+  span {
+    margin-left: var(--spacer-4);
   }
 }
 

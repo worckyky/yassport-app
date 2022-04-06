@@ -1,9 +1,16 @@
 @import "styles/font-styles";
+@import "styles/media";
 
 .cabinet {
   display: grid;
   grid-template-columns: repeat(12,1fr);
   margin-top: var(--spacer-32);
+  grid-gap: 24px;
+  margin-bottom: var(--spacer-40);
+  @media (max-width: $desktop) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .cabinetTitle {
@@ -13,8 +20,9 @@
 
 .cabinetWizard {
   grid-column: 1 / 4;
+
 }
 
 .cabinetContent {
-  grid-column: 5 / 13;
+  grid-column: 4 / 13;
 }
