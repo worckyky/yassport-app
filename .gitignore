@@ -5,15 +5,11 @@
 /.pnp
 .pnp.js
 
-/.idea
-/package.json
-/yarn.lock
-
 # testing
 /coverage
 
 # next.js
-/.next/*
+/.next/
 /out/
 
 # production
