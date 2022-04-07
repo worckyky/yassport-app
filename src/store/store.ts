@@ -10,6 +10,7 @@ import resultsReducer from "./slice/resultsSlice";
 import protocolReducer from "./slice/protocolSlice";
 import loginReducer from "./slice/loginSlice";
 import cabinetReducer from "./slice/cabinetSlice";
+import newMedalsReducer from "./slice/newMedalsSlice";
 
 export const store = configureStore({
     reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
         results: resultsReducer,
         protocol: protocolReducer,
         loginModal: loginReducer,
-        cabinet: cabinetReducer
+        cabinet: cabinetReducer,
+        newMedals: newMedalsReducer
     },
 });
 
