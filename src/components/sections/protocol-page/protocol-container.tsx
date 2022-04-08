@@ -14,13 +14,15 @@ import Button from "../../button/button";
 import {selectProtocol} from "../../../store/slice/protocolSlice";
 import {Table} from "antd";
 import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
+import AppComponentPreloader from "../../app-component-preloader/app-component-preloader";
 
 
 type IProtocolContainerType = {
-    id: string
+    id: string,
+    pending?: boolean
 }
 
-const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
+const ProtocolContainer: React.FC<IProtocolContainerType> = ({id,pending}) => {
 
     const dispatch = useAppDispatch();
     const {protocol} = useAppSelector(selectProtocol);
@@ -62,68 +64,83 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
         }
     }
 
+    const fetchData = (reactComponent: JSX.Element, style?:string ) : JSX.Element => {
+        if (pending) {
+            return <AppComponentPreloader extraStyles={style}/>
+        } else  {
+            return reactComponent;
+        }
+    }
 
 
     return (
         <div className={s.protocolPage}>
-            <div className={s.protocolImage}>
-                <img src={protocol.medal?.img} alt=""/>
-                <Resizer img={protocol.medal?.img} extraStyles={s.protocolResizerPosition}/>
-                {condition &&  <Resizer img={protocol.medal?.img} extraStyles={s.protocolGoBack} onGoBack={true}/>}
-            </div>
-            <div className={s.protocolContent}>
-                <div className={s.protocolBlock}>
-                    <div className={s.protocolFragments}>
-                        {content.map((elem, i) => {
-                            return (<ResultFragment name={elem[0]} value={elem[1]} key={i} resize='page'>
-                                {setMedal(elem[0])}
-                            </ResultFragment>)
-                        })}
+            {fetchData(
+                <div className={s.protocolImage}>
+                    <img src={protocol.medal?.img} alt=""/>
+                    <Resizer img={protocol.medal?.img} extraStyles={s.protocolResizerPosition}/>
+                    {condition &&  <Resizer img={protocol.medal?.img} extraStyles={s.protocolGoBack} onGoBack={true}/>}
+                </div>,
+                s.protocolImageLoader
+            )}
+            {fetchData(
+                <div className={s.protocolContent}>
+                    <div className={s.protocolBlock}>
+                        <div className={s.protocolFragments}>
+                            {content.map((elem, i) => {
+                                return (<ResultFragment name={elem[0]} value={elem[1]} key={i} resize='page'>
+                                    {setMedal(elem[0])}
+                                </ResultFragment>)
+                            })}
+                        </div>
+                        <div className={s.protocolInformation}>
+                            <div className={s.protocolUser}>
+                                <h1 className={s.protocolTitle}>{protocol.result.name}</h1>
+                                <img className={s.protocolAvatar} src={protocol.result.avatar} alt=""/>
+                            </div>
+                            <div className={s.protocolResults}>
+                                <ResultFragment
+                                    name={'Start number'}
+                                    imageBefore={
+                                        <img className={s.protocolFragmentImg} src="/img/protocol/protocol-startNumber.png" />
+                                    }
+                                    resize='page'
+                                    value={protocol.result.startNumber}/>
+                                <ResultFragment
+                                    name={'Result'}
+                                    imageBefore={
+                                        <img className={s.protocolFragmentImg} src="/img/protocol/protocol-result.png" />
+                                    }
+                                    resize='page'
+                                    value={protocol.result.result}/>
+                                <ResultFragment
+                                    name={'Place'}
+                                    imageBefore={
+                                        <img className={s.protocolFragmentImg} src="/img/protocol/protocol-place.png" />
+                                    }
+                                    resize='page'
+                                    value={`#${protocol.result.place}`}/>
+                            </div>
+                            <div className={s.protocolButtonContainer}>
+                                <Button size='big' type='field-primary'>Add result</Button>
+                            </div>
+                        </div>
                     </div>
-                    <div className={s.protocolInformation}>
-                        <div className={s.protocolUser}>
-                            <h1 className={s.protocolTitle}>{protocol.result.name}</h1>
-                            <img className={s.protocolAvatar} src={protocol.result.avatar} alt=""/>
-                        </div>
-                        <div className={s.protocolResults}>
-                            <ResultFragment
-                                name={'Start number'}
-                                imageBefore={
-                                    <img className={s.protocolFragmentImg} src="/img/protocol/protocol-startNumber.png" />
-                                }
-                                resize='page'
-                                value={protocol.result.startNumber}/>
-                            <ResultFragment
-                                name={'Result'}
-                                imageBefore={
-                                    <img className={s.protocolFragmentImg} src="/img/protocol/protocol-result.png" />
-                                }
-                                resize='page'
-                                value={protocol.result.result}/>
-                            <ResultFragment
-                                name={'Place'}
-                                imageBefore={
-                                    <img className={s.protocolFragmentImg} src="/img/protocol/protocol-place.png" />
-                                }
-                                resize='page'
-                                value={`#${protocol.result.place}`}/>
-                        </div>
-                        <div className={s.protocolButtonContainer}>
-                            <Button size='big' type='field-primary'>Add result</Button>
-                        </div>
+                    <div className={s.protocolCheckPoints}>
+                        <h2 className={s.protocolCheckPointsTitle}>
+                            Checkpoints
+                        </h2>
+                        <Table
+                            dataSource={protocol.protocol}
+                            bordered
+                            columns={protocol.columns}
+                            pagination={false}/>
                     </div>
-                </div>
-                <div className={s.protocolCheckPoints}>
-                    <h2 className={s.protocolCheckPointsTitle}>
-                        Checkpoints
-                    </h2>
-                    <Table
-                        dataSource={protocol.protocol}
-                        bordered
-                        columns={protocol.columns}
-                        pagination={false}/>
-                </div>
-            </div>
+                </div>,
+                s.protocolContentLoader
+            )}
+
+
         </div>
     )
 }

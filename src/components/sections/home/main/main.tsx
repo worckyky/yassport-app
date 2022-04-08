@@ -4,6 +4,7 @@ import AppIconArrowBtn from "../../../app-icons/app-icon-arrowBtn";
 import AppAnimatedLogo from "../../../app-icons/logo/app-animated-logo/app-animated-logo";
 import {EDeviceType, useWindowSize} from "../../../../helpers/device-helper";
 import {useRouter} from "next/router";
+import AppComponentPreloader from "../../../app-component-preloader/app-component-preloader";
 
 const Main = () => {
     const device = useWindowSize()

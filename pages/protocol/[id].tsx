@@ -5,6 +5,9 @@ import Footer from "../../src/components/footer/footer"
 import {useRouter} from "next/router";
 import ProtocolContainer from "../../src/components/sections/protocol-page/protocol-container";
 import {EDeviceType, useWindowSize} from "../../src/helpers/device-helper";
+import AppComponentPreloader from "../../src/components/app-component-preloader/app-component-preloader";
+import React from "react";
+
 
 const ResultPage = () => {
 

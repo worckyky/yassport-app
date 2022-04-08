@@ -38,7 +38,16 @@
     position: relative;
     top: unset;
   }
+}
 
+.protocolImageLoader {
+  grid-column: 1 / 5;
+  @media (max-width: $desktop) {
+    grid-column: 1 / 7;
+    grid-row: 1;
+    position: relative;
+    top: unset;
+  }
 }
 
 .protocolResizerPosition, .protocolGoBack {
@@ -59,6 +68,17 @@
   padding: var(--spacer-32);
   background: var(--white);
   height: max-content;
+  @media (max-width: $desktop) {
+    grid-column: 1 / 7;
+    grid-row: 2;
+  }
+  @media (max-width: $tablet) {
+    padding: var(--spacer-16);
+  }
+}
+
+.protocolContentLoader {
+  grid-column: 5 / 13;
   @media (max-width: $desktop) {
     grid-column: 1 / 7;
     grid-row: 2;

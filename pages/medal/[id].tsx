@@ -22,7 +22,7 @@ const MedalPage = () => {
                 <>
                     <Header/>
                     {!condition && <GoBack/>}
-                    <MedalContainer id={id as string}/>
+                    <MedalContainer id={id as string} />
                 </>
             </PageLayout>
             <ResultsTable/>

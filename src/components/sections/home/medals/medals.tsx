@@ -37,7 +37,7 @@ const Medals = () => {
                     <div className={s.medalsContainer}>
                         {medals.map(medal => {
                             return (
-                                <MedalCard medal={medal} key={medal.id}/>
+                                <MedalCard medal={medal} key={medal.id} pending={false}/>
                             )
                         })}
                     </div>

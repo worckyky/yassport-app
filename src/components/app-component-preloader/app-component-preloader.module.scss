@@ -1,0 +1,11 @@
+.preloader {
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+  border: 1px solid var(--grey-400);
+  box-shadow: var(--shadow-main);
+  border-radius: var(--radius-8w);
+}

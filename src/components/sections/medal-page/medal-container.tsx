@@ -13,13 +13,15 @@ import {EMedalType} from "../../../enums/medal-type";
 import ResultFragment from "../../result-fragment/result-fragment";
 import Button from "../../button/button";
 import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
+import AppComponentPreloader from "../../app-component-preloader/app-component-preloader";
 
 
 type IMedalContainerType = {
-    id: string
+    id: string,
+    pending?: boolean
 }
 
-const MedalContainer: React.FC<IMedalContainerType> = ({id}) => {
+const MedalContainer: React.FC<IMedalContainerType> = ({id, pending}) => {
 
     const dispatch = useAppDispatch();
     const medal = useAppSelector(selectMedalById);
@@ -61,29 +63,43 @@ const MedalContainer: React.FC<IMedalContainerType> = ({id}) => {
         }
     }
 
+    const fetchData = (reactComponent: JSX.Element, style?:string ) : JSX.Element => {
+        if (pending) {
+            return <AppComponentPreloader extraStyles={style}/>
+        } else  {
+            return reactComponent;
+        }
+    }
 
 
     return (
         <div className={s.medalPage}>
-            <div className={s.medalImage}>
-                <img src={medal?.img} alt=""/>
-                <Resizer img={medal?.img} extraStyles={s.medalResizerPosition}/>
-                {condition && <Resizer img={medal?.img} extraStyles={s.medalGoBack} onGoBack={true}/>}
-            </div>
-            <div className={s.medalContent}>
-                <span className={s.medalId}>#{medal?.id}</span>
-                <h1 className={s.medalTitle}>{medal?.name}</h1>
-                <div className={s.medalFragments}>
-                    {content.map((elem, i) => {
-                        return (<ResultFragment name={elem[0]} value={elem[1]} key={i} resize='page'>
-                            {setMedal(elem[0])}
-                        </ResultFragment>)
-                    })}
-                </div>
-                <div className={s.medalButtonContainer}>
-                    <Button size='big' type='field-primary'>Add result</Button>
-                </div>
-            </div>
+            {fetchData(
+                <div className={s.medalImage}>
+                    <img src={medal?.img} alt=""/>
+                    <Resizer img={medal?.img} extraStyles={s.medalResizerPosition}/>
+                    {condition && <Resizer img={medal?.img} extraStyles={s.medalGoBack} onGoBack={true}/>}
+                </div>,
+                s.medalImageLoader
+            )}
+            {fetchData(
+                <div className={s.medalContent}>
+                    <span className={s.medalId}>#{medal?.id}</span>
+                    <h1 className={s.medalTitle}>{medal?.name}</h1>
+                    <div className={s.medalFragments}>
+                        {content.map((elem, i) => {
+                            return (<ResultFragment name={elem[0]} value={elem[1]} key={i} resize='page'>
+                                {setMedal(elem[0])}
+                            </ResultFragment>)
+                        })}
+                    </div>
+                    <div className={s.medalButtonContainer}>
+                        <Button size='big' type='field-primary'>Add result</Button>
+                    </div>
+                </div>,
+                s.medalContentLoader
+            )}
+
         </div>
     )
 }
