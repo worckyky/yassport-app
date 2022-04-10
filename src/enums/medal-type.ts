@@ -1,16 +1,23 @@
 
+// TODO Получать нормальные типы
+
 export interface EMedalType {
-    name: string,
-    year: string,
-    distance: string,
-    type: string,
-    location: string,
     id: number,
-    img: string
+    medaltype_id: number
+    namestart: string,
+    datestart: string,
+    name: string,
+    country: string,
+    city: string
+    type?: string,
+    img?: string,
+    distantion: string,
 }
 
 
 export interface EResultsType {
+    overalltime: string
+    bib: string,
     id: number,
     place: number,
     startNumber: string,

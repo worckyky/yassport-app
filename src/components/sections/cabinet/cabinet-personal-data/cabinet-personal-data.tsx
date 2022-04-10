@@ -1,6 +1,6 @@
 import s from './cabinet-personal-data.module.scss'
 import {useAppSelector} from "../../../../store/hooks";
-import {selectMedals} from "../../../../store/slice/medalSlice";
+import {selectMedals} from "../../../../store/slice/medalsSlice";
 import {selectCabinetAccount} from "../../../../store/slice/cabinetSlice";
 import ResultFragment from "../../../result-fragment/result-fragment";
 

@@ -1,11 +1,11 @@
 import s from './registration-form.module.scss'
 import classnames from 'classnames'
 
-import React from "react";
+import React, {useState} from "react";
 import {Formik, Field, FormikErrors} from 'formik';
 
 import Input from "../../../input/input";
-import {DatePicker} from "antd";
+import {DatePicker, Modal} from "antd";
 import RadioButtons, {IRadioType} from "../../../radio-buttons/radio-buttons";
 import AppIconArrowBtn from "../../../app-icons/app-icon-arrowBtn";
 import Button from "../../../button/button";
@@ -13,8 +13,13 @@ import AppIconEmail from "../../../app-icons/app-icon-email";
 import Link from "../../../link/link";
 import stringCombiner from "../../../../helpers/stringCombiner";
 import * as yup from 'yup'
-import {useAppDispatch} from "../../../../store/hooks";
-import {openModal} from "../../../../store/slice/loginSlice";
+import {useAppDispatch, useAppSelector} from "../../../../store/hooks";
+import {closeModal, openModal} from "../../../../store/slice/loginSlice";
+import {authUser, IFormValuesType, selectRegistrationError} from "../../../../store/slice/authSlice";
+import AppIconCloseModalSmall from "../../../app-icons/app-icon-closeModalSmall";
+import LoginForm from "../login-form/login-form";
+import {EDeviceType, useWindowSize} from "../../../../helpers/device-helper";
+import {useRouter} from "next/router";
 
 const cn = classnames.bind(s);
 
@@ -23,19 +28,21 @@ type IRegistrationFormType = {
     extraStyles?: string
 }
 
-type IFormValuesType = {
-    firstName: string,
-    lastName: string,
-    birth: string,
-    gender: string,
-    email: string,
-    password: string,
-    checkPassword: string,
-}
+
 
 const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
 
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+    const device = useWindowSize();
+    const error = useAppSelector(selectRegistrationError);
+    const [visible, setVisible] = useState(false);
+    const condition = [EDeviceType.MOBILE, EDeviceType.TABLET].includes(device as EDeviceType)
+
+    const onSuccessClose = () => {
+        setVisible(false);
+        router.push('/');
+    }
 
     const validationSchema = yup.object().shape({
         firstName: yup.string().required('First name is required'),
@@ -78,10 +85,22 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                 validateOnChange={false}
                 validationSchema={validationSchema}
                 onSubmit={(values, {setSubmitting}) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
+                    const {birth,email,gender,lastName,password,firstName} = values
+                    dispatch(authUser({
+                        birth,
+                        email,
+                        gender,
+                        lastName,
+                        password,
+                        firstName
+                    })).then(() => {
                         setSubmitting(false);
-                    }, 400);
+                        if (error) {
+                            alert(error);
+                            return;
+                        }
+                        setVisible(true);
+                    }).catch(e => console.log(e))
                 }
             }
             >
@@ -93,6 +112,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                       handleBlur,
                       handleSubmit,
                       isSubmitting,
+                      dirty,
                       ...field
                       /* and other goodies */
                   }) => (
@@ -158,6 +178,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                                    component={Input}/>
                         </div>
                         <div className={s.registrationFormErrorsBlock}>
+                            {error && <span>{error}</span>}
                             {errors.firstName && <span>{touched.firstName && errors.firstName}</span>}
                             {errors.lastName && <span>{touched.lastName && errors.lastName}</span>}
                             {errors.email && <span>{touched.email && errors.email}</span>}
@@ -166,6 +187,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                         </div>
                         <div className={s.registrationFormBtnContainer}>
                             <Button btnType='submit'
+                                    disabled={isSubmitting}
                                     type='field-primary'
                                     size='big'>
                                 <span className={s.mainExplore}>Register</span><AppIconArrowBtn/>
@@ -188,6 +210,19 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
             <div className={s.registrationFormLogin}>
                 Already have an account? <span onClick={() => dispatch(openModal())} className={s.registrationFormLoginClick}>Sign in</span>
             </div>
+            <Modal
+                centered
+                visible={visible}
+                onCancel={() => onSuccessClose()}
+                width={condition ? '100%' : 400}
+                footer={null}
+                closeIcon={<AppIconCloseModalSmall/>}
+            >
+                <div className={s.registrationSuccess} >
+                    <img src="/img/rocket.png" alt="Success!"/>
+                    <h2>Success!</h2>
+                </div>
+            </Modal>
 
         </div>
     )

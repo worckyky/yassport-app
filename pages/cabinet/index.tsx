@@ -19,7 +19,7 @@ const Cabinet: NextPage = () => {
             <PageLayout>
                 <>
                     <Header/>
-                    <GoBack/>
+                    <GoBack home/>
                     <h1 className={s.cabinetTitle}>Your account</h1>
                     <div className={s.cabinet}>
                         <Wizard sections={[ESectionType.REWARDS, ESectionType.PERSONAL_INFORMATION]}

@@ -12,6 +12,7 @@ type IBtnProps = {
     width?: 'default' | 'full'
     extraStyles?: string
     btnType?: 'button' | 'submit'
+    disabled?: boolean
 }
 
 const Button: React.FC<IBtnProps> = (
@@ -22,7 +23,8 @@ const Button: React.FC<IBtnProps> = (
             size= 'normal',
             width = 'default',
             extraStyles,
-            btnType= 'button'
+            btnType= 'button',
+            disabled
         }
     ) => {
 
@@ -35,11 +37,12 @@ const Button: React.FC<IBtnProps> = (
             [s.btnNormal]: size === 'normal',
             [s.btnWidthDefault]: width === 'default',
             [s.btnWidthFull]: width === 'full',
+            [s.btnDisabled]: disabled
         }
     }
 
     return (
-        <button type={btnType} className={cn(s.btn, mapStyles(), extraStyles)} onClick={onClick}>{children}</button>
+        <button disabled={disabled} type={btnType} className={cn(s.btn, mapStyles(), extraStyles)} onClick={onClick}>{children}</button>
     )
 }
 

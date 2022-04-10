@@ -1,31 +1,39 @@
 import s from './medals.module.scss'
 import classnames from 'classnames'
 import PageLayout from "../../../pageLayout/PageLayout";
-import {EMedalType} from "../../../../enums/medal-type";
 import MedalCard from "../../../medal-card/medal-card";
 import Button from "../../../button/button";
 import {useAppDispatch, useAppSelector} from "../../../../store/hooks";
-import {selectMedals} from "../../../../store/slice/medalSlice";
-import {getMedals, selectNewMedals} from "../../../../store/slice/newMedalsSlice";
-import {useEffect} from "react";
+import {getMedals, selectMedals} from "../../../../store/slice/medalsSlice";
+import {useEffect, useState} from "react";
+import AppComponentPreloader from "../../../app-component-preloader/app-component-preloader";
+import {EMedalType} from "../../../../enums/medal-type";
 
 const cn = classnames.bind(s);
 
 const Medals = () => {
 
-    const medals = useAppSelector(selectMedals);
+    const [pageMedal, setPageMedal] = useState<EMedalType[]>([]);
     const dispatch = useAppDispatch();
 
     const {
-        data,
+        medals,
         error,
         pending
-    } = useAppSelector(selectNewMedals)
+    } = useAppSelector(selectMedals)
+
 
     useEffect(() => {
-        // dispatch(getMedals())
-        // console.log(data, error)
-    },[data, error])
+        dispatch(getMedals()).then(e => setPageMedal(e.payload))
+    },[])
+
+    const fetchData = (reactComponent: JSX.Element, style?:string ) : JSX.Element => {
+        if (pending) {
+            return <AppComponentPreloader extraStyles={style}/>
+        } else {
+            return reactComponent;
+        }
+    }
 
     return (
         <div className={s.medals}>
@@ -34,13 +42,17 @@ const Medals = () => {
                     <h2 className={s.medalsTitle}>
                         Medals
                     </h2>
-                    <div className={s.medalsContainer}>
-                        {medals.map(medal => {
-                            return (
-                                <MedalCard medal={medal} key={medal.id} pending={false}/>
-                            )
-                        })}
-                    </div>
+                    {fetchData(
+                        <div className={s.medalsContainer}>
+                            {pageMedal.map(medal => {
+                                return (
+                                    <MedalCard medal={medal} key={medal.id}/>
+                                )
+                            })}
+                        </div>,
+                        s.medalContainer
+                    )}
+
                     <Button type='outline-primary' size='big' extraStyles={s.medalsBtnMore}>See more</Button>
                 </>
             </PageLayout>

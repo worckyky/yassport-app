@@ -1,9 +1,7 @@
 
 import s from './medal-container.module.scss'
 import React, {useEffect, useState} from "react";
-import {useAppDispatch, useAppSelector} from "../../../store/hooks";
-import {selectMedalById} from "../../../store/slice/medalSlice";
-import {takeMedal} from "../../../store/slice/medalSlice";
+import {useAppSelector} from "../../../store/hooks";
 import Resizer from "../../resizer/resizer";
 import AppIconSmallCalendar from "../../app-icons/small/app-iconSmall-calendar";
 import AppIconSmallFlash from "../../app-icons/small/app-iconSmall-flash";
@@ -14,39 +12,47 @@ import ResultFragment from "../../result-fragment/result-fragment";
 import Button from "../../button/button";
 import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
 import AppComponentPreloader from "../../app-component-preloader/app-component-preloader";
+import {selectMedal} from "../../../store/slice/medalSlice";
+import moment from "moment";
 
 
-type IMedalContainerType = {
-    id: string,
-    pending?: boolean
-}
 
-const MedalContainer: React.FC<IMedalContainerType> = ({id, pending}) => {
 
-    const dispatch = useAppDispatch();
-    const medal = useAppSelector(selectMedalById);
-    const [content, setContent] = useState([])
+const MedalContainer = () => {
+
+    const [fragments, setFragments] = useState([])
     const device = useWindowSize()
+    const {
+        content,
+        error,
+        pending
+    } = useAppSelector(selectMedal)
+
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
 
-    useEffect(() =>{
-        dispatch(takeMedal(id))
-    },[id])
 
 
     useEffect(() => {
-        if (medal) {
-            const needContent = ['year', 'distance', 'location', 'type']
-            const initialContent = Object.keys(medal as EMedalType).reduce((acc, el) => {
-                if (needContent.includes(el)) {
+        const needContent = ['year', 'distantion', 'location', 'type']
+        const initialContent = Object.keys(content.medal).reduce((acc, el) => {
+            if (needContent.includes(el)) {
+                // @ts-ignore
+                let data = ''
+                if (el === 'datestart') {
+                    data = moment(content.medal[el]).format('YYYY-MM-DD')
+                } else {
                     // @ts-ignore
-                    acc.push([el, medal[el]])
+                    data = content.medal[el] as string
                 }
-                return acc
-            }, [])
-            setContent(initialContent)
-        }
-    }, [medal])
+                // @ts-ignore
+                acc.push([el, data])
+            }
+            return acc
+        }, [])
+        setFragments(initialContent)
+
+    }, [content.medal])
+
 
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
@@ -76,21 +82,23 @@ const MedalContainer: React.FC<IMedalContainerType> = ({id, pending}) => {
         <div className={s.medalPage}>
             {fetchData(
                 <div className={s.medalImage}>
-                    <img src={medal?.img} alt=""/>
-                    <Resizer img={medal?.img} extraStyles={s.medalResizerPosition}/>
-                    {condition && <Resizer img={medal?.img} extraStyles={s.medalGoBack} onGoBack={true}/>}
+                    {content.medal.img ? <img src={content.medal.img} alt={content.medal.name}/> : <img src="/img/empty-state.svg" alt="Empty state"/>}
+                    {content.medal.img && <Resizer img={content.medal.img} extraStyles={s.medalResizerPosition}/>}
+                    {condition && <Resizer img={content.medal.img} extraStyles={s.medalGoBack} onGoBack={true} location={''}/>}
                 </div>,
                 s.medalImageLoader
             )}
             {fetchData(
                 <div className={s.medalContent}>
-                    <span className={s.medalId}>#{medal?.id}</span>
-                    <h1 className={s.medalTitle}>{medal?.name}</h1>
+                    {content.medal.id && <span className={s.medalId}>#{content.medal.id}</span>}
+                    <h1 className={s.medalTitle}>{content.medal.name}</h1>
                     <div className={s.medalFragments}>
-                        {content.map((elem, i) => {
-                            return (<ResultFragment name={elem[0]} value={elem[1]} key={i} resize='page'>
-                                {setMedal(elem[0])}
-                            </ResultFragment>)
+                        {fragments.map((elem, i) => {
+                            if (elem[1]) {
+                                return (<ResultFragment name={elem[0]} value={elem[1]} key={i} resize='page'>
+                                    {setMedal(elem[0])}
+                                </ResultFragment>)
+                            }
                         })}
                     </div>
                     <div className={s.medalButtonContainer}>

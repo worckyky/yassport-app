@@ -2,7 +2,6 @@
 import s from './protocol-container.module.scss'
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
-import {takeMedal} from "../../../store/slice/medalSlice";
 import Resizer from "../../resizer/resizer";
 import AppIconSmallCalendar from "../../app-icons/small/app-iconSmall-calendar";
 import AppIconSmallFlash from "../../app-icons/small/app-iconSmall-flash";
@@ -15,39 +14,45 @@ import {selectProtocol} from "../../../store/slice/protocolSlice";
 import {Table} from "antd";
 import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
 import AppComponentPreloader from "../../app-component-preloader/app-component-preloader";
+import moment from "moment";
 
 
 type IProtocolContainerType = {
     id: string,
-    pending?: boolean
 }
 
-const ProtocolContainer: React.FC<IProtocolContainerType> = ({id,pending}) => {
+const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
 
-    const dispatch = useAppDispatch();
-    const {protocol} = useAppSelector(selectProtocol);
+    const {data, error, pending, columns} = useAppSelector(selectProtocol);
     const [content, setContent] = useState([])
     const device = useWindowSize()
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
 
-    useEffect(() =>{
-        dispatch(takeMedal(id))
-    },[id])
 
 
     useEffect(() => {
-        if (protocol.medal) {
-            const needContent = ['year', 'distance', 'location', 'type']
-            const initialContent = Object.keys(protocol.medal as EMedalType).reduce((acc, el) => {
-                if (needContent.includes(el)) {
+        const needContent = ['year', 'distantion', 'location', 'type']
+        const initialContent = Object.keys(data.medal).reduce((acc, el) => {
+            if (needContent.includes(el)) {
+                // @ts-ignore
+                let info = ''
+                if (el === 'datestart') {
+                    info = moment(data.medal[el]).format('YYYY-MM-DD')
+                } else {
                     // @ts-ignore
-                    acc.push([el, protocol.medal[el]])
+                    info = data.medal[el] as string
                 }
-                return acc
-            }, [])
-            setContent(initialContent)
-        }
-    }, [protocol.medal])
+                // @ts-ignore
+                acc.push([el, info])
+            }
+            return acc
+        }, [])
+        setContent(initialContent)
+
+    }, [data.medal])
+
+
+
 
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
@@ -71,15 +76,25 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id,pending}) => {
             return reactComponent;
         }
     }
-
+    const imageContainer = () => {
+        if (data.medal.img) {
+            return (
+                <>
+                    <img src={data.medal?.img} alt=""/>
+                    <Resizer img={data.medal?.img} extraStyles={s.protocolResizerPosition}/>
+                    {condition &&  <Resizer img={data.medal?.img} extraStyles={s.protocolGoBack} onGoBack={true}/>}
+                </>
+            )
+        } else {
+            return  <img src="/img/empty-state.svg" alt="Empty state"/>
+    }
+}
 
     return (
         <div className={s.protocolPage}>
             {fetchData(
                 <div className={s.protocolImage}>
-                    <img src={protocol.medal?.img} alt=""/>
-                    <Resizer img={protocol.medal?.img} extraStyles={s.protocolResizerPosition}/>
-                    {condition &&  <Resizer img={protocol.medal?.img} extraStyles={s.protocolGoBack} onGoBack={true}/>}
+                    {imageContainer()}
                 </div>,
                 s.protocolImageLoader
             )}
@@ -88,6 +103,9 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id,pending}) => {
                     <div className={s.protocolBlock}>
                         <div className={s.protocolFragments}>
                             {content.map((elem, i) => {
+                                if (!elem[1]) {
+                                    return
+                                }
                                 return (<ResultFragment name={elem[0]} value={elem[1]} key={i} resize='page'>
                                     {setMedal(elem[0])}
                                 </ResultFragment>)
@@ -95,8 +113,8 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id,pending}) => {
                         </div>
                         <div className={s.protocolInformation}>
                             <div className={s.protocolUser}>
-                                <h1 className={s.protocolTitle}>{protocol.result.name}</h1>
-                                <img className={s.protocolAvatar} src={protocol.result.avatar} alt=""/>
+                                <h1 className={s.protocolTitle}>{data.athlete.firstname + ' ' + data.athlete.lastname}</h1>
+                                {/*<img className={s.protocolAvatar} src={protocol.result.avatar} alt=""/>*/}
                             </div>
                             <div className={s.protocolResults}>
                                 <ResultFragment
@@ -105,37 +123,38 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id,pending}) => {
                                         <img className={s.protocolFragmentImg} src="/img/protocol/protocol-startNumber.png" />
                                     }
                                     resize='page'
-                                    value={protocol.result.startNumber}/>
+                                    value={data.result.bib}/>
                                 <ResultFragment
                                     name={'Result'}
                                     imageBefore={
                                         <img className={s.protocolFragmentImg} src="/img/protocol/protocol-result.png" />
                                     }
                                     resize='page'
-                                    value={protocol.result.result}/>
+                                    value={data.result.overalltime}/>
                                 <ResultFragment
                                     name={'Place'}
                                     imageBefore={
                                         <img className={s.protocolFragmentImg} src="/img/protocol/protocol-place.png" />
                                     }
                                     resize='page'
-                                    value={`#${protocol.result.place}`}/>
+                                    value={`#${data.result.place}`}/>
                             </div>
                             <div className={s.protocolButtonContainer}>
                                 <Button size='big' type='field-primary'>Add result</Button>
                             </div>
                         </div>
                     </div>
-                    <div className={s.protocolCheckPoints}>
+                    {data.splits && <div className={s.protocolCheckPoints}>
                         <h2 className={s.protocolCheckPointsTitle}>
                             Checkpoints
                         </h2>
                         <Table
-                            dataSource={protocol.protocol}
+                            dataSource={data.splits}
                             bordered
-                            columns={protocol.columns}
+                            columns={columns}
                             pagination={false}/>
-                    </div>
+                    </div>}
+
                 </div>,
                 s.protocolContentLoader
             )}

@@ -45,8 +45,7 @@ const Main = () => {
                     Save all awards and competition results <br/> as digital NFT medals
                 </p>
                 <div className={s.mainButtonContainer}>
-                    <Button type='outline-primary' size='big' extraStyles={s.mainRegister} onClick={onRegister}>Sign up</Button>
-                    <Button type='field-primary' size='big'><span className={s.mainExplore}>Explore</span><AppIconArrowBtn/> </Button>
+                    <Button type='field-primary' size='big'><span className={s.mainExplore} onClick={onRegister}>Sign up</span><AppIconArrowBtn/> </Button>
                 </div>
             </div>
         </div>

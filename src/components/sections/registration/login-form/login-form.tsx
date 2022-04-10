@@ -23,8 +23,6 @@ interface IFormLoginType extends IFormForgotType {
 }
 
 
-class FormModel {
-}
 
 const LoginForm = () => {
 

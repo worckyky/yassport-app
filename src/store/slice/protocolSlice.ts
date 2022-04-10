@@ -1,9 +1,11 @@
 import {
+    createAsyncThunk,
     createSlice, Draft,
     PayloadAction,
 } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import {EMedalType, EProtocolType, EResultsType} from "../../enums/medal-type";
+import axios from "axios";
 
 
 type EColumnsType = {
@@ -12,66 +14,33 @@ type EColumnsType = {
     key: string
     width?: number
 }
+type EAthleteType = {
+    firstname: string,
+    lastname: string
+}
 
 
 type InitialStateType = {
-    result: EResultsType
-    protocol: EProtocolType[]
+    data: {
+        result: EResultsType
+        athlete: EAthleteType
+        medal: EMedalType
+        splits: Array<any>
+    }
     columns: EColumnsType[]
-    medal: EMedalType
-    id: string
+    pending: boolean,
+    error: string
 }
 
 const initialState: InitialStateType = {
-    id: '',
-    result: {
-        place: 1,
-        avatar: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80',
-        startNumber: '#4324',
-        name: 'Anatoliy Mitroshin',
-        result: '32 : 15',
-        id: 12313
+    data: {
+        result: {} as EResultsType,
+        medal: {} as EMedalType,
+        splits: [],
+        athlete: {} as EAthleteType,
     },
-    medal: {
-        type: 'Running',
-        img: 'https://yassport.org/storage/media/2022/01/DH4n8xVEaRg7R0mWdJ7RuMQTYm0lU8CckgphU3Xo.gif',
-        id: 314141,
-        distance: '42.2 km',
-        name: 'RZD Golden Ring Ultra-Trail',
-        year: '2022',
-        location: 'Russia - Kazan'
-    },
-    protocol: [
-        {
-            split: '🥇 1',
-            time: '32 : 15',
-        },
-        {
-            split: '🥇 1',
-            time: '32 : 15',
-        },
-        {
-            split: '🥇 1',
-            time: '32 : 15',
-        },
-        {
-            split: '🥇 1',
-            time: '32 : 15',
-        },
-        {
-            split: '🥇 1',
-            time: '32 : 15',
-        },
-        {
-            split: '🥇 1',
-            time: '32 : 15',
-        },
-        {
-            split: '🥇 1',
-            time: '32 : 15',
-        },
-    ],
-
+    pending: false,
+    error: '',
     columns: [
         {
             title: 'Split',
@@ -85,17 +54,32 @@ const initialState: InitialStateType = {
         }
     ]
 };
+export const getProtocol = createAsyncThunk('protocol', async (id: number) => {
+    const response = await axios.get(`https://api.asdev.site/result/${id}`);
+    return response.data;
+});
+
+
 
 export const protocolSlice = createSlice({
     name: 'protocol',
     initialState,
     reducers: {
     },
+    extraReducers: builder => {
+        builder.addCase(getProtocol.pending, state => {
+            state.pending = true
+        })
+        builder.addCase(getProtocol.fulfilled, (state, {payload}) => {
+            state.data = payload
+            state.pending = false
+        })
+        builder.addCase(getProtocol.rejected, (state, {error}) => {
+            state.error = JSON.stringify(error)
+        })
+    }
 });
-// export const {
-//
-// } = protocolSlice.actions;
 
-export const selectProtocol = (state: RootState) => state;
+export const selectProtocol = (state: RootState) => state.protocol;
 
 export default protocolSlice.reducer;

@@ -45,3 +45,10 @@
 .btnWidthDefault {
   width: unset;
 }
+
+.btnDisabled {
+  color: var(--grey-700);
+  border-color: 1px solid var(--grey-400);
+  background-color: var(--grey-400);
+  cursor: not-allowed;
+}

@@ -12,6 +12,7 @@ import AppIconArrowBtnLong from "../app-icons/app-icon-arrowBtnLong";
 import {useRouter} from "next/router";
 import Link from 'next/link'
 import AppComponentPreloader from "../app-component-preloader/app-component-preloader";
+import moment from "moment";
 
 const cn = classnames.bind(s);
 
@@ -26,16 +27,23 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending}) => {
     const [content, setContent] = useState([])
 
     useEffect(() => {
-        const needContent = ['year', 'distance', 'location', 'type']
+        const needContent = ['datestart', 'distantion', 'country', 'type']
         const initialContent = Object.keys(medal).reduce((acc, el) => {
             if (needContent.includes(el)) {
                 // @ts-ignore
-                acc.push([el, medal[el]])
+                let data = ''
+                if (el === 'datestart') {
+                    data = moment(medal[el]).format('YYYY-MM-DD')
+                } else {
+                    // @ts-ignore
+                    data = medal[el] as string
+                }
+                // @ts-ignore
+                acc.push([el, data])
             }
             return acc
         }, [])
         setContent(initialContent)
-
 
     }, [medal])
 
@@ -54,9 +62,6 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending}) => {
         }
     }
 
-    const seeMedal = () => {
-        router.push(`/medal/${[medal.id]}`)
-    }
 
 
     const fetchContent = () => {
@@ -65,9 +70,9 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending}) => {
         } else {
             return <div className={s.medal}>
                 <div className={s.medalHead}>
-                    <img className={s.medalImg} src={medal.img} alt=""/>
+                    {medal.img ? <img className={s.medalImg} src={medal.img} alt={medal.namestart}/> : <img className={s.medalImg} src="/img/empty-state.svg" alt="Empty state"/>}
                     <div className={s.medalTitle}>
-                        <h3>{medal.name}</h3>
+                        <h3>{medal.namestart}</h3>
                     </div>
                 </div>
 

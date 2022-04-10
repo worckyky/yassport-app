@@ -4,59 +4,51 @@ import {
     PayloadAction,
 } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import {EMedalType, EResultsType} from "../../enums/medal-type";
+import {EMedalType} from "../../enums/medal-type";
 import axios from "axios";
-import {EProtocolType} from "../../enums/protocol-type";
 
 // declaring the types for our state
 
 type InitialStateType = {
-    content: {
-        medal: EMedalType,
-        results: EProtocolType[]
-    },
+    medals: EMedalType[],
     pending: boolean
     error: boolean
 }
 
 
 const initialState: InitialStateType = {
-    content: {
-        medal: {} as EMedalType,
-        results: [] as EProtocolType[]
-    },
+    medals: [] as EMedalType[],
     pending: false,
     error: false
 };
 
 
-
-export const getMedal = createAsyncThunk('medal', async (id:string) => {
-    const response = await axios.get(`https://api.asdev.site/medal/${id}`);
+export const getMedals = createAsyncThunk('medals', async () => {
+    const response = await axios.get('https://api.asdev.site/medals');
     return response.data;
 });
 
 
 export const medalsSlice = createSlice({
-    name: 'medal',
+    name: 'medals',
     initialState,
     reducers: {},
     extraReducers: builder => {
         builder
-            .addCase(getMedal.pending, state => {
+            .addCase(getMedals.pending, state => {
                 state.pending = true;
             })
-            .addCase(getMedal.fulfilled, (state, { payload }) => {
+            .addCase(getMedals.fulfilled, (state, { payload }) => {
                 state.pending = false;
-                state.content = payload;
+                state.medals = payload;
             })
-            .addCase(getMedal.rejected, state => {
+            .addCase(getMedals.rejected, state => {
                 state.pending = false;
                 state.error = true;
             });
     },
 });
 
-export const selectMedal = (state: RootState) => state.medal;
+export const selectMedals = (state: RootState) => state.medals;
 
 export default medalsSlice.reducer;

@@ -15,7 +15,7 @@ const initialState: InitialStateType = {
 };
 
 export const loginSlice = createSlice({
-    name: 'protocol',
+    name: 'loginModal',
     initialState,
     reducers: {
         openModal: (state) => {

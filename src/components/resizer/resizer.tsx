@@ -14,10 +14,16 @@ type IResizerPropTypes = {
     img?: string,
     extraStyles?: string,
     onGoBack?: boolean,
+    location?: string
 }
 
 
-const Resizer: React.FC<IResizerPropTypes> = ({img,extraStyles, onGoBack= false} ) => {
+const Resizer: React.FC<IResizerPropTypes> = (
+    {
+        img,
+        extraStyles,
+        onGoBack= false,
+    } ) => {
 
     const [visible, setVisible] = useState(false);
     const router = useRouter()

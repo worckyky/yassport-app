@@ -75,8 +75,8 @@ const initialState: InitialStateType = {
         },
         {
             title: '⏱ Start number',
-            dataIndex: 'startNumber',
-            key: 'startNumber',
+            dataIndex: 'bib',
+            key: 'bib',
             width: 150
         },
         {
@@ -86,8 +86,8 @@ const initialState: InitialStateType = {
         },
         {
             title: '🏆 Result',
-            dataIndex: 'result',
-            key: 'result',
+            dataIndex: 'overalltime',
+            key: 'overalltime',
             width: 150
         }
     ]

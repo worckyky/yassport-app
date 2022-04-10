@@ -107,6 +107,8 @@ const Input: React.FC<EInputType> = (
     const changeOnPassWord = () => {
         if (type === 'password') {
             return <AppIconEye hide={showPass} onClick={() => setOnShowPass((state) => !state)}/>
+        } else if (type === 'date') {
+            return ''
         } else {
             return (
                 <span style={{width: 24, height: 24}}>

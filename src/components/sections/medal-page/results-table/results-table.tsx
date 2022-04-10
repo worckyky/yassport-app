@@ -7,14 +7,34 @@ import Input from "../../../input/input";
 import AppIconSearch from "../../../app-icons/app-icon-search";
 import {useRouter} from "next/router";
 import Link from 'next/link'
+import {selectMedal} from "../../../../store/slice/medalSlice";
+import {useEffect, useState} from "react";
 
 
 const ResultsTable = () => {
 
-    const dispatch = useAppDispatch();
-    const results = useAppSelector(selectResults);
+    // const results = useAppSelector(selectResults);
     const columns = useAppSelector(selectColumns);
-    const router = useRouter();
+    const [results, setResults] = useState([] as any);
+    const {
+        content,
+        error,
+        pending
+    } = useAppSelector(selectMedal)
+
+
+    useEffect(() => {
+        // TODO: Получить нормальные данные
+        if (content.results) {
+            const data = content.results.map(elem => {
+                return {
+                    ...elem, name: elem.athlete.firstName + " " + elem.athlete.lastName
+                }
+            })
+            setResults(data);
+        }
+    },[content.results])
+
 
     const editable = (): any => {
         return [...columns, {

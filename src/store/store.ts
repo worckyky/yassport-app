@@ -3,25 +3,25 @@ import {
     configureStore,
     ThunkAction,
 } from '@reduxjs/toolkit';
-import counterReducer from "./slice/counterSlice";
-import kanyeReducer from "./slice/kanyeSlice";
+import medalsReducer from "./slice/medalsSlice";
 import medalReducer from "./slice/medalSlice";
 import resultsReducer from "./slice/resultsSlice";
 import protocolReducer from "./slice/protocolSlice";
 import loginReducer from "./slice/loginSlice";
 import cabinetReducer from "./slice/cabinetSlice";
-import newMedalsReducer from "./slice/newMedalsSlice";
+import {authSliceReducer, checkUserSliceReducer} from "./slice/authSlice";
+
 
 export const store = configureStore({
     reducer: {
-        counter: counterReducer,
-        kanyeQuote: kanyeReducer,
+        medals: medalsReducer,
         medal: medalReducer,
         results: resultsReducer,
         protocol: protocolReducer,
         loginModal: loginReducer,
         cabinet: cabinetReducer,
-        newMedals: newMedalsReducer
+        auth: authSliceReducer,
+        checkUser: checkUserSliceReducer
     },
 });
 
