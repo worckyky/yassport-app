@@ -68,6 +68,6 @@ export const {
 
 export const selectResults = (state: RootState) => state.results.results;
 export const selectColumns = (state: RootState) => state.results.columns;
-export const selectResultsId = (state: RootState) => state.results.selectedResult;
+export const selectResultsId = (state: RootState) => state.results
 
 export default resultsSlice.reducer;

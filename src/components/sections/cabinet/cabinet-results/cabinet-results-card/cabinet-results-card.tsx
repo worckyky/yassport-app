@@ -70,12 +70,12 @@ const CabinetResultsCard: React.FC<ICabinetResultsCardType> = ({extraStyles, act
             {fetchData(
                 <>
                     <div className={s.medalImage}>
-                        <img src={activity.medal.img} alt=""/>
-                        <Resizer img={activity.medal.img} extraStyles={s.medalResizerPosition}/>
+                        <img src={activity.medal.medalMedia} alt=""/>
+                        <Resizer img={activity.medal.medalMedia} extraStyles={s.medalResizerPosition}/>
                     </div>
                     <div className={s.medalContentContainer}>
                         <h2 className={s.medalContentContainerTitle}>
-                            {activity.medal.name}
+                            {activity.medal.nameStart}
                         </h2>
                         <div className={s.protocolFragments}>
                             {content.map((elem, i) => {
