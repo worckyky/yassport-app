@@ -6,6 +6,8 @@ import {useRouter} from "next/router";
 import {ESectionType} from "../../../../../pages/cabinet";
 import CabinetResults from "../cabinet-results/cabinet-results";
 import CabinetPersonalData from "../cabinet-personal-data/cabinet-personal-data";
+import {useAppSelector} from "../../../../store/hooks";
+import {isAuthUser} from "../../../../store/slice/authSlice";
 const cn = classnames.bind(s);
 
 type ICabinetContainerType = {

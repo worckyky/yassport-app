@@ -17,6 +17,8 @@
   display: flex;
   justify-content: center;
 }
+
+
 .medalImg {
   width: inherit;
   height: 180px;
@@ -24,6 +26,12 @@
   z-index: 0;
 }
 
+.resizeMedal {
+  height: 300px;
+  img {
+    height: inherit;
+  }
+}
 
 .medalTitle {
   width: 90%;

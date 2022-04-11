@@ -26,3 +26,14 @@
 .cabinetContent {
   grid-column: 4 / 13;
 }
+
+.cabinetWrapper {
+  height: 100vh;
+  position: relative;
+}
+
+.cabinetFooter {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}

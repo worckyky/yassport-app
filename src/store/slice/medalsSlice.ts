@@ -13,10 +13,12 @@ type InitialStateType = {
     medals: EMedalType[],
     pending: boolean
     error: boolean
+    total: number
 }
 
 
 const initialState: InitialStateType = {
+    total: 0,
     medals: [] as EMedalType[],
     pending: false,
     error: false
@@ -39,8 +41,10 @@ export const medalsSlice = createSlice({
                 state.pending = true;
             })
             .addCase(getMedals.fulfilled, (state, { payload }) => {
+                const {medals, total} = payload
                 state.pending = false;
-                state.medals = payload;
+                state.total = total
+                state.medals = medals
             })
             .addCase(getMedals.rejected, state => {
                 state.pending = false;

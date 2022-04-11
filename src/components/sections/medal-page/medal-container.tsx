@@ -33,12 +33,12 @@ const MedalContainer = () => {
 
 
     useEffect(() => {
-        const needContent = ['year', 'distantion', 'location', 'type']
+        const needContent = ['dateStart', 'distance', 'country', 'medalType']
         const initialContent = Object.keys(content.medal).reduce((acc, el) => {
             if (needContent.includes(el)) {
                 // @ts-ignore
                 let data = ''
-                if (el === 'datestart') {
+                if (el === 'dateStart') {
                     data = moment(content.medal[el]).format('YYYY-MM-DD')
                 } else {
                     // @ts-ignore
@@ -56,13 +56,13 @@ const MedalContainer = () => {
 
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
-            case 'year':
+            case 'dateStart':
                 return <AppIconSmallCalendar size={16}/>
             case 'distance':
                 return <AppIconSmallFlash size={16}/>
-            case 'location':
+            case 'country':
                 return <AppIconSmallArrow size={16}/>
-            case 'type':
+            case 'medalType':
                 return <AppIconSmallFinish size={16}/>
             default:
                 return <AppIconSmallFlash size={16}/>
@@ -82,16 +82,16 @@ const MedalContainer = () => {
         <div className={s.medalPage}>
             {fetchData(
                 <div className={s.medalImage}>
-                    {content.medal.img ? <img src={content.medal.img} alt={content.medal.name}/> : <img src="/img/empty-state.svg" alt="Empty state"/>}
-                    {content.medal.img && <Resizer img={content.medal.img} extraStyles={s.medalResizerPosition}/>}
-                    {condition && <Resizer img={content.medal.img} extraStyles={s.medalGoBack} onGoBack={true} location={''}/>}
+                    {content.medal.medalMedia ? <img src={content.medal.medalMedia} alt={content.medal.nameStart}/> : <img src="/img/empty-state.svg" alt="Empty state"/>}
+                    {content.medal.medalMedia && <Resizer img={content.medal.medalMedia} extraStyles={s.medalResizerPosition}/>}
+                    {condition && <Resizer img={content.medal.medalMedia} extraStyles={s.medalGoBack} onGoBack={true} location={''}/>}
                 </div>,
                 s.medalImageLoader
             )}
             {fetchData(
                 <div className={s.medalContent}>
                     {content.medal.id && <span className={s.medalId}>#{content.medal.id}</span>}
-                    <h1 className={s.medalTitle}>{content.medal.name}</h1>
+                    <h1 className={s.medalTitle}>{content.medal.nameStart}</h1>
                     <div className={s.medalFragments}>
                         {fragments.map((elem, i) => {
                             if (elem[1]) {

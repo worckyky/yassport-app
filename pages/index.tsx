@@ -15,7 +15,9 @@ const Home: NextPage = () => {
                 </>
             </PageLayout>
             <Medals/>
-            <Footer/>
+            <PageLayout>
+                <Footer/>
+            </PageLayout>
         </>
     )
 

@@ -11,6 +11,7 @@ import {closeModal, selectOnOpen} from "../../../../store/slice/loginSlice";
 import AppIconEmail from "../../../app-icons/app-icon-email";
 import AppIconArrowLeft from "../../../app-icons/app-icon-arrowLeft";
 import classnames from 'classnames'
+import {loginUser} from "../../../../store/slice/authSlice";
 const cn = classnames.bind(s);
 
 
@@ -18,7 +19,7 @@ interface IFormForgotType {
     email: string
 }
 
-interface IFormLoginType extends IFormForgotType {
+export interface IFormLoginType extends IFormForgotType {
     password: string,
 }
 
@@ -28,7 +29,8 @@ const LoginForm = () => {
 
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const [onForgot, setOnForgotPassword] = useState(false)
+    const [onForgot, setOnForgotPassword] = useState(false);
+    const [invalid, setInvalid] = useState('')
     const loginRef = useRef<FormikProps<any>>(null);
     const forgotRef = useRef<FormikProps<any>>(null);
     const visible = useAppSelector(selectOnOpen);
@@ -72,10 +74,23 @@ const LoginForm = () => {
                         innerRef={loginRef && loginRef}
                         validationSchema={validationLoginSchema}
                         onSubmit={(values, {setSubmitting}) => {
-                            setTimeout(() => {
-                                alert(JSON.stringify(values, null, 2));
+                            const {email, password} = values
+                            setSubmitting(true);
+                            dispatch(loginUser(
+                                {
+                                    email,
+                                    password
+                                }
+                            )).then((e) => {
+                                if (e.meta.requestStatus === 'rejected') {
+                                    setInvalid('Invalid email or password');
+                                } else {
+                                    dispatch(closeModal())
+                                }
                                 setSubmitting(false);
-                            }, 400);
+                            })
+
+
                         }}
                 >
                     {
@@ -105,10 +120,12 @@ const LoginForm = () => {
                                        required={true}
                                        component={Input}/>
                                 <div className={s.loginFormErrors}>
+                                    <span>{invalid}</span>
                                     {errors.email && <span>{touched.email && errors.email}</span>}
                                     {errors.password && <span>{touched.password && errors.password}</span>}
                                 </div>
                                 <Button btnType='submit'
+                                        disabled={isSubmitting}
                                         extraStyles={s.loginButton}
                                         type='field-primary'
                                         size='big'>

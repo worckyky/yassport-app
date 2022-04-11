@@ -15,7 +15,7 @@ import stringCombiner from "../../../../helpers/stringCombiner";
 import * as yup from 'yup'
 import {useAppDispatch, useAppSelector} from "../../../../store/hooks";
 import {closeModal, openModal} from "../../../../store/slice/loginSlice";
-import {authUser, IFormValuesType, selectRegistrationError} from "../../../../store/slice/authSlice";
+import {authUser, IFormValuesType, removeError, selectRegistrationError} from "../../../../store/slice/authSlice";
 import AppIconCloseModalSmall from "../../../app-icons/app-icon-closeModalSmall";
 import LoginForm from "../login-form/login-form";
 import {EDeviceType, useWindowSize} from "../../../../helpers/device-helper";
@@ -35,7 +35,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const device = useWindowSize();
-    const error = useAppSelector(selectRegistrationError);
+    const [error, setError] = useState('')
     const [visible, setVisible] = useState(false);
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET].includes(device as EDeviceType)
 
@@ -86,6 +86,7 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                 validationSchema={validationSchema}
                 onSubmit={(values, {setSubmitting}) => {
                     const {birth,email,gender,lastName,password,firstName} = values
+                    console.log(email)
                     dispatch(authUser({
                         birth,
                         email,
@@ -93,14 +94,17 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                         lastName,
                         password,
                         firstName
-                    })).then(() => {
-                        setSubmitting(false);
-                        if (error) {
-                            alert(error);
+                    })).then((e) => {
+                        console.log(e)
+                        if (e.payload?.error?.email[0]) {
+                            setError(e.payload.error.email[0])
+                            setSubmitting(false);
                             return;
+                        } else {
+                            setVisible(true);
+                            setSubmitting(false);
                         }
-                        setVisible(true);
-                    }).catch(e => console.log(e))
+                    })
                 }
             }
             >

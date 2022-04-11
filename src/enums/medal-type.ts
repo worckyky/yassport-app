@@ -3,15 +3,14 @@
 
 export interface EMedalType {
     id: number,
-    medaltype_id: number
-    namestart: string,
-    datestart: string,
-    name: string,
     country: string,
+    medalType: string,
+    nameStart: string,
+    dateStart: string,
+    distance: string,
+    medalMedia: string,
     city: string
-    type?: string,
-    img?: string,
-    distantion: string,
+    year: string
 }
 
 

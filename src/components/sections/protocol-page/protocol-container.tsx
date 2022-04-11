@@ -31,12 +31,12 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
 
 
     useEffect(() => {
-        const needContent = ['year', 'distantion', 'location', 'type']
+        const needContent = ['dateStart', 'distance', 'country', 'medalType']
         const initialContent = Object.keys(data.medal).reduce((acc, el) => {
             if (needContent.includes(el)) {
                 // @ts-ignore
                 let info = ''
-                if (el === 'datestart') {
+                if (el === 'dateStart') {
                     info = moment(data.medal[el]).format('YYYY-MM-DD')
                 } else {
                     // @ts-ignore
@@ -56,13 +56,13 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
 
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
-            case 'year':
+            case 'dateStart':
                 return <AppIconSmallCalendar size={16}/>
             case 'distance':
                 return <AppIconSmallFlash size={16}/>
-            case 'location':
+            case 'country':
                 return <AppIconSmallArrow size={16}/>
-            case 'type':
+            case 'medalType':
                 return <AppIconSmallFinish size={16}/>
             default:
                 return <AppIconSmallFlash size={16}/>
@@ -77,12 +77,12 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
         }
     }
     const imageContainer = () => {
-        if (data.medal.img) {
+        if (data.medal.medalMedia) {
             return (
                 <>
-                    <img src={data.medal?.img} alt=""/>
-                    <Resizer img={data.medal?.img} extraStyles={s.protocolResizerPosition}/>
-                    {condition &&  <Resizer img={data.medal?.img} extraStyles={s.protocolGoBack} onGoBack={true}/>}
+                    <img src={data.medal?.medalMedia} alt=""/>
+                    <Resizer img={data.medal?.medalMedia} extraStyles={s.protocolResizerPosition}/>
+                    {condition &&  <Resizer img={data.medal?.medalMedia} extraStyles={s.protocolGoBack} onGoBack={true}/>}
                 </>
             )
         } else {

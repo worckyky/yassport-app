@@ -9,30 +9,32 @@ import AppIconSmallArrow from "../app-icons/small/app-iconSmall-arrow";
 import AppIconSmallFlash from "../app-icons/small/app-iconSmall-flash";
 import Button from "../button/button";
 import AppIconArrowBtnLong from "../app-icons/app-icon-arrowBtnLong";
-import {useRouter} from "next/router";
 import Link from 'next/link'
 import AppComponentPreloader from "../app-component-preloader/app-component-preloader";
 import moment from "moment";
+import {EDeviceType, useWindowSize} from "../../helpers/device-helper";
 
 const cn = classnames.bind(s);
 
 type IMedalPropsType = {
     medal: EMedalType,
-    pending?: boolean
+    pending?: boolean,
+    count: number
 }
 
-const MedalCard: React.FC<IMedalPropsType> = ({medal, pending}) => {
+const MedalCard: React.FC<IMedalPropsType> = ({medal, pending, count}) => {
 
-    const router = useRouter();
     const [content, setContent] = useState([])
+    const device = useWindowSize()
+    console.log(count)
 
     useEffect(() => {
-        const needContent = ['datestart', 'distantion', 'country', 'type']
+        const needContent = ['dateStart', 'distance', 'country', 'medalType']
         const initialContent = Object.keys(medal).reduce((acc, el) => {
             if (needContent.includes(el)) {
                 // @ts-ignore
                 let data = ''
-                if (el === 'datestart') {
+                if (el === 'dateStart') {
                     data = moment(medal[el]).format('YYYY-MM-DD')
                 } else {
                     // @ts-ignore
@@ -49,30 +51,32 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending}) => {
 
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
-            case 'year':
+            case 'dateStart':
                 return <AppIconSmallCalendar/>
             case 'distance':
                 return <AppIconSmallFlash/>
-            case 'location':
+            case 'country':
                 return <AppIconSmallArrow/>
-            case 'type':
+            case 'medalType':
                 return <AppIconSmallFinish/>
             default:
                 return <AppIconSmallFlash/>
         }
     }
 
-
+    const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType);
 
     const fetchContent = () => {
         if (pending) {
             return <AppComponentPreloader/>
         } else {
             return <div className={s.medal}>
-                <div className={s.medalHead}>
-                    {medal.img ? <img className={s.medalImg} src={medal.img} alt={medal.namestart}/> : <img className={s.medalImg} src="/img/empty-state.svg" alt="Empty state"/>}
+                <div className={cn(s.medalHead, {
+                    [s.resizeMedal] : count % 2 == 0 && count !== 4 && !condition
+                })}>
+                    {medal.medalMedia ? <img className={s.medalImg} src={medal.medalMedia} alt={medal.nameStart}/> : <img className={s.medalImg} src="/img/empty-state.svg" alt="Empty state"/>}
                     <div className={s.medalTitle}>
-                        <h3>{medal.namestart}</h3>
+                        <h3>{medal.nameStart}</h3>
                     </div>
                 </div>
 

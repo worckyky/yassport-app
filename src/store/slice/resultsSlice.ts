@@ -21,50 +21,7 @@ type InitialStateType = {
 }
 
 const initialState: InitialStateType = {
-    results: [
-        {
-            place: 1,
-            startNumber: '#4324',
-            name: 'Anatoliy Mitroshin',
-            result: '32 : 15',
-            id: 12313
-        },
-        {
-            place: 1,
-            startNumber: '#4324',
-            name: 'Anatoliy Mitroshin',
-            result: '32 : 15',
-            id: 12313
-        },
-        {
-            place: 1,
-            startNumber: '#4324',
-            name: 'Anatoliy Mitroshin',
-            result: '32 : 15',
-            id: 12313
-        },
-        {
-            place: 1,
-            startNumber: '#4324',
-            name: 'Anatoliy Mitroshin',
-            result: '32 : 15',
-            id: 12313
-        },
-        {
-            place: 1,
-            startNumber: '#4324',
-            name: 'Anatoliy Mitroshin',
-            result: '32 : 15',
-            id: 12313
-        },
-        {
-            place: 1,
-            startNumber: '#4324',
-            name: 'Anatoliy Mitroshin',
-            result: '32 : 15',
-            id: 12313
-        }
-    ],
+    results: [] as EResultsType[],
     selectedResult: {} as EResultsType,
     columns: [
         {

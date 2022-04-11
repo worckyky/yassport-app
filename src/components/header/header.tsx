@@ -12,37 +12,50 @@ import {closeModal, openModal, selectOnOpen} from "../../store/slice/loginSlice"
 import LoginForm from "../sections/registration/login-form/login-form";
 import AppIconCloseModalSmall from "../app-icons/app-icon-closeModalSmall";
 import Link from 'next/link'
-import {checkUser, resetUser, selectRegistered} from "../../store/slice/authSlice";
+import {checkUser, resetUser, selectCheckUser, selectLoginUser} from "../../store/slice/authSlice";
 import AppIconUser from "../app-icons/app-icon-user";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
+
 
 const Header = () => {
     const device = useWindowSize();
     const visible = useAppSelector(selectOnOpen);
-    const isRegistered = useAppSelector(selectRegistered);
+    const doCheckUser = useAppSelector(selectCheckUser);
+    const doCheckLogin = useAppSelector(selectLoginUser)
     const dispatch = useAppDispatch();
+    const router = useRouter()
 
     useEffect(() => {
        const token = localStorage.getItem('authToken')
-       token ? dispatch(checkUser(token)) : dispatch(resetUser())
-    },[])
+        const invalidPaths = ['/cabinet']
+        dispatch(checkUser(token ? token : '')).then(e => {
+            if ((e.payload.error && invalidPaths.includes(router.pathname)) || (e.payload.token && router.pathname === '/registration')) {
+                router.push('/');
+            }
+        })
+
+    },[doCheckUser.token, doCheckLogin.token])
 
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET].includes(device as EDeviceType)
 
-    const changeOnAuth = () => {
-        if (isRegistered.token) {
-            debugger
+    const onLogout = () => {
+        dispatch(resetUser())
+        router.push('/')
+    }
+
+    const changeOnAuth = useCallback (() => {
+        if (doCheckUser.token) {
             return (
                 <div className={s.headerLogout}>
                     <Link href={'/cabinet'}>
                         <a>
                             <span>
-                                <AppIconUser/> {isRegistered.firstName + ' ' + isRegistered.lastName.charAt(0)}
+                                <AppIconUser/> {doCheckUser.firstName + ' ' + doCheckUser.lastName.charAt(0)+'.'}
                             </span>
                         </a>
                     </Link>
                     <div className={s.headerLogoutDivider}/>
-                    <Button onClick={() => dispatch(openModal())} type={'outline-second'} size='normal'>
+                    <Button onClick={() => onLogout()} type={'outline-second'} size='normal'>
                         <span className={s.headerBtnText}>Log out</span>
                     </Button>
                 </div>
@@ -59,7 +72,7 @@ const Header = () => {
                 </>
             )
         }
-    }
+    },[doCheckUser.token, doCheckLogin.token])
 
     return (
         <>

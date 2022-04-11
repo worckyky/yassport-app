@@ -9,7 +9,7 @@ import resultsReducer from "./slice/resultsSlice";
 import protocolReducer from "./slice/protocolSlice";
 import loginReducer from "./slice/loginSlice";
 import cabinetReducer from "./slice/cabinetSlice";
-import {authSliceReducer, checkUserSliceReducer} from "./slice/authSlice";
+import {authSliceReducer, checkUserSliceReducer, loginUserSliceReducer} from "./slice/authSlice";
 
 
 export const store = configureStore({
@@ -21,7 +21,8 @@ export const store = configureStore({
         loginModal: loginReducer,
         cabinet: cabinetReducer,
         auth: authSliceReducer,
-        checkUser: checkUserSliceReducer
+        checkUser: checkUserSliceReducer,
+        login: loginUserSliceReducer
     },
 });
 

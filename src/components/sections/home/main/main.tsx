@@ -4,12 +4,13 @@ import AppIconArrowBtn from "../../../app-icons/app-icon-arrowBtn";
 import AppAnimatedLogo from "../../../app-icons/logo/app-animated-logo/app-animated-logo";
 import {EDeviceType, useWindowSize} from "../../../../helpers/device-helper";
 import {useRouter} from "next/router";
-import AppComponentPreloader from "../../../app-component-preloader/app-component-preloader";
+import {useAppSelector} from "../../../../store/hooks";
+import {selectCheckUser} from "../../../../store/slice/authSlice";
 
 const Main = () => {
     const device = useWindowSize()
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET].includes(device as EDeviceType)
-
+    const doCheckUser = useAppSelector(selectCheckUser);
     const router = useRouter()
     const onRegister = () => {
         router.push(`/registration`)
@@ -42,11 +43,14 @@ const Main = () => {
                     Your unique digital victories
                 </h1>
                 <p className={s.mainDescription}>
-                    Save all awards and competition results <br/> as digital NFT medals
+                    Save all awards and competition results as&nbsp;digital NFT medals
                 </p>
-                <div className={s.mainButtonContainer}>
-                    <Button type='field-primary' size='big'><span className={s.mainExplore} onClick={onRegister}>Sign up</span><AppIconArrowBtn/> </Button>
-                </div>
+                {!doCheckUser.token && (
+                    <div className={s.mainButtonContainer}>
+                        <Button type='field-primary' size='big'><span className={s.mainExplore} onClick={onRegister}>Sign up</span><AppIconArrowBtn/> </Button>
+                    </div>
+                )}
+
             </div>
         </div>
     )

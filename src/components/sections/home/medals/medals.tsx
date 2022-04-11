@@ -24,7 +24,9 @@ const Medals = () => {
 
 
     useEffect(() => {
-        dispatch(getMedals()).then(e => setPageMedal(e.payload))
+        dispatch(getMedals()).then(e => {
+                setPageMedal(e.payload.medals)
+        } )
     },[])
 
     const fetchData = (reactComponent: JSX.Element, style?:string ) : JSX.Element => {
@@ -46,7 +48,7 @@ const Medals = () => {
                         <div className={s.medalsContainer}>
                             {pageMedal.map(medal => {
                                 return (
-                                    <MedalCard medal={medal} key={medal.id}/>
+                                    <MedalCard medal={medal} key={medal.id} count={pageMedal.length}/>
                                 )
                             })}
                         </div>,
