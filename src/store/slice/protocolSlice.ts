@@ -15,8 +15,8 @@ type EColumnsType = {
     width?: number
 }
 type EAthleteType = {
-    firstname: string,
-    lastname: string
+    firstName: string,
+    lastName: string
 }
 
 
@@ -44,8 +44,8 @@ const initialState: InitialStateType = {
     columns: [
         {
             title: 'Split',
-            dataIndex: 'split',
-            key: 'split',
+            dataIndex: 'splitName',
+            key: 'splitName',
         },
         {
             title: 'Time',

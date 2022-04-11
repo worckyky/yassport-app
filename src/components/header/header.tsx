@@ -50,7 +50,7 @@ const Header = () => {
                     <Link href={'/cabinet'}>
                         <a>
                             <span>
-                                <AppIconUser/> {doCheckUser.firstName + ' ' + doCheckUser.lastName.charAt(0)+'.'}
+                                <AppIconUser/> {device !== EDeviceType.MOBILE && <span>{doCheckUser.firstName + ' ' + doCheckUser.lastName.charAt(0)+'.'}</span>}
                             </span>
                         </a>
                     </Link>
@@ -79,7 +79,7 @@ const Header = () => {
             <div className={s.header}>
                 <Link href={'/'}>
                     <a className={s.headerBack}>
-                        {condition ? <AppMobileLogo/> : <Image src={'/img/header/yass-logo.png'} width={200} height={28}/>}
+                        {condition ? <AppMobileLogo/> : <Image src={'/img/header/yass-logo.svg'} width={200} height={28}/>}
                     </a>
                 </Link>
                 {changeOnAuth()}

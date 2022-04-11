@@ -108,6 +108,19 @@
 }
 .protocolButtonContainer {
   margin-top: var(--spacer-32);
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-16);
+  span {
+    max-width: 300px;
+  }
+  a {
+    color: var(--accent-first);
+    &:hover {
+      color: var(--accent-first);
+    }
+  }
 }
 
 .protocolBlock {
@@ -118,6 +131,7 @@
 }
 .protocolInformation {
   margin-left: var(--spacer-24);
+  width: 100%;
   @media (max-width: $desktop) {
     margin-top: var(--spacer-24);
     margin-left: unset;

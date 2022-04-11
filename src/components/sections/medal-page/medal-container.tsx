@@ -1,29 +1,31 @@
 
 import s from './medal-container.module.scss'
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useAppSelector} from "../../../store/hooks";
 import Resizer from "../../resizer/resizer";
 import AppIconSmallCalendar from "../../app-icons/small/app-iconSmall-calendar";
 import AppIconSmallFlash from "../../app-icons/small/app-iconSmall-flash";
 import AppIconSmallArrow from "../../app-icons/small/app-iconSmall-arrow";
 import AppIconSmallFinish from "../../app-icons/small/app-iconSmall-finish";
-import {EMedalType} from "../../../enums/medal-type";
 import ResultFragment from "../../result-fragment/result-fragment";
 import Button from "../../button/button";
 import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
 import AppComponentPreloader from "../../app-component-preloader/app-component-preloader";
 import {selectMedal} from "../../../store/slice/medalSlice";
-import moment from "moment";
+import {selectCheckUser} from "../../../store/slice/authSlice";
+import Link from 'next/link'
+import reMapper from "../../../helpers/remapper";
 
 
 
 
 const MedalContainer = () => {
 
-    const [fragments, setFragments] = useState([])
+    const [fragments, setFragments] = useState([]);
+    const doCheckUser = useAppSelector(selectCheckUser);
     const device = useWindowSize()
     const {
-        content,
+        medal,
         error,
         pending
     } = useAppSelector(selectMedal)
@@ -33,30 +35,21 @@ const MedalContainer = () => {
 
 
     useEffect(() => {
-        const needContent = ['dateStart', 'distance', 'country', 'medalType']
-        const initialContent = Object.keys(content.medal).reduce((acc, el) => {
+        const needContent = ['year', 'distance', 'country', 'medalType']
+        const initialContent = Object.keys(medal).reduce((acc, el) => {
             if (needContent.includes(el)) {
                 // @ts-ignore
-                let data = ''
-                if (el === 'dateStart') {
-                    data = moment(content.medal[el]).format('YYYY-MM-DD')
-                } else {
-                    // @ts-ignore
-                    data = content.medal[el] as string
-                }
-                // @ts-ignore
-                acc.push([el, data])
+                acc.push([reMapper(el), medal[el]])
             }
             return acc
         }, [])
         setFragments(initialContent)
-
-    }, [content.medal])
+    }, [medal])
 
 
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
-            case 'dateStart':
+            case 'year':
                 return <AppIconSmallCalendar size={16}/>
             case 'distance':
                 return <AppIconSmallFlash size={16}/>
@@ -77,21 +70,38 @@ const MedalContainer = () => {
         }
     }
 
+    const setButton = useCallback(() => {
+        return (
+            <div className={s.medalButtonContainer}>
+                <Button disabled={!doCheckUser.token} size='big' type='field-primary'>Add to profile</Button>
+                {!doCheckUser.token && <span>
+                    To get medal in your list of rewards, you should {' '}
+                    <Link href={'/registration'}>
+                        <a>
+                            sign up
+                        </a>
+                    </Link>
+                    {' '}
+                    first.
+                </span>}
+            </div>
+        )
+    },[doCheckUser])
 
     return (
         <div className={s.medalPage}>
             {fetchData(
                 <div className={s.medalImage}>
-                    {content.medal.medalMedia ? <img src={content.medal.medalMedia} alt={content.medal.nameStart}/> : <img src="/img/empty-state.svg" alt="Empty state"/>}
-                    {content.medal.medalMedia && <Resizer img={content.medal.medalMedia} extraStyles={s.medalResizerPosition}/>}
-                    {condition && <Resizer img={content.medal.medalMedia} extraStyles={s.medalGoBack} onGoBack={true} location={''}/>}
+                    {medal.medalMedia ? <img src={medal.medalMedia} alt={medal.nameStart}/> : <img src="/img/empty-state.svg" alt="Empty state"/>}
+                    {medal.medalMedia && <Resizer img={medal.medalMedia} extraStyles={s.medalResizerPosition}/>}
+                    {condition && <Resizer img={medal.medalMedia} extraStyles={s.medalGoBack} onGoBack={true} location={''}/>}
                 </div>,
                 s.medalImageLoader
             )}
             {fetchData(
                 <div className={s.medalContent}>
-                    {content.medal.id && <span className={s.medalId}>#{content.medal.id}</span>}
-                    <h1 className={s.medalTitle}>{content.medal.nameStart}</h1>
+                    {medal.id && <span className={s.medalId}>#{medal.id}</span>}
+                    <h1 className={s.medalTitle}>{medal.nameStart}</h1>
                     <div className={s.medalFragments}>
                         {fragments.map((elem, i) => {
                             if (elem[1]) {
@@ -101,9 +111,7 @@ const MedalContainer = () => {
                             }
                         })}
                     </div>
-                    <div className={s.medalButtonContainer}>
-                        <Button size='big' type='field-primary'>Add result</Button>
-                    </div>
+                    {setButton()}
                 </div>,
                 s.medalContentLoader
             )}

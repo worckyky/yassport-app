@@ -31,7 +31,9 @@ const ResultPage = () => {
                     {container && <ProtocolContainer id={id as string}/>}
                 </>
             </PageLayout>
-            <Footer/>
+            <PageLayout>
+                <Footer/>
+            </PageLayout>
         </>
     )
 }

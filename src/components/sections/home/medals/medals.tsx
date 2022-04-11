@@ -4,8 +4,8 @@ import PageLayout from "../../../pageLayout/PageLayout";
 import MedalCard from "../../../medal-card/medal-card";
 import Button from "../../../button/button";
 import {useAppDispatch, useAppSelector} from "../../../../store/hooks";
-import {getMedals, selectMedals} from "../../../../store/slice/medalsSlice";
-import {useEffect, useState} from "react";
+import {getMedals, resetMedals, selectMedals} from "../../../../store/slice/medalsSlice";
+import {useCallback, useEffect, useState} from "react";
 import AppComponentPreloader from "../../../app-component-preloader/app-component-preloader";
 import {EMedalType} from "../../../../enums/medal-type";
 
@@ -15,19 +15,41 @@ const Medals = () => {
 
     const [pageMedal, setPageMedal] = useState<EMedalType[]>([]);
     const dispatch = useAppDispatch();
-
+    const [initialState, setInitialState] = useState(0);
+    useEffect(() => {
+        return () => {
+            dispatch(resetMedals())
+        }
+    },[])
     const {
         medals,
         error,
+        total,
         pending
     } = useAppSelector(selectMedals)
 
+    const increaseNumber = () => {
+        setInitialState(initialState + 1)
+    }
+
+    const renderButton = useCallback(() => {
+        if (medals.length >= total) {
+            return ''
+        }
+        return (
+            <Button
+                type='outline-primary'
+                size='big'
+                extraStyles={s.medalsBtnMore}
+                onClick={increaseNumber}
+            >See more
+            </Button>
+        )
+    },[medals])
 
     useEffect(() => {
-        dispatch(getMedals()).then(e => {
-                setPageMedal(e.payload.medals)
-        } )
-    },[])
+        dispatch(getMedals(initialState))
+    },[initialState])
 
     const fetchData = (reactComponent: JSX.Element, style?:string ) : JSX.Element => {
         if (pending) {
@@ -46,7 +68,7 @@ const Medals = () => {
                     </h2>
                     {fetchData(
                         <div className={s.medalsContainer}>
-                            {pageMedal.map(medal => {
+                            {medals.map(medal => {
                                 return (
                                     <MedalCard medal={medal} key={medal.id} count={pageMedal.length}/>
                                 )
@@ -54,8 +76,7 @@ const Medals = () => {
                         </div>,
                         s.medalContainer
                     )}
-
-                    <Button type='outline-primary' size='big' extraStyles={s.medalsBtnMore}>See more</Button>
+                    {renderButton()}
                 </>
             </PageLayout>
         </div>

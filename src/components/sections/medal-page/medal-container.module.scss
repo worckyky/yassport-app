@@ -110,7 +110,20 @@
   @include font-500();
 }
 .medalButtonContainer {
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-16);
   margin-top: var(--spacer-32);
+  span {
+    max-width: 300px;
+  }
+  a {
+    color: var(--accent-first);
+    &:hover {
+      color: var(--accent-first);
+    }
+  }
 }
 
 

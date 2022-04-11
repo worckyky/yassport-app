@@ -13,6 +13,7 @@ import Link from 'next/link'
 import AppComponentPreloader from "../app-component-preloader/app-component-preloader";
 import moment from "moment";
 import {EDeviceType, useWindowSize} from "../../helpers/device-helper";
+import reMapper from "../../helpers/remapper";
 
 const cn = classnames.bind(s);
 
@@ -26,7 +27,7 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending, count}) => {
 
     const [content, setContent] = useState([])
     const device = useWindowSize()
-    console.log(count)
+
 
     useEffect(() => {
         const needContent = ['dateStart', 'distance', 'country', 'medalType']
@@ -41,7 +42,7 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending, count}) => {
                     data = medal[el] as string
                 }
                 // @ts-ignore
-                acc.push([el, data])
+                acc.push([reMapper(el), data])
             }
             return acc
         }, [])
@@ -72,7 +73,7 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending, count}) => {
         } else {
             return <div className={s.medal}>
                 <div className={cn(s.medalHead, {
-                    [s.resizeMedal] : count % 2 == 0 && count !== 4 && !condition
+                    [s.resizeMedal] : count % 2 == 0 && count % 4 !== 0 && !condition
                 })}>
                     {medal.medalMedia ? <img className={s.medalImg} src={medal.medalMedia} alt={medal.nameStart}/> : <img className={s.medalImg} src="/img/empty-state.svg" alt="Empty state"/>}
                     <div className={s.medalTitle}>

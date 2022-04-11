@@ -13,7 +13,7 @@ const Footer: React.FC<IFooterTypeProps> = ({extraStyles}) => {
     return (
         <div className={cn(s.footer, extraStyles)}>
             <div className={s.footerLogo}>
-                <Image src={'/img/header/yass-logo.png'} width={200} height={28}/>
+                <Image src={'/img/header/yass-logo.svg'} width={200} height={28}/>
             </div>
             <p>© 2022 Yassport, Inc.</p>
             <div className={s.footerLinks}>

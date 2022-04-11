@@ -25,8 +25,9 @@ const initialState: InitialStateType = {
 };
 
 
-export const getMedals = createAsyncThunk('medals', async () => {
-    const response = await axios.get('https://api.asdev.site/medals');
+
+export const getMedals = createAsyncThunk('medals', async (page:number = 0) => {
+    const response = await axios.get(`https://api.asdev.site/medals/${page}`);
     return response.data;
 });
 
@@ -34,7 +35,11 @@ export const getMedals = createAsyncThunk('medals', async () => {
 export const medalsSlice = createSlice({
     name: 'medals',
     initialState,
-    reducers: {},
+    reducers: {
+        resetMedals: (state) => {
+            state.medals = []
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(getMedals.pending, state => {
@@ -44,7 +49,7 @@ export const medalsSlice = createSlice({
                 const {medals, total} = payload
                 state.pending = false;
                 state.total = total
-                state.medals = medals
+                state.medals = [...state.medals, ...medals]
             })
             .addCase(getMedals.rejected, state => {
                 state.pending = false;
@@ -52,6 +57,10 @@ export const medalsSlice = createSlice({
             });
     },
 });
+
+export const {
+    resetMedals
+} = medalsSlice.actions;
 
 export const selectMedals = (state: RootState) => state.medals;
 

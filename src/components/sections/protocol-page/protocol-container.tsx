@@ -1,6 +1,6 @@
 
 import s from './protocol-container.module.scss'
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "../../../store/hooks";
 import Resizer from "../../resizer/resizer";
 import AppIconSmallCalendar from "../../app-icons/small/app-iconSmall-calendar";
@@ -15,6 +15,9 @@ import {Table} from "antd";
 import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
 import AppComponentPreloader from "../../app-component-preloader/app-component-preloader";
 import moment from "moment";
+import reMapper from "../../../helpers/remapper";
+import Link from "next/link";
+import {selectCheckUser} from "../../../store/slice/authSlice";
 
 
 type IProtocolContainerType = {
@@ -27,11 +30,12 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
     const [content, setContent] = useState([])
     const device = useWindowSize()
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
+    const doCheckUser = useAppSelector(selectCheckUser);
 
 
 
     useEffect(() => {
-        const needContent = ['dateStart', 'distance', 'country', 'medalType']
+        const needContent = ['year', 'distance', 'country', 'medalType']
         const initialContent = Object.keys(data.medal).reduce((acc, el) => {
             if (needContent.includes(el)) {
                 // @ts-ignore
@@ -43,7 +47,7 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
                     info = data.medal[el] as string
                 }
                 // @ts-ignore
-                acc.push([el, info])
+                acc.push([reMapper(el), info])
             }
             return acc
         }, [])
@@ -56,7 +60,7 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
 
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
-            case 'dateStart':
+            case 'year':
                 return <AppIconSmallCalendar size={16}/>
             case 'distance':
                 return <AppIconSmallFlash size={16}/>
@@ -68,6 +72,25 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
                 return <AppIconSmallFlash size={16}/>
         }
     }
+
+    const setButton = useCallback(() => {
+        return (
+            <div className={s.protocolButtonContainer}>
+                <Button disabled={!doCheckUser.token} size='big' type='field-primary'>Add to profile</Button>
+                {!doCheckUser.token && <span>
+                    To get medal in your list of rewards, you should {' '}
+                    <Link href={'/registration'}>
+                        <a>
+                            sign up
+                        </a>
+                    </Link>
+                    {' '}
+                    first.
+                </span>}
+            </div>
+        )
+    },[doCheckUser])
+
 
     const fetchData = (reactComponent: JSX.Element, style?:string ) : JSX.Element => {
         if (pending) {
@@ -113,7 +136,7 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
                         </div>
                         <div className={s.protocolInformation}>
                             <div className={s.protocolUser}>
-                                <h1 className={s.protocolTitle}>{data.athlete.firstname + ' ' + data.athlete.lastname}</h1>
+                                <h1 className={s.protocolTitle}>{data.athlete.firstName + ' ' + data.athlete.lastName}</h1>
                                 {/*<img className={s.protocolAvatar} src={protocol.result.avatar} alt=""/>*/}
                             </div>
                             <div className={s.protocolResults}>
@@ -139,9 +162,7 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
                                     resize='page'
                                     value={`#${data.result.place}`}/>
                             </div>
-                            <div className={s.protocolButtonContainer}>
-                                <Button size='big' type='field-primary'>Add result</Button>
-                            </div>
+                            {setButton()}
                         </div>
                     </div>
                     {data.splits && <div className={s.protocolCheckPoints}>

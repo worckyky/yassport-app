@@ -12,6 +12,7 @@ export interface EAthleteType {
 export interface EProtocolType {
     id: string,
     protocol_id: string,
+    key: number,
     place: string,
     bib: null,
     resulttime: null,

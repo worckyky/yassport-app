@@ -4,8 +4,7 @@ import {
     ThunkAction,
 } from '@reduxjs/toolkit';
 import medalsReducer from "./slice/medalsSlice";
-import medalReducer from "./slice/medalSlice";
-import resultsReducer from "./slice/resultsSlice";
+import {medalsSliceReducer ,resultsSliceReducer} from "./slice/medalSlice";
 import protocolReducer from "./slice/protocolSlice";
 import loginReducer from "./slice/loginSlice";
 import cabinetReducer from "./slice/cabinetSlice";
@@ -15,8 +14,8 @@ import {authSliceReducer, checkUserSliceReducer, loginUserSliceReducer} from "./
 export const store = configureStore({
     reducer: {
         medals: medalsReducer,
-        medal: medalReducer,
-        results: resultsReducer,
+        medal: medalsSliceReducer,
+        results: resultsSliceReducer,
         protocol: protocolReducer,
         loginModal: loginReducer,
         cabinet: cabinetReducer,

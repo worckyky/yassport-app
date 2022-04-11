@@ -20,8 +20,9 @@ const MedalPage = () => {
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
     const dispatch = useAppDispatch();
     useEffect(() =>{
-        dispatch(getMedal(id as string))
+       id && dispatch(getMedal(id as string))
     },[id])
+
     return (
         <>
             <PageLayout>
@@ -31,7 +32,7 @@ const MedalPage = () => {
                     <MedalContainer/>
                 </>
             </PageLayout>
-            <ResultsTable/>
+            <ResultsTable id={id as string}/>
             <PageLayout>
                 <Footer/>
             </PageLayout>
