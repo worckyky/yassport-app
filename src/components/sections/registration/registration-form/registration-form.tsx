@@ -29,6 +29,7 @@ type IRegistrationFormType = {
 
 
 
+
 const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
 
     const dispatch = useAppDispatch();
