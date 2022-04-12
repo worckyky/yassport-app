@@ -5,17 +5,24 @@ import React from "react";
 const cn = classnames.bind(s);
 
 type IAppComponentPreloaderType = {
-    extraStyles?: string
+    extraStyles?: string,
+    width?: number,
+    height?: number,
 }
 
-const AppComponentPreloader: React.FC<IAppComponentPreloaderType> = ({extraStyles}) => {
+const AppComponentPreloader: React.FC<IAppComponentPreloaderType> = (
+    {
+        extraStyles,
+        height= 60,
+        width= 60
+    }) => {
     // @ts-ignore
     return (
         <div className={cn(s.preloader, extraStyles)}>
             <div className="loader" title="1">
                 <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
                      xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                     width="60px" height="60px" viewBox="0 0 50 50"
+                     width={width} height={height} viewBox="0 0 50 50"
                      xmlSpace="preserve">
                     <path fill="#DDBE90"
                           d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">

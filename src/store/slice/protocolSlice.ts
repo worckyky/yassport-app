@@ -30,6 +30,11 @@ type InitialStateType = {
     columns: EColumnsType[]
     pending: boolean,
     error: string
+    approved: {
+        state: string,
+        text: string,
+        pending: boolean,
+    }
 }
 
 const initialState: InitialStateType = {
@@ -52,10 +57,29 @@ const initialState: InitialStateType = {
             dataIndex: 'time',
             key: 'time',
         }
-    ]
+    ],
+    approved: {
+        state: '',
+        text: '',
+        pending: false
+    },
 };
 export const getProtocol = createAsyncThunk('protocol', async (id: number) => {
     const response = await axios.get(`https://api.asdev.site/result/${id}`);
+    return response.data;
+});
+
+
+export type EApproveProtocolType = {
+    token: string,
+    user_id: number,
+    result_id: number
+}
+
+export const approveProtocol = createAsyncThunk('approveProtocol', async (req: EApproveProtocolType) => {
+    const response = await axios.post('https://api.asdev.site/addResult', {
+        ...req
+    });
     return response.data;
 });
 
@@ -67,16 +91,35 @@ export const protocolSlice = createSlice({
     reducers: {
     },
     extraReducers: builder => {
-        builder.addCase(getProtocol.pending, state => {
+        builder
+        .addCase(getProtocol.pending, state => {
             state.pending = true
-        })
-        builder.addCase(getProtocol.fulfilled, (state, {payload}) => {
+        }).addCase(getProtocol.fulfilled, (state, {payload}) => {
             state.data = payload
             state.pending = false
-        })
-        builder.addCase(getProtocol.rejected, (state, {error}) => {
+        }).addCase(getProtocol.rejected, (state, {error}) => {
+            state.pending = false
             state.error = JSON.stringify(error)
         })
+
+        builder
+        .addCase(approveProtocol.pending, state => {
+            state.approved.pending = true
+        })
+        .addCase(approveProtocol.fulfilled, (state, {payload}) => {
+            debugger
+            state.approved = {
+                state: payload.success ? 'success' : 'error',
+                text: payload.error || payload.success,
+                pending: false
+            }
+        })
+        .addCase(approveProtocol.rejected, (state, {error}) => {
+            state.approved.pending = false;
+            state.error = JSON.stringify(error)
+        })
+
+
     }
 });
 

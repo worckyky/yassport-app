@@ -90,7 +90,7 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending, count}) => {
                 </div>
                 <div className={s.bottomsBlock}>
                     <Link href={`/medal/${[medal.id]}`}>
-                        <a target="_blank" rel="noreferrer">
+                        <a>
                             <Button type='outline-primary' size='normal' width='full'>
                                 See <AppIconArrowBtnLong/>
                             </Button>

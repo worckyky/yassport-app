@@ -1,4 +1,5 @@
 @import "styles/font-styles";
+@import "styles/media";
 
 .medals {
   background-color: var(--white);
@@ -17,6 +18,9 @@
   display: grid;
   grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
   grid-gap: 24px;
+  @media (max-width: $tablet) {
+    grid-gap: 16px;
+  }
 }
 
 .medalsBtnMore {

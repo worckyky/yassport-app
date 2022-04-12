@@ -1,6 +1,6 @@
 import s from './footer.module.scss';
 import Image from "next/image";
-import Link from "../link/link";
+import CustomLink from "../link/link";
 import React from "react";
 import classnames from 'classnames'
 const cn = classnames.bind(s);
@@ -17,9 +17,9 @@ const Footer: React.FC<IFooterTypeProps> = ({extraStyles}) => {
             </div>
             <p>© 2022 Yassport, Inc.</p>
             <div className={s.footerLinks}>
-                <Link href={'#'} extraClass={s.footerLink}>Terms of Service</Link>
-                <Link href={'#'} extraClass={s.footerLink}>Privacy Policy</Link>
-                <Link href={'#'} extraClass={s.footerLink}>support@yassport.org</Link>
+                <CustomLink href={'#'} extraClass={s.footerLink}>Terms of Service</CustomLink>
+                <CustomLink href={'#'} extraClass={s.footerLink}>Privacy Policy</CustomLink>
+                <CustomLink href={'mailto:support@yassport.org'} extraClass={s.footerLink}>support@yassport.org</CustomLink>
             </div>
         </div>
     )

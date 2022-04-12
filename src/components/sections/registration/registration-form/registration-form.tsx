@@ -10,14 +10,13 @@ import RadioButtons, {IRadioType} from "../../../radio-buttons/radio-buttons";
 import AppIconArrowBtn from "../../../app-icons/app-icon-arrowBtn";
 import Button from "../../../button/button";
 import AppIconEmail from "../../../app-icons/app-icon-email";
-import Link from "../../../link/link";
+import CustomLink from "../../../link/link";
 import stringCombiner from "../../../../helpers/stringCombiner";
 import * as yup from 'yup'
-import {useAppDispatch, useAppSelector} from "../../../../store/hooks";
-import {closeModal, openModal} from "../../../../store/slice/loginSlice";
-import {authUser, IFormValuesType, removeError, selectRegistrationError} from "../../../../store/slice/authSlice";
+import {useAppDispatch} from "../../../../store/hooks";
+import {openModal} from "../../../../store/slice/loginSlice";
+import {authUser, IFormValuesType} from "../../../../store/slice/authSlice";
 import AppIconCloseModalSmall from "../../../app-icons/app-icon-closeModalSmall";
-import LoginForm from "../login-form/login-form";
 import {EDeviceType, useWindowSize} from "../../../../helpers/device-helper";
 import {useRouter} from "next/router";
 
@@ -200,10 +199,10 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                                 {stringCombiner(
                                     [
                                         <span key={'1'} className={s.registrationFormRulesText}>By signing up, you agree to Yassport</span>,
-                                        <Link key={'2'} href={'#'} extraClass={s.footerLink}>Privacy Policy</Link>,
+                                        <CustomLink key={'2'} href={'#'} extraClass={s.footerLink}>Privacy Policy</CustomLink>,
                                         <br key={'3'} />,
                                         <span key={'4'} className={s.registrationFormRulesText}>and</span>,
-                                        <Link key={'5'} href={'#'} extraClass={s.footerLink}>Terms of Service</Link>
+                                        <CustomLink key={'5'} href={'#'} extraClass={s.footerLink}>Terms of Service</CustomLink>
                                     ]
                                 )}
                             </span>

@@ -10,10 +10,10 @@ type ILinkTypeProps = {
     children: string
 }
 
-const Link: React.FC<ILinkTypeProps> = ({href = '#', extraClass, children}) => {
+const CustomLink: React.FC<ILinkTypeProps> = ({href = '#', extraClass, children}) => {
     return (
         <a className={cn(s.link, extraClass)} href={href}>{children}</a>
     )
 }
 
-export default Link;
+export default CustomLink;

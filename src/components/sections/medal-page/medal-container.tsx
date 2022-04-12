@@ -111,7 +111,7 @@ const MedalContainer = () => {
                             }
                         })}
                     </div>
-                    {setButton()}
+                    {/*{setButton()}*/}
                 </div>,
                 s.medalContentLoader
             )}

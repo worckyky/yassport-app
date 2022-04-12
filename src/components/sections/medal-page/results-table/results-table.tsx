@@ -4,22 +4,33 @@ import {Table} from "antd";
 import {useAppDispatch, useAppSelector} from "../../../../store/hooks";
 import Input from "../../../input/input";
 import AppIconSearch from "../../../app-icons/app-icon-search";
-import {useRouter} from "next/router";
 import Link from 'next/link'
-import {getResult, resetList, selectColumns, selectMedal, selectResults} from "../../../../store/slice/medalSlice";
+import {
+    getResult,
+    resetList,
+    searchResult,
+    selectColumns,
+    selectMedal,
+    selectResults
+} from "../../../../store/slice/medalSlice";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import Button from "../../../button/button";
+import {useDebounce, useDebouncedCallback} from 'use-debounce';
 
 type EResultsTablePropTypes = {
     id?: string
 }
 
 const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
-    const [initialState, setInitialState] = useState({
+
+    const defaultSate = {
         medal_id: 0,
         page: 0,
         max: 8
-    },)
+    }
+    const [initialState, setInitialState] = useState(defaultSate)
+    const [search, setSearch] = useState('');
+
     const columns = useAppSelector(selectColumns);
     const dispatch = useAppDispatch()
     const {
@@ -28,23 +39,58 @@ const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
         error,
         pending
     } = useAppSelector(selectResults)
+
+
+    const debounced = useDebouncedCallback(
+        (query) => {
+            if (query.length === 0) {
+                dispatch(resetList())
+                dispatch(getResult({
+                    ...defaultSate,
+                    medal_id: Number(id)
+                }))
+            } else {
+                dispatch(resetList())
+                dispatch(searchResult({
+                    ...defaultSate,
+                    medal_id: Number(id),
+                    query
+                }))
+            }
+            setInitialState({...defaultSate, medal_id: Number(id)})
+            setSearch(query);
+        },
+        1000
+    );
+
     useEffect(() => {
         return () => {
             dispatch(resetList())
         }
-    },[])
+    }, [])
 
-    useEffect(() => {
-        id && dispatch(getResult({...initialState, medal_id: +id}))
-    }, [id, initialState])
 
     const increaseValue = () => {
-        setInitialState(state => {
-            return {
-                ...state, page: state.page += 1
+        const newState = ({
+                ...initialState, page: initialState.page += 1
             }
-        })
+        )
+        if (search.length) {
+            dispatch(searchResult({
+                ...newState,
+                medal_id: Number(id),
+                query: search
+            }))
+        } else  {
+            dispatch(getResult({...newState, medal_id: Number(id)}))
+        }
+        setInitialState(newState)
     }
+
+    useEffect(() => {
+        id && dispatch(getResult({...initialState, medal_id: Number(id)}))
+    }, [id])
+
 
     const renderButton = useCallback(() => {
         if (list.length >= total) {
@@ -54,6 +100,20 @@ const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
             <Button size='normal' type='outline-primary' onClick={increaseValue}>See more</Button>
         )
     }, [list])
+
+    const renderTable = useCallback(() => {
+        return (
+            <Table
+                className="table-striped-rows"
+                rowClassName={(record, index) => index % 2 === 0 ? s.tableRowLight : s.tableRowDark}
+                dataSource={list}
+                rowKey={(record => record.athlete_id)}
+                scroll={{x: 768}}
+                bordered
+                columns={editable()}
+                pagination={false}/>
+        )
+    }, [id, list, search])
 
 
     const editable = (): any => {
@@ -85,20 +145,9 @@ const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
                 </div>
             )
         }
-        return condition() && <Table
-            className="table-striped-rows"
-            rowClassName={(record, index) => index % 2 === 0 ? s.tableRowLight : s.tableRowDark}
-            dataSource={list}
-            rowKey={(record => record.athlete_id)}
-            scroll={{x: 768}}
-            bordered
-            columns={editable()}
-            pagination={false}/>
+        return condition() && renderTable()
     }
 
-    const onChangeHandler = (value: string) => {
-
-    }
 
 
     return (
@@ -107,8 +156,9 @@ const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
 
             <PageLayout>
                 <>
-                    <Input onChange={onChangeHandler}
+                    <Input onChange={debounced}
                            extraStyles={s.resultsSearchInput}
+                           pending={pending}
                            value={''}
                            icon={<AppIconSearch/>}
                            placeHolder={'Search via name or start number'}

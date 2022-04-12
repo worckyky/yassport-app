@@ -6,6 +6,7 @@ import AppIconCalendar from "../app-icons/app-icon-calendar";
 import AppIconEye from "../app-icons/app-icon-eye";
 import {useFormikContext} from "formik";
 import AppIconSmallRequired from "../app-icons/small/app-iconSmall-required";
+import AppComponentPreloader from "../app-component-preloader/app-component-preloader";
 
 const cn = classnames.bind(s);
 
@@ -22,7 +23,8 @@ type EInputType = {
     field?: any
     required?: boolean,
     error?: ''
-    touched?: boolean
+    touched?: boolean,
+    pending?: boolean
 }
 
 const Input: React.FC<EInputType> = (
@@ -31,6 +33,7 @@ const Input: React.FC<EInputType> = (
         value = '',
         name,
         onChange,
+        pending,
         extraStyles,
         placeHolder,
         width = 'default',
@@ -104,6 +107,7 @@ const Input: React.FC<EInputType> = (
 
     }
 
+
     const changeOnPassWord = () => {
         if (type === 'password') {
             return <AppIconEye hide={showPass} onClick={() => setOnShowPass((state) => !state)}/>
@@ -127,7 +131,7 @@ const Input: React.FC<EInputType> = (
             onClick={onAreaClick}>
             {required && <div className={s.inputRequired}><AppIconSmallRequired/></div>}
             {changeOnDatePicker()}
-            {changeOnPassWord()}
+            {pending ? <AppComponentPreloader width={24} height={24} extraStyles={s.pendingInput}/> : changeOnPassWord()}
         </div>
     )
 }

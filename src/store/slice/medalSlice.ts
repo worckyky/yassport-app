@@ -112,6 +112,20 @@ export const getResult = createAsyncThunk('result', async (data: EGetResultParam
     return response.data;
 });
 
+export type EResultSearchType = {
+    medal_id: number,
+    query: string,
+    page: number,
+    max: number
+}
+
+export const searchResult = createAsyncThunk('searchResult', async (search: EResultSearchType) => {
+    const response = await axios.post(`https://api.asdev.site/searchResult`, {
+        ...search
+    });
+    return response.data;
+});
+
 export const resultSlice = createSlice({
     name: 'result',
     initialState,
@@ -134,16 +148,37 @@ export const resultSlice = createSlice({
             state.results.pending = false
             state.results.error = 'Some problem'
         })
+        builder
+        .addCase(searchResult.pending, state => {
+            state.results.pending = true
+        })
+        .addCase(searchResult.fulfilled, ((state, {payload}) => {
+            state.results.pending = false
+            if (payload.total === '0') {
+                state.results.list = []
+            } else {
+                state.results.list = [...state.results.list, ...payload.results]
+                state.results.total = payload.total
+            }
+        }))
+        .addCase(searchResult.rejected, (state => {
+            state.results.error = 'Search went wrong'
+        }))
     }
 })
 
 export const { resetList } = resultSlice.actions
 
 
+
+
+
+
 export const selectMedal = (state: RootState) => state.medal;
 export const selectResults = (state: RootState) => state.results.results;
 export const selectColumns = (state: RootState) => state.results.columns;
 
-export const medalsSliceReducer = medalsSlice.reducer
-export const resultsSliceReducer = resultSlice.reducer
+
+export const medalsSliceReducer = medalsSlice.reducer;
+export const resultsSliceReducer = resultSlice.reducer;
 

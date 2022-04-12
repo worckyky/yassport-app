@@ -7,17 +7,19 @@ import AppIconSmallCalendar from "../../app-icons/small/app-iconSmall-calendar";
 import AppIconSmallFlash from "../../app-icons/small/app-iconSmall-flash";
 import AppIconSmallArrow from "../../app-icons/small/app-iconSmall-arrow";
 import AppIconSmallFinish from "../../app-icons/small/app-iconSmall-finish";
-import {EMedalType} from "../../../enums/medal-type";
 import ResultFragment from "../../result-fragment/result-fragment";
 import Button from "../../button/button";
-import {selectProtocol} from "../../../store/slice/protocolSlice";
-import {Table} from "antd";
+import {approveProtocol, selectProtocol} from "../../../store/slice/protocolSlice";
+import {Modal, Table} from "antd";
 import {EDeviceType, useWindowSize} from "../../../helpers/device-helper";
 import AppComponentPreloader from "../../app-component-preloader/app-component-preloader";
 import moment from "moment";
 import reMapper from "../../../helpers/remapper";
 import Link from "next/link";
 import {selectCheckUser} from "../../../store/slice/authSlice";
+import AppIconCloseModalSmall from "../../app-icons/app-icon-closeModalSmall";
+import CustomLink from "../../link/link";
+import {useRouter} from "next/router";
 
 
 type IProtocolContainerType = {
@@ -26,11 +28,15 @@ type IProtocolContainerType = {
 
 const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
 
-    const {data, error, pending, columns} = useAppSelector(selectProtocol);
+    const {data, pending, columns, approved} = useAppSelector(selectProtocol);
+    const user = useAppSelector(selectCheckUser)
     const [content, setContent] = useState([])
     const device = useWindowSize()
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
     const doCheckUser = useAppSelector(selectCheckUser);
+    const dispatch = useAppDispatch()
+    const router = useRouter()
+    const [visible, setVisible] = useState(false);
 
 
 
@@ -73,10 +79,55 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
         }
     }
 
+
+    const renderContent = useCallback(() => {
+        if (approved.state === 'success') {
+            return (
+                <>
+                    <img src="/img/rocket.png" alt="Success!"/>
+                    <h2>{approved.text}</h2>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <img src="/img/reject.png" alt="Reject:("/>
+                    <h2>{approved.text}</h2>
+                    <p>Write as at&nbsp;<CustomLink href='mailto:support@yassport.org'>support@yassport.org</CustomLink> to get some&nbsp;help</p>
+                </>
+            )
+        }
+
+    },[approved])
+
+    const onCloseModal = () => {
+
+        setTimeout(() => {
+            if (approved.state === 'success') {
+                router.push('/cabinet')
+            }
+        }, 2000)
+        setVisible(false)
+
+
+    }
+    const onApproveProtocol = () => {
+        dispatch(approveProtocol(
+            {
+                token: user.token,
+                user_id: user.user_id,
+                result_id: Number(id)
+            })
+        ).then(() => {
+            setVisible(true)
+        })
+    }
+
+
     const setButton = useCallback(() => {
         return (
             <div className={s.protocolButtonContainer}>
-                <Button disabled={!doCheckUser.token} size='big' type='field-primary'>Add to profile</Button>
+                <Button disabled={!doCheckUser.token || pending} size='big' type='field-primary' onClick={onApproveProtocol}>Add to profile</Button>
                 {!doCheckUser.token && <span>
                     To get medal in your list of rewards, you should {' '}
                     <Link href={'/registration'}>
@@ -179,7 +230,18 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
                 </div>,
                 s.protocolContentLoader
             )}
-
+            <Modal
+                centered
+                visible={visible}
+                onCancel={() => onCloseModal()}
+                width={condition ? '100%' : 400}
+                footer={null}
+                closeIcon={<AppIconCloseModalSmall/>}
+            >
+                <div className={s.protocolActionModal}>
+                    {renderContent()}
+                </div>
+            </Modal>
 
         </div>
     )

@@ -18,6 +18,7 @@ type InitialStateType = {
     lastName: string,
     expired: string,
     token: string,
+    user_id: number,
     pending: boolean,
     isAuthed: boolean,
     onRegister: {
@@ -31,6 +32,7 @@ const initialState: InitialStateType = {
     email: '',
     expired: '',
     token: '',
+    user_id: 0,
     pending: false,
     isAuthed: false,
     onRegister: {
@@ -82,6 +84,7 @@ export const authSlice = createSlice({
                 state.expired = payload.expired
                 state.firstName = payload.firstName
                 state.lastName = payload.lastName
+                state.user_id = payload.user_id
                 state.email = payload.email
                 state.isAuthed = true;
                 localStorage.setItem('authToken', payload.token)
@@ -115,6 +118,7 @@ export const checkUserSLice = createSlice({
             state.email = ''
             state.lastName = ''
             state.firstName = ''
+            state.user_id = null as unknown as number
             localStorage.removeItem('authToken')
         },
     },
@@ -129,6 +133,7 @@ export const checkUserSLice = createSlice({
                     state.expired = ''
                     state.email = ''
                     state.lastName = ''
+                    state.user_id = null as unknown as number
                     state.firstName = ''
                     localStorage.removeItem('authToken')
                     return
@@ -138,7 +143,8 @@ export const checkUserSLice = createSlice({
                 state.expired = payload.expired
                 state.firstName = payload.firstName
                 state.lastName = payload.lastName
-                state.email = payload.email;
+                state.email = payload.email
+                state.user_id = payload.user_id
                 state.isAuthed = true;
             })
             .addCase(checkUser.rejected,(state, {error})=> {

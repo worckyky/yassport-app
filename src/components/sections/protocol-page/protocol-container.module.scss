@@ -188,3 +188,32 @@
   margin: var(--spacer-24);
 
 }
+
+.protocolActionModal {
+  padding: var(--spacer-24);
+  min-height: 400px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: var(--grey-900);
+  img {
+    width: 140px;
+    height: 140px;
+    margin-bottom: var(--spacer-32);
+  }
+  h2 {
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: var(--spacer-24);
+    &::first-letter {
+      text-transform:capitalize;
+    }
+  }
+  p {
+    font-size: 14px;
+    line-height: 24px;
+
+  }
+}
