@@ -5,11 +5,16 @@ import Header from "../../src/components/header/header"
 import GoBack from "../../src/components/go-back/go-back";
 import RegistrationForm from "../../src/components/sections/registration/registration-form/registration-form";
 import AppAnimatedLogo from "../../src/components/app-icons/logo/app-animated-logo/app-animated-logo";
+import Head from "next/head";
 
 
 const Registration = () => {
     return (
         <>
+            <Head>
+                <title>Sign up</title>
+                <meta name='description' content='Sign up in a Yassport account'/>
+            </Head>
             <PageLayout>
                 <>
                     <Header/>

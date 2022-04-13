@@ -6,6 +6,7 @@ import s from "./cabinet.module.scss"
 import Wizard from "../../src/components/wizzard/wizard";
 import CabinetContainer from "../../src/components/sections/cabinet/cabinet-container/cabinet-container";
 import Footer from "../../src/components/footer/footer"
+import Head from "next/head";
 
 
 export enum ESectionType {
@@ -17,6 +18,10 @@ const Cabinet: NextPage = () => {
 
     return (
         <div>
+            <Head>
+                <title>Personal cabinet</title>
+                <meta name='description' content='Personal cabinet'/>
+            </Head>
             <PageLayout>
                 <div className={s.cabinetWrapper}>
                     <Header/>

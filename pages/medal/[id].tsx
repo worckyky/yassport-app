@@ -7,14 +7,20 @@ import { useRouter } from 'next/router'
 import ResultsTable from "../../src/components/sections/medal-page/results-table/results-table";
 import Footer from "../../src/components/footer/footer"
 import {EDeviceType, useWindowSize} from "../../src/helpers/device-helper";
-import {useEffect} from "react";
-import {getMedal} from "../../src/store/slice/medalSlice";
-import {useAppDispatch} from "../../src/store/hooks";
+import React, {useEffect} from "react";
+import {getMedal, selectMedal} from "../../src/store/slice/medalSlice";
+import {useAppDispatch, useAppSelector} from "../../src/store/hooks";
+import Head from "next/head";
 
 const MedalPage = () => {
 
     const router = useRouter()
     const { id } = router.query
+    const {
+        medal,
+        error,
+        pending
+    } = useAppSelector(selectMedal)
 
     const device = useWindowSize()
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType)
@@ -25,6 +31,10 @@ const MedalPage = () => {
 
     return (
         <>
+            <Head>
+                <title>{medal.nameStart}</title>
+                <meta name='description' content={medal.nameStart}/>
+            </Head>
             <PageLayout>
                 <>
                     <Header/>

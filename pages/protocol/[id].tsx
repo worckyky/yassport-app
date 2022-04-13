@@ -6,8 +6,9 @@ import {useRouter} from "next/router";
 import ProtocolContainer from "../../src/components/sections/protocol-page/protocol-container";
 import {EDeviceType, useWindowSize} from "../../src/helpers/device-helper";
 import React, {useEffect, useState} from "react";
-import {useAppDispatch} from "../../src/store/hooks";
+import {useAppDispatch, useAppSelector} from "../../src/store/hooks";
 import {getProtocol, selectProtocol} from "../../src/store/slice/protocolSlice";
+import Head from "next/head";
 
 
 const ResultPage = () => {
@@ -15,6 +16,7 @@ const ResultPage = () => {
     const router = useRouter()
     const [container, setShowContainer] = useState(false);
     const { id } = router.query
+    const {data} = useAppSelector(selectProtocol);
 
     useEffect(() =>{
         id && dispatch(getProtocol(+id)).then(() => setShowContainer(true))
@@ -24,6 +26,10 @@ const ResultPage = () => {
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET, EDeviceType.DESKTOP].includes(device as EDeviceType);
     return (
         <>
+            <Head>
+                <title>{`Protocol | ${data.athlete.firstName + ' ' + data.athlete.lastName}`}</title>
+                <meta name='description' content={`Protocol | ${data.athlete.firstName + ' ' + data.athlete.lastName}`}/>
+            </Head>
             <PageLayout>
                 <>
                     <Header/>

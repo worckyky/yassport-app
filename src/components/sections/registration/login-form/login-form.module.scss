@@ -42,7 +42,12 @@
 
 .loginFormFooter {
   display: flex;
+  text-align: center;
+  align-items: center;
   justify-content: space-between;
+  span {
+    width: 100%;
+  }
 }
 .loginFormFooterRegister, .loginFormFooterForgot {
   cursor: pointer;
