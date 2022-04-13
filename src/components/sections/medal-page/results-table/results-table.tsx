@@ -10,12 +10,12 @@ import {
     resetList,
     searchResult,
     selectColumns,
-    selectMedal,
     selectResults
 } from "../../../../store/slice/medalSlice";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import Button from "../../../button/button";
-import {useDebounce, useDebouncedCallback} from 'use-debounce';
+import {useDebouncedCallback} from 'use-debounce';
+import AppIconSmallArrowRight from "../../../app-icons/small/app-iconSmall-arrowRight";
 
 type EResultsTablePropTypes = {
     id?: string
@@ -93,7 +93,7 @@ const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
 
 
     const renderButton = useCallback(() => {
-        if (list.length >= total) {
+        if (list.length >= total || !list.length) {
             return ''
         }
         return (
@@ -121,12 +121,12 @@ const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
             title: '',
             key: 'id',
             dataIndex: 'id',
-            width: 70,
+            width: 100,
             fixed: 'right',
             render: (id: string) => (
                 <Link href={`/protocol/${[id]}`}>
                     <a>
-                        <span className={s.resultsTableMore}>More</span>
+                        <span className={s.resultsTableMore}>More <AppIconSmallArrowRight/></span>
                     </a>
                 </Link>
             ),
