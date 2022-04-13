@@ -93,7 +93,7 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
                 <>
                     <img src="/img/reject.png" alt="Reject:("/>
                     <h2>{approved.text}</h2>
-                    <p>Write as at&nbsp;<CustomLink href='mailto:support@yassport.org'>support@yassport.org</CustomLink> to get some&nbsp;help</p>
+                    <p>Write us at&nbsp;<CustomLink href='mailto:support@yassport.org'>support@yassport.org</CustomLink> to get some&nbsp;help</p>
                 </>
             )
         }
@@ -125,9 +125,17 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
 
 
     const setButton = useCallback(() => {
+
+        const condition = doCheckUser.userResultIds.includes(Number(id))
+
         return (
             <div className={s.protocolButtonContainer}>
-                <Button disabled={!doCheckUser.token || pending} size='big' type='field-primary' onClick={onApproveProtocol}>Add to profile</Button>
+                <Button disabled={!doCheckUser.token || pending || condition}
+                        size='big'
+                        type='field-primary'
+                        onClick={onApproveProtocol}>
+                    {condition ? 'Result was added' : 'Add to profile'}
+                </Button>
                 {!doCheckUser.token && <span>
                     To get medal in your list of rewards, you should {' '}
                     <Link href={'/registration'}>

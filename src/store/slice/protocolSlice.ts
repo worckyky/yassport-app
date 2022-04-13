@@ -107,7 +107,6 @@ export const protocolSlice = createSlice({
             state.approved.pending = true
         })
         .addCase(approveProtocol.fulfilled, (state, {payload}) => {
-            debugger
             state.approved = {
                 state: payload.success ? 'success' : 'error',
                 text: payload.error || payload.success,

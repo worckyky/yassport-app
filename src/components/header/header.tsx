@@ -15,6 +15,7 @@ import Link from 'next/link'
 import {checkUser, resetUser, selectCheckUser, selectLoginUser} from "../../store/slice/authSlice";
 import AppIconUser from "../app-icons/app-icon-user";
 import {useCallback, useEffect} from "react";
+import {resetCabinet} from "../../store/slice/cabinetSlice";
 
 
 const Header = () => {
@@ -31,6 +32,7 @@ const Header = () => {
         dispatch(checkUser(token ? token : '')).then(e => {
             if ((e.payload.error && invalidPaths.includes(router.pathname)) || (e.payload.token && router.pathname === '/registration')) {
                 router.push('/');
+                dispatch(resetCabinet())
             }
         })
 

@@ -16,6 +16,7 @@ export interface EMedalType {
 
 export interface EResultsType {
     overalltime: string
+    result_id?: number
     bib: string,
     id: number,
     place: number,

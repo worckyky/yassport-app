@@ -141,7 +141,7 @@ const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
         if (!list.length) {
             return (
                 <div className={s.resultsTableEmptyState}>
-                    Where is no data 🥸
+                    There is no data 🥸
                 </div>
             )
         }

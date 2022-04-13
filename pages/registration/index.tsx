@@ -25,7 +25,9 @@ const Registration = () => {
                     </div>
                 </>
             </PageLayout>
-            <Footer/>
+            <PageLayout>
+                <Footer/>
+            </PageLayout>
         </>
     )
 }

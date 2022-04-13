@@ -86,7 +86,6 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                 validationSchema={validationSchema}
                 onSubmit={(values, {setSubmitting}) => {
                     const {birth,email,gender,lastName,password,firstName} = values
-                    console.log(email)
                     dispatch(authUser({
                         birth,
                         email,
@@ -95,7 +94,6 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                         password,
                         firstName
                     })).then((e) => {
-                        console.log(e)
                         if (e.payload?.error?.email[0]) {
                             setError(e.payload.error.email[0])
                             setSubmitting(false);

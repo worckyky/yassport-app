@@ -1,4 +1,5 @@
 @import "styles/media";
+@import "styles/font-styles";
 
 .cabinetResults {
   display: grid;
@@ -9,6 +10,34 @@
 .cabinetResults {
   @media (max-width:$tablet) {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;}
+}
+
+
+
+.emptyState {
+  min-height: 600px;
+  border-radius: var(--radius-8);
+  box-shadow: var(--shadow-main);
+  flex-direction: column;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--grey-400);
+  h2 {
+    margin-top: var(--spacer-48);
+    @include font-500();
+  }
+  @media (max-width: $desktop) {
+    min-height: 400px;
+    width: 100%;
+  }
+}
+
+.emptyStateAnimation {
+  transform: scale(1.5);
+  @media (max-width: $tablet) {
+    transform: unset;
   }
 }

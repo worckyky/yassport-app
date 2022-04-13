@@ -21,6 +21,7 @@ type InitialStateType = {
     user_id: number,
     pending: boolean,
     isAuthed: boolean,
+    userResultIds: Array<number>
     onRegister: {
         error: string,
     }
@@ -33,6 +34,7 @@ const initialState: InitialStateType = {
     expired: '',
     token: '',
     user_id: 0,
+    userResultIds: [],
     pending: false,
     isAuthed: false,
     onRegister: {
@@ -80,6 +82,7 @@ export const authSlice = createSlice({
                     return;
                 }
                 state.pending = false;
+                state.userResultIds = payload.userResults
                 state.token = payload.token
                 state.expired = payload.expired
                 state.firstName = payload.firstName
@@ -116,6 +119,7 @@ export const checkUserSLice = createSlice({
             state.token = ''
             state.expired = ''
             state.email = ''
+            state.userResultIds = []
             state.lastName = ''
             state.firstName = ''
             state.user_id = null as unknown as number
@@ -132,6 +136,7 @@ export const checkUserSLice = createSlice({
                     state.token = ''
                     state.expired = ''
                     state.email = ''
+                    state.userResultIds = []
                     state.lastName = ''
                     state.user_id = null as unknown as number
                     state.firstName = ''
@@ -140,6 +145,7 @@ export const checkUserSLice = createSlice({
                 }
                 state.pending = false;
                 state.token = payload.token
+                state.userResultIds = payload.userResultIds
                 state.expired = payload.expired
                 state.firstName = payload.firstName
                 state.lastName = payload.lastName
@@ -186,6 +192,7 @@ export const loginUserSLice = createSlice({
             .addCase(loginUser.fulfilled, (state,{payload})=> {
                 state.pending = false;
                 state.token = payload.token
+                state.userResultIds = payload.userResultIds
                 state.expired = payload.expired
                 state.firstName = payload.firstName
                 state.lastName = payload.lastName

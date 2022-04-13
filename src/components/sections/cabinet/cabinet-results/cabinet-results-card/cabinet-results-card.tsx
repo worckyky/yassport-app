@@ -11,8 +11,8 @@ import Button from "../../../../button/button";
 import AppIconArrowBtn from "../../../../app-icons/app-icon-arrowBtn";
 import ResultFragment from "../../../../result-fragment/result-fragment";
 import AppComponentPreloader from "../../../../app-component-preloader/app-component-preloader";
-
-const cn = classnames.bind(s);
+import reMapper from "../../../../../helpers/remapper";
+import Link from 'next/link'
 
 type ICabinetResultsCardType = {
     extraStyles?: string
@@ -33,9 +33,9 @@ const CabinetResultsCard: React.FC<ICabinetResultsCardType> = ({extraStyles, act
                 return <AppIconSmallCalendar size={16}/>
             case 'distance':
                 return <AppIconSmallFlash size={16}/>
-            case 'location':
+            case 'country':
                 return <AppIconSmallArrow size={16}/>
-            case 'type':
+            case 'medalType':
                 return <AppIconSmallFinish size={16}/>
             default:
                 return <AppIconSmallFlash size={16}/>
@@ -44,11 +44,11 @@ const CabinetResultsCard: React.FC<ICabinetResultsCardType> = ({extraStyles, act
 
     useEffect(() => {
         if (activity.medal) {
-            const needContent = ['year', 'distance', 'location', 'type']
+            const needContent = ['year', 'distance', 'country', 'medalType']
             const initialContent = Object.keys(activity.medal as EMedalType).reduce((acc, el) => {
                 if (needContent.includes(el)) {
                     // @ts-ignore
-                    acc.push([el, activity.medal[el]])
+                    acc.push([reMapper(el), activity.medal[el]])
                 }
                 return acc
             }, [])
@@ -92,14 +92,14 @@ const CabinetResultsCard: React.FC<ICabinetResultsCardType> = ({extraStyles, act
                                          src="/img/protocol/protocol-startNumber.png"/>
                                 }
                                 resize='page'
-                                value={activity.result.startNumber}/>
+                                value={activity.result.bib}/>
                             <ResultFragment
                                 name={'Result'}
                                 imageBefore={
                                     <img className={s.protocolFragmentImg} src="/img/protocol/protocol-result.png"/>
                                 }
                                 resize='page'
-                                value={activity.result.result}/>
+                                value={activity.result.overalltime}/>
                             <ResultFragment
                                 name={'Place'}
                                 imageBefore={
@@ -108,12 +108,14 @@ const CabinetResultsCard: React.FC<ICabinetResultsCardType> = ({extraStyles, act
                                 resize='page'
                                 value={`#${activity.result.place}`}/>
                         </div>
-                        <Button size='big'
-                                type='field-primary'
-                                width={'full'}
-                                extraStyles={s.medalImageButton}>
-                            <span>See result</span><AppIconArrowBtn/>
-                        </Button>
+                        <Link href={`/protocol/${activity.result.result_id}`}>
+                            <Button size='big'
+                                    type='field-primary'
+                                    width={'full'}
+                                    extraStyles={s.medalImageButton}>
+                                <span>See result</span><AppIconArrowBtn/>
+                            </Button>
+                        </Link>
                     </div>
                 </>,
                 s.cabinetResultCardLoader

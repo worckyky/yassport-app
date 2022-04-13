@@ -6,8 +6,9 @@ import {useRouter} from "next/router";
 import {ESectionType} from "../../../../../pages/cabinet";
 import CabinetResults from "../cabinet-results/cabinet-results";
 import CabinetPersonalData from "../cabinet-personal-data/cabinet-personal-data";
-import {useAppSelector} from "../../../../store/hooks";
-import {isAuthUser} from "../../../../store/slice/authSlice";
+import {useAppDispatch, useAppSelector} from "../../../../store/hooks";
+import {isAuthUser, selectCheckUser} from "../../../../store/slice/authSlice";
+import {fetchResults, fetchUser} from "../../../../store/slice/cabinetSlice";
 const cn = classnames.bind(s);
 
 type ICabinetContainerType = {
@@ -19,10 +20,19 @@ const CabinetContainer: React.FC<ICabinetContainerType> = ({extraStyles}) => {
     const router = useRouter()
     const [container, selectContainer] = useState('')
     const {tab} = router.query
+    const {token, user_id} = useAppSelector(selectCheckUser);
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         selectContainer(tab as string)
     }, [tab])
+
+    useEffect(() => {
+        if (token) {
+            dispatch(fetchUser({token, user_id}))
+            dispatch(fetchResults({token, user_id}))
+        }
+    },[token])
 
     const returnContainer = () => {
         switch (container) {
