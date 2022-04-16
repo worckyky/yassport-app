@@ -8,11 +8,12 @@ type ILinkTypeProps = {
     href: string,
     extraClass?: string
     children: string
+    target?: string
 }
 
-const CustomLink: React.FC<ILinkTypeProps> = ({href = '#', extraClass, children}) => {
+const CustomLink: React.FC<ILinkTypeProps> = ({href = '#', extraClass, children,target}) => {
     return (
-        <a className={cn(s.link, extraClass)} href={href}>{children}</a>
+        <a className={cn(s.link, extraClass)} target={target} href={href}>{children}</a>
     )
 }
 

@@ -52,6 +52,9 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   padding: var(--spacer-16);
+  @media (max-width: $tablet) {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
 }
 
 .bottomsBlock {

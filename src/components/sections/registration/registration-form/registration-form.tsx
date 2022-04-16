@@ -198,10 +198,10 @@ const RegistrationForm: React.FC<IRegistrationFormType> = ({extraStyles}) => {
                                 {stringCombiner(
                                     [
                                         <span key={'1'} className={s.registrationFormRulesText}>By signing up, you agree to Yassport</span>,
-                                        <CustomLink key={'2'} href={'#'} extraClass={s.footerLink}>Privacy Policy</CustomLink>,
+                                        <CustomLink key={'2'} href={'/files/Privacy-policy.pdf'} target={'_blank'} extraClass={s.footerLink}>Privacy Policy</CustomLink>,
                                         <br key={'3'} />,
-                                        <span key={'4'} className={s.registrationFormRulesText}>and</span>,
-                                        <CustomLink key={'5'} href={'#'} extraClass={s.footerLink}>Terms of Service</CustomLink>
+                                        // <span key={'4'} className={s.registrationFormRulesText}>and</span>,
+                                        // <CustomLink key={'5'} href={'#'} extraClass={s.footerLink}>Terms of Service</CustomLink>
                                     ]
                                 )}
                             </span>

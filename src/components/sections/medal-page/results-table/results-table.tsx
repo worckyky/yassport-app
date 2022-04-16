@@ -142,6 +142,7 @@ const ResultsTable: React.FC<EResultsTablePropTypes> = ({id}) => {
             return (
                 <div className={s.resultsTableEmptyState}>
                     There is no data 🥸
+                    <span> If you cant find you medal medal <a href="https://forms.gle/H1x9jcwcTLPU5fst9" target={'_blank'}>click</a> here</span>
                 </div>
             )
         }

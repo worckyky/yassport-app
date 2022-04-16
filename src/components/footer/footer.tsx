@@ -17,8 +17,8 @@ const Footer: React.FC<IFooterTypeProps> = ({extraStyles}) => {
             </div>
             <p>© 2022 Yassport, Inc.</p>
             <div className={s.footerLinks}>
-                <CustomLink href={'#'} extraClass={s.footerLink}>Terms of Service</CustomLink>
-                <CustomLink href={'#'} extraClass={s.footerLink}>Privacy Policy</CustomLink>
+                {/*<CustomLink href={'#'} extraClass={s.footerLink}>Terms of Service</CustomLink>*/}
+                <CustomLink href={'/files/Privacy-policy.pdf'} target={'_blank'} extraClass={s.footerLink}>Privacy Policy</CustomLink>
                 <CustomLink href={'mailto:support@yassport.org'} extraClass={s.footerLink}>support@yassport.org</CustomLink>
             </div>
         </div>

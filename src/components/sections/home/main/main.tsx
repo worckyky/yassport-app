@@ -6,15 +6,12 @@ import {EDeviceType, useWindowSize} from "../../../../helpers/device-helper";
 import {useRouter} from "next/router";
 import {useAppSelector} from "../../../../store/hooks";
 import {selectCheckUser} from "../../../../store/slice/authSlice";
+import Link from 'next/link'
 
 const Main = () => {
     const device = useWindowSize()
     const condition = [EDeviceType.MOBILE, EDeviceType.TABLET].includes(device as EDeviceType)
     const doCheckUser = useAppSelector(selectCheckUser);
-    const router = useRouter()
-    const onRegister = () => {
-        router.push(`/registration`)
-    }
 
     return (
         <div className={s.main}>
@@ -47,7 +44,9 @@ const Main = () => {
                 </p>
                 {!doCheckUser.token && (
                     <div className={s.mainButtonContainer}>
-                        <Button type='field-primary' size='big'><span className={s.mainExplore} onClick={onRegister}>Sign up</span><AppIconArrowBtn/> </Button>
+                        <Link href={'/registration'}>
+                            <Button type='field-primary' size='big'><span className={s.mainExplore}>Sign up</span><AppIconArrowBtn/> </Button>
+                        </Link>
                     </div>
                 )}
 

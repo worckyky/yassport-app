@@ -16,11 +16,19 @@
 .resultsTableEmptyState {
   min-height: 400px;
   display: flex;
+  flex-direction: column;
   border: 1px solid var(--grey-500);
   border-radius: var(--radius-8);
   align-items: center;
   justify-content: center;
   @include font-200();
+  span {
+    font-size: 16px;
+    line-height: 24px;
+    a {
+      color: var(--accent-first);
+    }
+  }
 }
 
 .resultsTableMore {
