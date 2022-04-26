@@ -147,7 +147,7 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
                 </span>}
             </div>
         )
-    },[doCheckUser])
+    },[doCheckUser, pending])
 
 
     const fetchData = useCallback ((reactComponent: JSX.Element, style?:string ) : JSX.Element => {
