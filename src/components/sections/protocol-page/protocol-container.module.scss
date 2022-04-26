@@ -105,6 +105,10 @@
 .protocolTitle {
   @include font-500();
   padding-right: var(--spacer-24);
+  @media (max-width: $tablet) {
+    padding-right: unset;
+    align-items: center;
+  }
 }
 .protocolButtonContainer {
   margin-top: var(--spacer-32);
@@ -141,13 +145,22 @@
 
 .protocolUser {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   padding-bottom: var(--spacer-16);
   border-bottom: 1px solid var(--grey-400);
   @media (max-width: $tablet) {
-    margin-top: var(--spacer-24);
+    margin-top: unset;
+    align-items: center;
+  }
+}
+
+.protocolNameStart {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--grey-700);
+  @media (max-width: $tablet) {
+    margin-bottom: var(--spacer-8);
   }
 }
 
@@ -217,3 +230,4 @@
 
   }
 }
+

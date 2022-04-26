@@ -67,17 +67,16 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
             case 'year':
-                return <AppIconSmallCalendar size={16}/>
+                return <AppIconSmallCalendar/>
             case 'distance':
-                return <AppIconSmallFlash size={16}/>
+                return <AppIconSmallFlash/>
             case 'country':
-                return <AppIconSmallArrow size={16}/>
-            case 'medalType':
-                return <AppIconSmallFinish size={16}/>
+                return <AppIconSmallArrow/>
+            case 'type':
+                return <AppIconSmallFinish/>
             default:
-                return <AppIconSmallFlash size={16}/>
-        }
-    }
+                return <AppIconSmallFlash/>
+        }    }
 
 
     const renderContent = useCallback(() => {
@@ -151,13 +150,13 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
     },[doCheckUser])
 
 
-    const fetchData = (reactComponent: JSX.Element, style?:string ) : JSX.Element => {
+    const fetchData = useCallback ((reactComponent: JSX.Element, style?:string ) : JSX.Element => {
         if (pending) {
             return <AppComponentPreloader extraStyles={style}/>
         } else  {
             return reactComponent;
         }
-    }
+    }, [pending])
     const imageContainer = () => {
         if (data.medal.medalMedia) {
             return (
@@ -195,8 +194,9 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
                         </div>
                         <div className={s.protocolInformation}>
                             <div className={s.protocolUser}>
+                                <span className={s.protocolNameStart}>{data.medal.nameStart}</span>
                                 <h1 className={s.protocolTitle}>{data.athlete.firstName + ' ' + data.athlete.lastName}</h1>
-                                {/*<img className={s.protocolAvatar} src={protocol.result.avatar} alt=""/>*/}
+                                {/*<img className={s.protocolAvatar} src={data.result.avatar} alt=""/>*/}
                             </div>
                             <div className={s.protocolResults}>
                                 <ResultFragment

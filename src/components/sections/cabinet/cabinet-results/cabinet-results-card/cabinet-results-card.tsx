@@ -30,17 +30,16 @@ const CabinetResultsCard: React.FC<ICabinetResultsCardType> = ({extraStyles, act
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
             case 'year':
-                return <AppIconSmallCalendar size={16}/>
+                return <AppIconSmallCalendar/>
             case 'distance':
-                return <AppIconSmallFlash size={16}/>
+                return <AppIconSmallFlash/>
             case 'country':
-                return <AppIconSmallArrow size={16}/>
-            case 'medalType':
-                return <AppIconSmallFinish size={16}/>
+                return <AppIconSmallArrow/>
+            case 'type':
+                return <AppIconSmallFinish/>
             default:
-                return <AppIconSmallFlash size={16}/>
-        }
-    }
+                return <AppIconSmallFlash/>
+        }    }
 
     useEffect(() => {
         if (activity.medal) {

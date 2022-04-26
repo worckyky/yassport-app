@@ -14,12 +14,11 @@ import Head from "next/head";
 const ResultPage = () => {
     const dispatch = useAppDispatch();
     const router = useRouter()
-    const [container, setShowContainer] = useState(false);
     const { id } = router.query
     const {data} = useAppSelector(selectProtocol);
 
     useEffect(() =>{
-        id && dispatch(getProtocol(+id)).then(() => setShowContainer(true))
+        id && dispatch(getProtocol(+id))
     },[id])
 
     const device = useWindowSize();
@@ -34,7 +33,7 @@ const ResultPage = () => {
                 <>
                     <Header/>
                     {!condition && <GoBack/>}
-                    {container && <ProtocolContainer id={id as string}/>}
+                    <ProtocolContainer id={id as string}/>
                 </>
             </PageLayout>
             <PageLayout>

@@ -52,13 +52,13 @@ const MedalCard: React.FC<IMedalPropsType> = ({medal, pending, count}) => {
 
     const setMedal = (name: string): JSX.Element => {
         switch (name) {
-            case 'dateStart':
+            case 'year':
                 return <AppIconSmallCalendar/>
             case 'distance':
                 return <AppIconSmallFlash/>
             case 'country':
                 return <AppIconSmallArrow/>
-            case 'medalType':
+            case 'type':
                 return <AppIconSmallFinish/>
             default:
                 return <AppIconSmallFlash/>
