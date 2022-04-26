@@ -126,28 +126,31 @@ const ProtocolContainer: React.FC<IProtocolContainerType> = ({id}) => {
     const setButton = useCallback(() => {
 
         const condition = doCheckUser.userResultIds.includes(Number(id))
-
-        return (
-            <div className={s.protocolButtonContainer}>
-                <Button disabled={!doCheckUser.token || pending || condition}
-                        size='big'
-                        type='field-primary'
-                        onClick={onApproveProtocol}>
-                    {condition ? 'Result was added' : 'Add to profile'}
-                </Button>
-                {!doCheckUser.token && <span>
+        if (!pending) {
+            return (
+                <div className={s.protocolButtonContainer}>
+                    <Button disabled={!doCheckUser.token || condition}
+                            size='big'
+                            type='field-primary'
+                            onClick={onApproveProtocol}>
+                        {condition ? 'Result was added' : 'Add to profile'}
+                    </Button>
+                    {!doCheckUser.token && <span>
                     To get medal in your list of rewards, you should {' '}
-                    <Link href={'/registration'}>
+                        <Link href={'/registration'}>
                         <a>
                             sign up
                         </a>
                     </Link>
-                    {' '}
-                    first.
+                        {' '}
+                        first.
                 </span>}
-            </div>
-        )
+                </div>
+            )
+        }
+
     },[doCheckUser, pending])
+
 
 
     const fetchData = useCallback ((reactComponent: JSX.Element, style?:string ) : JSX.Element => {
