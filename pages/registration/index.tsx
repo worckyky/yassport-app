@@ -15,9 +15,9 @@ const Registration = () => {
                 <title>Sign up</title>
                 <meta name='description' content='Sign up in a Yassport account'/>
             </Head>
+            <Header/>
             <PageLayout>
                 <>
-                    <Header/>
                     <GoBack/>
                     <h2 className={s.registrationTitle}>
                        registration

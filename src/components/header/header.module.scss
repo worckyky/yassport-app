@@ -1,3 +1,5 @@
+@import "styles/media";
+
 .header {
   margin-top: var(--spacer-40);
   height: 64px;
@@ -5,6 +7,10 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--grey-500);
+}
+
+.headerContainer {
+  width: 100%;
 }
 
 .headerBtnText {
@@ -32,6 +38,10 @@
   display: flex;
   align-items: center;
   gap: var(--spacer-16);
+  @media (max-width: $tablet) {
+    width: 100%;
+    justify-content: space-between;
+  }
   span {
     display: flex;
     align-items: center;
@@ -48,3 +58,87 @@
   height: 40px;
   background-color: var(--grey-500);
 }
+
+.headerLinks {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: var(--spacer-32);
+  .headerLinksLink {
+    font-size: 18px;
+    @media (max-width: $tablet) {
+      font-size: 16px;
+    }
+  }
+  @media (max-width: $tablet) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacer-16);
+    padding: var(--spacer-16);
+  }
+}
+
+.mobileMenu {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacer-8);
+  .shape {
+    width: 32px;
+    height: 2px;
+    display: block;
+    background-color: var(--accent-second);
+    transition: ease-in-out 0.5s;
+  }
+  &._active {
+    .shape {
+      position: absolute;
+      &:nth-child(1) {
+        transform: rotate(315deg);
+      }
+      &:nth-child(2) {
+        background-color: transparent;
+      }
+      &:nth-child(3) {
+        transform: rotate(-315deg);
+      }
+    }
+  }
+  @media (max-width: $tablet) {
+    display: flex;
+  }
+}
+
+.headerActiveButtons {
+  display: none;
+  @media (max-width: $tablet) {
+    display: flex;
+  }
+}
+
+.mobileMenuContainer {
+  display: none;
+  width: 100%;
+  min-height: 100px;
+  position: absolute;
+  z-index: 1000;
+  top: 104px;
+  left: 0;
+  background-color: var(--white);
+  &._active {
+    display: flex;
+  }
+}
+
+.headerDesktop {
+  display: inline;
+  @media (max-width: $tablet) {
+    display: none;
+  }
+}
+

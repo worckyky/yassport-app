@@ -22,9 +22,9 @@ const Cabinet: NextPage = () => {
                 <title>Personal cabinet</title>
                 <meta name='description' content='Personal cabinet'/>
             </Head>
+            <Header/>
             <PageLayout>
                 <div className={s.cabinetWrapper}>
-                    <Header/>
                     <GoBack home/>
                     <h1 className={s.cabinetTitle}>Your account</h1>
                     <div className={s.cabinet}>

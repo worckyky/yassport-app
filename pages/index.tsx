@@ -14,9 +14,9 @@ const Home: NextPage = () => {
                 <title>Your unique digital victories</title>
                 <meta name='description' content='Save all awards and competition results as digital NFT medals'/>
             </Head>
+            <Header/>
             <PageLayout>
                 <>
-                    <Header/>
                     <Main/>
                 </>
             </PageLayout>

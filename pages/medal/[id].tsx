@@ -35,9 +35,9 @@ const MedalPage = () => {
                 <title>{medal.nameStart}</title>
                 <meta name='description' content={medal.nameStart}/>
             </Head>
+            <Header/>
             <PageLayout>
                 <>
-                    <Header/>
                     {!condition && <GoBack home/>}
                     <MedalContainer/>
                 </>

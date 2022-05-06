@@ -29,9 +29,9 @@ const ResultPage = () => {
                 <title>{`Protocol | ${data.athlete.firstName + ' ' + data.athlete.lastName}`}</title>
                 <meta name='description' content={`Protocol | ${data.athlete.firstName + ' ' + data.athlete.lastName}`}/>
             </Head>
+            <Header/>
             <PageLayout>
                 <>
-                    <Header/>
                     {!condition && <GoBack/>}
                     <ProtocolContainer id={id as string}/>
                 </>

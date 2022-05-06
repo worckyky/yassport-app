@@ -34,7 +34,7 @@ const Medals = () => {
 
     const renderButton = useCallback(() => {
         if (medals.length >= total) {
-            return <div className={s.findMedal}> If you cant find you medal <a href="https://forms.gle/H1x9jcwcTLPU5fst9" target={'_blank'}>click</a> here</div>
+            return <div className={s.findMedal}> Can't find your medal? <a href="https://forms.gle/H1x9jcwcTLPU5fst9" target={'_blank'}>Click here</a> </div>
         }
         return (
             <Button

@@ -5,15 +5,16 @@ import classnames from "classnames";
 const cn = classnames.bind(s);
 
 type ILinkTypeProps = {
-    href: string,
+    href?: string,
     extraClass?: string
     children: string
     target?: string
+    click?: () => void;
 }
 
-const CustomLink: React.FC<ILinkTypeProps> = ({href = '#', extraClass, children,target}) => {
+const CustomLink: React.FC<ILinkTypeProps> = ({href = '#', extraClass, children,target, click}) => {
     return (
-        <a className={cn(s.link, extraClass)} target={target} href={href}>{children}</a>
+        <a className={cn(s.link, extraClass)} target={target} href={href} onClick={click}>{children}</a>
     )
 }
 
